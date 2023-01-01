@@ -10,11 +10,14 @@ export default function TicketButton() {
 		<ContentBox style={styles.contentBox}>
 			<TouchableOpacity style={{ flexDirection: 'row' }}>
 				<View style={{ flex: 1 }}>
-					<LinearGradient colors={['#5ddab4', '#0a8183']} style={styles.iconView}>
+					<LinearGradient
+						colors={[t.fillTertiary, t.fillQuaternary]}
+						style={styles.iconView}
+					>
 						<Ionicons
-							name="camera"
-							size={38}
-							color={t.bgSecondaryGrouped}
+							name="camera-outline"
+							size={28}
+							color={t.tint}
 							style={styles.icon}
 						/>
 					</LinearGradient>
@@ -31,16 +34,7 @@ export default function TicketButton() {
 }
 
 const styles = StyleSheet.create({
-	icon: {
-		shadowColor: '#011825',
-		shadowOffset: {
-			width: 0,
-			height: 1,
-		},
-		shadowOpacity: 0.82,
-		shadowRadius: 1.4,
-		elevation: 4,
-	},
+	icon: {},
 	textTitle: {
 		fontSize: 18,
 		marginBottom: 3,
@@ -51,11 +45,11 @@ const styles = StyleSheet.create({
 	},
 	textView: {
 		flex: 6,
-		marginLeft: 12,
+		marginLeft: 16,
 	},
 	contentBox: {
 		paddingVertical: 12,
-		paddingHorizontal: 16,
+		paddingHorizontal: 12,
 		marginBottom: 12,
 	},
 	iconView: {

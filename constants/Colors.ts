@@ -64,6 +64,13 @@ export const CustomDarkTheme = {
 	red: 'rgb(255,69,58)',
 	teal: 'rgb(64,200,224)',
 	yellow: 'rgb(255,214,10)',
+	negativeLabel: '#ff8cb2',
+	criticalLabel: '#ffc933',
+	positiveLabel: '#97dd40',
+	negativeBackground: '#ff5252',
+	criticalBackground: '#ffc933',
+	positiveBackground: '#66ff90',
+	informativeBackground: '#366cfe',
 };
 export const CustomLightTheme = {
 	theme: 'light',
@@ -111,4 +118,11 @@ export const CustomLightTheme = {
 	red: 'rgb(255,59,48)',
 	teal: 'rgb(48,176,199)',
 	yellow: 'rgb(255,204,0)',
+	negativeLabel: '#D20a0a',
+	criticalLabel: '#c35500',
+	positiveLabel: '#256f3a',
+	negativeBackground: '#ff80bc',
+	criticalBackground: '#ffd500',
+	positiveBackground: '#bdde54',
+	informativeBackground: '#85d4ff',
 };

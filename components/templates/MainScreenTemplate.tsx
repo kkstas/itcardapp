@@ -3,6 +3,7 @@ import ProfileHeading from '../organisms/ProfileHeading';
 import MainScreenApps from '../organisms/MainScreenApps';
 import useCustomColors from '../../hooks/useCustomColors';
 import { LinearGradient } from 'expo-linear-gradient';
+import AppCardBlueprint from '../atoms/AppCardBlueprint';
 
 interface MainScreenTemplateProps {
 	navigateToProfile: () => void;
@@ -28,7 +29,9 @@ export default function MainScreenTemplate(props: MainScreenTemplateProps) {
 			</LinearGradient>
 			<View style={styles.container}>
 				<ProfileHeading onPress={props.navigateToProfile} />
+
 				<MainScreenApps />
+				<AppCardBlueprint />
 			</View>
 		</ScrollView>
 	);
@@ -50,7 +53,7 @@ const styles = StyleSheet.create({
 		height: 880,
 		top: -830,
 		paddingBottom: 50,
-		paddingHorizontal: 45,
+		paddingHorizontal: 38,
 		justifyContent: 'flex-end',
 	},
 	logoText: {
