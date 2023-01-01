@@ -1,21 +1,9 @@
-import { View, ScrollView, StyleSheet } from 'react-native';
-import ProfileHeading from '../components/organisms/ProfileHeading';
-import MainScreenApps from '../components/organisms/MainScreenApps';
+import { RootTabScreenProps } from '../types';
+import MainScreenTemplate from '../components/templates/MainScreenTemplate';
 
-export default function TabTwoScreen() {
-	return (
-		<ScrollView>
-			<View style={styles.container}>
-				<ProfileHeading />
-				<MainScreenApps />
-			</View>
-		</ScrollView>
-	);
+export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'>) {
+	function navigateToProfile() {
+		navigation.navigate('TabThree');
+	}
+	return <MainScreenTemplate navigateToProfile={navigateToProfile} />;
 }
-
-const styles = StyleSheet.create({
-	container: {
-		paddingTop: 15,
-		alignItems: 'center',
-	},
-});

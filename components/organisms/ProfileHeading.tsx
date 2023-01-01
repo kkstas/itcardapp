@@ -6,11 +6,15 @@ import useCustomColors from '../../hooks/useCustomColors';
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
-export default function ProfileHeading() {
+interface ProfileHeadingProps {
+	onPress?: () => void;
+}
+
+export default function ProfileHeading(props: ProfileHeadingProps) {
 	const t = useCustomColors();
 	return (
 		<ContentBox style={styles.container}>
-			<TouchableOpacity style={styles.mainBox}>
+			<TouchableOpacity onPress={props.onPress} style={styles.mainBox}>
 				<View style={styles.iconView}>
 					<Ionicons name="person-circle" color={t.labelTertiary} style={styles.icon} />
 				</View>

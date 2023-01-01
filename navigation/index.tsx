@@ -1,16 +1,8 @@
-import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import {
-	Button,
-	View,
-	Text,
-	ColorSchemeName,
-	Pressable,
-	TouchableOpacity,
-} from 'react-native';
+import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -23,6 +15,7 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../typ
 import TabThreeScreen from '../screens/TabThreeScreen';
 import { CustomLightTheme, CustomDarkTheme } from '../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
+import HeaderButton from '../components/atoms/HeaderButton';
 
 const CLTheme = {
 	...DefaultTheme,
@@ -126,6 +119,7 @@ function BottomTabNavigator() {
 				name="TabTwo"
 				component={TabTwoScreen}
 				options={{
+					headerShown: false,
 					title: 'Ekran główny',
 					tabBarIcon: ({ color }) => (
 						<Ionicons
@@ -140,20 +134,17 @@ function BottomTabNavigator() {
 			<BottomTab.Screen
 				name="TabThree"
 				component={TabThreeScreen}
-				options={{
+				options={({ navigation }: RootTabScreenProps<'TabThree'>) => ({
+					headerLeft: () => (
+						<HeaderButton
+							text="Ekran główny"
+							position="left"
+							icon="chevron-back-outline"
+							onPress={() => navigation.navigate('TabTwo')}
+						/>
+					),
 					headerRight: () => (
-						<TouchableOpacity style={{ marginRight: 18 }}>
-							<Text
-								style={{
-									color:
-										colorScheme === 'light'
-											? CustomLightTheme.tint
-											: CustomDarkTheme.tint,
-								}}
-							>
-								Wyloguj
-							</Text>
-						</TouchableOpacity>
+						<HeaderButton text="Wyloguj " position="right" icon="log-out-outline" />
 					),
 					title: 'Profil',
 					tabBarIcon: ({ color }) => (
@@ -164,7 +155,7 @@ function BottomTabNavigator() {
 							color={color}
 						/>
 					),
-				}}
+				})}
 			/>
 		</BottomTab.Navigator>
 	);
