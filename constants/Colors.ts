@@ -34,7 +34,7 @@ export const CustomDarkTheme = {
 	labelSecondary: '#D5DADD',
 	labelTertiary: '#A9B4BE',
 	labelQuaternary: '#8396A8',
-	fillPrimary: 'rgba(131, 150, 168, 0.06)',
+	fillPrimary: 'rgba(131, 150, 168, 0.2)',
 	fillSecondary: 'rgba(131, 150, 168, 0.20)',
 	fillTertiary: 'rgba(131, 150, 168, 0.10)',
 	fillQuaternary: 'rgba(131, 150, 168, 0.22)',

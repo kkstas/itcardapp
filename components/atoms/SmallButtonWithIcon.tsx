@@ -4,14 +4,14 @@ import { Ionicons } from '@expo/vector-icons';
 
 interface SmallButtonWithIconProps {
 	text: string;
-	icon?: JSX.Element;
+	icon?: keyof typeof Ionicons.glyphMap;
 	onPress?: () => void;
 	style?: ViewStyle;
 }
 /**
  *
  * @param text - text inside button
- * @param icon - JSX element with icon styled
+ * @param icon - name of Ionicons icon
  * @param onPress - press handler function
  * @returns lightly styled button with icon and text
  */
@@ -27,7 +27,7 @@ export default function SmallButtonWithIcon({
 			onPress={onPress}
 			style={[styles.goButton, style, { backgroundColor: t.bgSecondary }]}
 		>
-			{icon}
+			{icon && <Ionicons name={icon} color={t.text} size={20} />}
 			<Text style={[styles.goButtonText, { color: t.text }]}>{text}</Text>
 		</TouchableOpacity>
 	);

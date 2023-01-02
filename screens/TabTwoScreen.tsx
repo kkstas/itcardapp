@@ -5,5 +5,14 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
 	function navigateToProfile() {
 		navigation.navigate('TabThree');
 	}
-	return <MainScreenTemplate navigateToProfile={navigateToProfile} />;
+	function navigateToInfo() {
+		navigation.navigate('InfoModal');
+	}
+
+	return (
+		<MainScreenTemplate
+			navigateToInfo={navigateToInfo}
+			navigateToProfile={navigateToProfile}
+		/>
+	);
 }

@@ -1,80 +1,113 @@
-import { Pressable, View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import useCustomColors from '../../hooks/useCustomColors';
-import ContentBox from './ContentBox';
-import { Ionicons } from '@expo/vector-icons';
-import SmallButtonWithIcon from './SmallButtonWithIcon';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
+import TouchableContentBox from './TouchableContentBox';
 
-export default function AppCardBlueprint() {
-	const contentText =
-		'Naciśnij asd asby o asdjhf aslfsdkjahf slkdhf skjadhf ksjdhf skjlahf kljs dfkjsad';
+interface AppCardBlueprintProps {
+	title: string;
+	content: string;
+	icon: keyof typeof Ionicons.glyphMap;
+	showLearnMore: boolean;
+	learnMoreHandler?: () => void;
+	pressHandler?: () => void;
+}
+/**
+ *
+ * @param title - string title
+ * @param content - string content describing app
+ * @param icon - name of icon from Ionicons (string)
+ * @param showLearnMore - boolean whether show or not the learn more button
+ * @param learnMoreHandler (optional) - function handling learn more onPress
+ * @param pressHandler (optional) - function handling onPress action
+ * @returns
+ */
+export default function AppCardBlueprint({
+	title,
+	content,
+	icon,
+	showLearnMore,
+	learnMoreHandler,
+	pressHandler,
+}: AppCardBlueprintProps) {
 	const t = useCustomColors();
 	return (
-		<ContentBox style={styles.container}>
-			<LinearGradient
-				colors={[t.informativeBackground, t.informativeBackground]}
-				style={styles.iconView}
-			>
-				<Ionicons name="code" size={30} color={'#fff'} />
-			</LinearGradient>
-			<View style={styles.textView}>
-				<Text style={[styles.titleText, { color: t.text }]}>Tytuł aplikacji</Text>
-				<Text style={[styles.text, { color: t.labelSecondary }]}>{contentText}</Text>
+		<TouchableContentBox style={styles.container} onPress={pressHandler}>
+			<View style={styles.leftView}>
+				<LinearGradient
+					colors={[t.fillTertiary, t.fillQuaternary]}
+					style={styles.iconView}
+				>
+					<Ionicons name={icon} size={28} color={t.tint} />
+				</LinearGradient>
+			</View>
+			<View style={styles.rightView}>
+				<Text style={[styles.titleText, { color: t.text }]}>{title}</Text>
+				<Text style={[styles.contentText, { color: t.labelSecondary }]}>{content}</Text>
 				<View style={styles.buttonsView}>
-					<Pressable style={styles.learnMorePressable}>
-						<Text style={[styles.learnMore, { color: t.tint }]}>
-							Dowiedz się więcej...
-						</Text>
-					</Pressable>
-					<SmallButtonWithIcon
-						text="Przejdź"
-						icon={<Ionicons name="paper-plane" size={18} color={t.text} />}
-						style={styles.smallButtonStyle}
-					/>
+					{showLearnMore && (
+						<TouchableOpacity style={styles.learnMoreView} onPress={learnMoreHandler}>
+							<Text style={[styles.learnMoreText, { color: t.tint }]}>
+								Dowiedz się więcej...
+							</Text>
+						</TouchableOpacity>
+					)}
 				</View>
 			</View>
-		</ContentBox>
+			<TouchableOpacity style={styles.chevron} onPress={pressHandler}>
+				<Ionicons name="chevron-forward-outline" size={25} color={t.tint} />
+			</TouchableOpacity>
+		</TouchableContentBox>
 	);
 }
 
 const styles = StyleSheet.create({
-	learnMorePressable: {
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
-	smallButtonStyle: {
-		marginTop: 12,
-	},
 	buttonsView: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		alignItems: 'flex-start',
+		minHeight: 18,
 	},
-	learnMore: {
-		fontSize: 12,
+	bottomButton: {},
+	chevron: {
+		justifyContent: 'center',
+		marginBottom: 12,
 	},
+	learnMoreText: {
+		fontSize: 11,
+		paddingTop: 3,
+		paddingBottom: 15,
+	},
+	learnMoreView: {},
 	iconView: {
-		padding: 5,
 		borderRadius: 10,
-		width: 45,
-		height: 45,
+		height: 48,
+		width: 48,
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
-	titleText: {
-		fontSize: 22,
-		fontWeight: '500',
+	contentText: {
+		fontSize: 13,
+		lineHeight: 16,
+		paddingRight: 2,
 	},
-	textView: {
-		flex: 1,
+	titleText: {
+		fontSize: 20,
+		fontWeight: '400',
+		marginBottom: 2,
+	},
+	leftView: {
+		flex: 2,
+	},
+	rightView: {
+		flex: 10,
 		paddingLeft: 8,
 	},
 	container: {
-		paddingRight: 12,
-		paddingLeft: 15,
-		paddingBottom: 8,
 		flexDirection: 'row',
+		paddingTop: 12,
+		paddingBottom: 0,
+		paddingLeft: 14,
+		paddingRight: 4,
+		marginBottom: 12,
 	},
-	text: {},
 });

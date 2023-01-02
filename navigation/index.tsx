@@ -16,6 +16,8 @@ import TabThreeScreen from '../screens/TabThreeScreen';
 import { CustomLightTheme, CustomDarkTheme } from '../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import HeaderButton from '../components/atoms/HeaderButton';
+import LoginScreen from '../screens/LoginScreen';
+import InfoModalScreen from '../screens/InfoModalScreen';
 
 const CLTheme = {
 	...DefaultTheme,
@@ -53,6 +55,11 @@ function RootNavigator() {
 	return (
 		<Stack.Navigator>
 			<Stack.Screen
+				name="LoginScreen"
+				component={LoginScreen}
+				options={{ headerShown: false }}
+			/>
+			<Stack.Screen
 				name="Root"
 				component={BottomTabNavigator}
 				options={{ headerShown: false }}
@@ -62,8 +69,18 @@ function RootNavigator() {
 				component={NotFoundScreen}
 				options={{ title: 'Oops!' }}
 			/>
-			<Stack.Group screenOptions={{ presentation: 'modal' }}>
+			<Stack.Group
+				screenOptions={{
+					presentation: 'modal',
+					contentStyle: { backgroundColor: '#4040400' },
+				}}
+			>
 				<Stack.Screen name="Modal" component={ModalScreen} />
+				<Stack.Screen
+					name="InfoModal"
+					component={InfoModalScreen}
+					options={{ headerTitle: 'Informacje o module' }}
+				/>
 			</Stack.Group>
 		</Stack.Navigator>
 	);
@@ -92,7 +109,7 @@ function BottomTabNavigator() {
 					title: 'Dokumenty',
 					tabBarIcon: ({ color }) => (
 						<Ionicons
-							name="document-outline"
+							name="layers-outline"
 							size={28}
 							color={color}
 							style={{ marginBottom: -3 }}
@@ -144,7 +161,12 @@ function BottomTabNavigator() {
 						/>
 					),
 					headerRight: () => (
-						<HeaderButton text="Wyloguj " position="right" icon="log-out-outline" />
+						<HeaderButton
+							onPress={() => navigation.navigate('LoginScreen')}
+							text="Wyloguj "
+							position="right"
+							icon="log-out-outline"
+						/>
 					),
 					title: 'Profil',
 					tabBarIcon: ({ color }) => (
