@@ -1,124 +1,95 @@
-import {
-	View,
-	ScrollView,
-	TouchableOpacity,
-	Image,
-	Text,
-	StyleSheet,
-	TextInput,
-} from 'react-native';
-import ProfileHeading from '../organisms/ProfileHeading';
-import MainScreenApps from '../organisms/MainScreenApps';
-import useCustomColors from '../../hooks/useCustomColors';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import AppCardBlueprint from '../atoms/AppCardBlueprint';
-import ContentBox from '../atoms/ContentBox';
+import Layout from '../../constants/Layout';
+import { CustomTheme, blueGradientColors } from '../../constants/Colors';
+import WelcomeToItcard from '../atoms/WelcomeToItcard';
+import LoginBox from '../organisms/LoginBox';
 
 interface LoginScreenTemplateProps {
-	navigateToProfile: () => void;
+	onLoginChangeText: (text: string) => void;
+	onPasswordChangeText: (text: string) => void;
+	onLoginFocus: () => void;
+	onPasswordFocus: () => void;
+	onLoginBlur: () => void;
+	onPasswordBlur: () => void;
+	onLockPress: () => void;
+	loginLogoColor: string;
+	passwLogoColor: string;
+	isPasswordHidden: boolean;
+	submitAction: () => void;
+	t: CustomTheme;
+	loginErrorMessage: string | null;
+	passwordErrorMessage: string | null;
+	loginText: string;
+	passwordText: string;
 }
 
+/**
+ *
+ * @param loginErrorMessage - error message for login input field (null if no error)
+ * @param passwordErrorMessage - error message for password input field (null if no error)
+ * @param onLoginFocus - login field onFocus handler
+ * @param onLoginBlur - login field onBlur handler
+ * @param onPasswordFocus - password field onFocus handler
+ * @param onPasswordBlur - password field onBlur handler
+ * @param onLockPress - password field lock button pressed handler
+ * @param loginLogoColor - login logo color string
+ * @param passwLogoColor - password logo color string
+ * @param isPasswordHidden - should password entry by secured with '***'
+ * @param submitAction - submit handler
+ * @param onLoginChangeText - login change text handler
+ * @param onPasswordChangeText - password change text handler
+ * @param t - theme colors
+ * @param loginText - login text value
+ * @param passwordText - password text value
+ * @returns JSX of login screen template
+ */
 export default function LoginScreenTemplate(props: LoginScreenTemplateProps) {
-	const t = useCustomColors();
-	const grad = [
-		'rgb(114, 172, 211)',
-		'rgb(114, 172, 211)',
-		'rgb(106, 175, 181)',
-		'rgb(78, 89, 122)',
-	];
+	const windowHeight = Layout.window.height;
+	const t = props.t;
+
 	return (
-		<ScrollView style={styles.scroll}>
-			<LinearGradient style={styles.grad} colors={grad}>
-				<Text style={styles.logoText}>Witaj w aplikacji</Text>
-				<Image
-					source={require('../../assets/images/ITCARD-white-logo.png')}
-					style={styles.img}
-					resizeMode="contain"
-				/>
-			</LinearGradient>
-			<View style={styles.container}>
-				<ContentBox style={styles.contentBox}>
-					<Text style={[styles.mainText, { color: t.labelTertiary }]}>Logowanie</Text>
-					<View style={[styles.separator, { borderBottomColor: t.separator }]}></View>
-					<Text style={[styles.inputLabel, { color: t.labelSecondary }]}>
-						Login lub adres e-mail
-					</Text>
-					<TextInput
-						style={[
-							styles.loginInput,
-							{ backgroundColor: t.fillSecondary, color: t.text },
-						]}
+		<View style={styles.mainView}>
+			<ScrollView style={[styles.scroll, { height: windowHeight }]}>
+				<LinearGradient style={styles.grad} colors={blueGradientColors}>
+					<WelcomeToItcard />
+				</LinearGradient>
+				<LinearGradient
+					style={[styles.container, { height: windowHeight }]}
+					colors={[t.bgPrimary, t.bgSecondaryGrouped]}
+				>
+					<LoginBox
+						onLoginChangeText={props.onLoginChangeText}
+						onPasswordChangeText={props.onPasswordChangeText}
+						loginErrorMessage={props.loginErrorMessage}
+						passwordErrorMessage={props.passwordErrorMessage}
+						onLoginFocus={props.onLoginFocus}
+						onLoginBlur={props.onLoginBlur}
+						loginLogoColor={props.loginLogoColor}
+						onPasswordFocus={props.onPasswordFocus}
+						onPasswordBlur={props.onPasswordBlur}
+						passwLogoColor={props.passwLogoColor}
+						onLockPress={props.onLockPress}
+						isPasswordHidden={props.isPasswordHidden}
+						submitAction={props.submitAction}
+						t={t}
+						loginText={props.loginText}
+						passwordText={props.passwordText}
 					/>
-					<Text style={[styles.inputLabel, { color: t.labelSecondary }]}>Hasło</Text>
-					<TextInput
-						style={[
-							styles.loginInput,
-							{ backgroundColor: t.fillSecondary, color: t.text },
-						]}
-					/>
-					<View style={styles.buttonView}>
-						<TouchableOpacity onPress={props.navigateToProfile}>
-							<LinearGradient
-								colors={['rgb(121, 150, 174)', 'rgb(99, 116, 169)']}
-								style={styles.loginButton}
-							>
-								<Text style={[styles.loginBtnText, { color: 'white' }]}>Zaloguj</Text>
-							</LinearGradient>
-						</TouchableOpacity>
-					</View>
-				</ContentBox>
-			</View>
-		</ScrollView>
+				</LinearGradient>
+			</ScrollView>
+		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	separator: {
-		top: -5,
-		marginLeft: 8,
-		width: '75%',
-		borderBottomWidth: StyleSheet.hairlineWidth,
-		marginBottom: 5,
-	},
-	loginBtnText: {
-		fontSize: 17,
-		fontWeight: '400',
-	},
-	loginButton: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		paddingVertical: 8,
-		width: '100%',
-		borderRadius: 10,
-		marginTop: 35,
-	},
-	buttonView: {},
-	inputLabel: {
-		marginTop: 10,
-		paddingLeft: 8,
-		paddingBottom: 2,
-		fontWeight: '300',
-	},
-	loginInput: {
-		paddingVertical: 7,
-		paddingHorizontal: 12,
-		borderRadius: 8,
-		fontSize: 16,
-	},
-	mainText: {
-		fontSize: 48,
-		paddingLeft: 8,
-		fontWeight: '200',
-	},
-	contentBox: {
-		paddingTop: 30,
-		paddingBottom: 50,
+	mainView: {
+		height: '100%',
 	},
 	container: {
 		paddingTop: 15,
 		alignItems: 'center',
-		borderRadius: 25,
-		flex: 1,
+		borderRadius: 18,
 	},
 	scroll: {
 		paddingTop: 215,
@@ -128,20 +99,8 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: 950,
 		top: -880,
-		paddingBottom: 70,
+		paddingBottom: 80,
 		paddingHorizontal: 38,
 		justifyContent: 'flex-end',
-	},
-	logoText: {
-		fontSize: 15,
-		color: '#ffffff',
-		paddingBottom: 2,
-		letterSpacing: 0.8,
-		fontWeight: '500',
-	},
-	img: {
-		width: 190,
-		height: 42,
-		opacity: 0.9,
 	},
 });

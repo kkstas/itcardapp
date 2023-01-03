@@ -79,7 +79,10 @@ function RootNavigator() {
 				<Stack.Screen
 					name="InfoModal"
 					component={InfoModalScreen}
-					options={{ headerTitle: 'Informacje o module' }}
+					options={{
+						headerShown: false,
+						presentation: 'transparentModal',
+					}}
 				/>
 			</Stack.Group>
 		</Stack.Navigator>
@@ -162,7 +165,7 @@ function BottomTabNavigator() {
 					),
 					headerRight: () => (
 						<HeaderButton
-							onPress={() => navigation.navigate('LoginScreen')}
+							onPress={() => navigation.replace('LoginScreen')}
 							text="Wyloguj "
 							position="right"
 							icon="log-out-outline"

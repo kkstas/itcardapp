@@ -3,6 +3,9 @@ import ProfileHeading from '../organisms/ProfileHeading';
 import MainScreenApps from '../organisms/MainScreenApps';
 import useCustomColors from '../../hooks/useCustomColors';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
+import { blueGradientColors } from '../../constants/Colors';
+import WelcomeToItcard from '../atoms/WelcomeToItcard';
 
 interface MainScreenTemplateProps {
 	navigateToProfile: () => void;
@@ -11,24 +14,30 @@ interface MainScreenTemplateProps {
 
 export default function MainScreenTemplate(props: MainScreenTemplateProps) {
 	const t = useCustomColors();
-	const grad = [
-		'rgb(114, 172, 211)',
-		'rgb(114, 172, 211)',
-		'rgb(106, 175, 181)',
-		'rgb(78, 89, 122)',
-	];
 	return (
 		<ScrollView style={styles.scroll}>
-			<LinearGradient style={styles.grad} colors={grad}>
-				<Text style={styles.logoText}>Witaj w aplikacji</Text>
-				<Image
-					source={require('../../assets/images/ITCARD-white-logo.png')}
-					style={styles.img}
-					resizeMode="contain"
-				/>
+			<LinearGradient style={styles.grad} colors={blueGradientColors}>
+				<WelcomeToItcard />
 			</LinearGradient>
 			<View style={styles.container}>
 				<ProfileHeading onPress={props.navigateToProfile} />
+				{/* eksperyment ponizej */}
+				<View style={{}}>
+					<LinearGradient
+						colors={[t.fillTertiary, t.fillQuaternary]}
+						style={{
+							borderRadius: 10,
+							justifyContent: 'center',
+							alignItems: 'center',
+							paddingHorizontal: 10,
+							paddingVertical: 10,
+						}}
+					>
+						<Ionicons name="layers-outline" size={38} color={t.tint} />
+						<Text style={{ color: t.tint, paddingTop: 10, fontSize: 15 }}>Dokumenty</Text>
+					</LinearGradient>
+				</View>
+				{/* eksperyment powyzej */}
 				<MainScreenApps navigateToInfo={props.navigateToInfo} />
 			</View>
 		</ScrollView>
@@ -54,17 +63,5 @@ const styles = StyleSheet.create({
 		paddingBottom: 50,
 		paddingHorizontal: 38,
 		justifyContent: 'flex-end',
-	},
-	logoText: {
-		fontSize: 15,
-		color: '#ffffff',
-		paddingBottom: 2,
-		letterSpacing: 0.8,
-		fontWeight: '500',
-	},
-	img: {
-		width: 190,
-		height: 42,
-		opacity: 0.9,
 	},
 });

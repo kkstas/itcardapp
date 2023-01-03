@@ -18,7 +18,14 @@ export default {
 	},
 };
 
-export const CustomDarkTheme = {
+export const blueGradientColors = [
+	'rgb(114, 172, 211)',
+	'rgb(114, 172, 211)',
+	'rgb(106, 175, 181)',
+	'rgb(78, 89, 122)',
+];
+
+export const CustomDarkTheme: CustomTheme = {
 	theme: 'dark',
 	text: '#fff',
 	bgPrimaryGrouped: '#000000',
@@ -39,7 +46,6 @@ export const CustomDarkTheme = {
 	fillTertiary: 'rgba(131, 150, 168, 0.10)',
 	fillQuaternary: 'rgba(131, 150, 168, 0.22)',
 	header: '#161C21',
-	barTransparent: '#111d29cc',
 	footer: '#161C21',
 	contrastElement: '#8396A8',
 	separator: 'rgba(131, 150, 168, 0.37)',
@@ -72,7 +78,7 @@ export const CustomDarkTheme = {
 	positiveBackground: '#66ff90',
 	informativeBackground: '#366cfe',
 };
-export const CustomLightTheme = {
+export const CustomLightTheme: CustomTheme = {
 	theme: 'light',
 	text: '#000',
 	bgPrimaryGrouped: 'rgb(242,242,247)',
@@ -88,12 +94,11 @@ export const CustomLightTheme = {
 	labelSecondary: '#475E75',
 	labelTertiary: 'rgba(71, 94, 117, 0.9)',
 	labelQuaternary: 'rgba(91, 115, 139, 0.55)',
-	fillPrimary: 'rgb(255, 255, 255)',
+	fillPrimary: 'rgba(255, 255, 255, 0.1)',
 	fillSecondary: 'rgba(91, 115, 139, 0.08)',
 	fillTertiary: 'rgba(91, 115, 139, 0.04)',
 	fillQuaternary: 'rgba(91, 115, 139, 0.1)',
 	header: '#fff',
-	headerBlended: 'rgba(255, 255, 255, 0.85)',
 	footer: '#fff',
 	contrastElement: '#5B738B',
 	separator: 'rgba(91, 115, 139, 0.37)',
@@ -126,3 +131,57 @@ export const CustomLightTheme = {
 	positiveBackground: '#bdde54',
 	informativeBackground: '#85d4ff',
 };
+
+export interface CustomTheme {
+	theme: string;
+	text: string;
+	bgPrimaryGrouped: string;
+	bgSecondaryGrouped: string;
+	bgTertiaryGrouped: string;
+	bgPrimary: string;
+	bgSecondary: string;
+	bgTertiary: string;
+	tint: string;
+	tint2: string;
+	tintTapState: string;
+	labelPrimary: string;
+	labelSecondary: string;
+	labelTertiary: string;
+	labelQuaternary: string;
+	fillPrimary: string;
+	fillSecondary: string;
+	fillTertiary: string;
+	fillQuaternary: string;
+	header: string;
+	footer: string;
+	contrastElement: string;
+	separator: string;
+	separatorOpaque: string;
+	cardShadow: string;
+	sectionShadow: string;
+	blue: string;
+	brown: string;
+	cyan: string;
+	gray: string;
+	gray2: string;
+	gray3: string;
+	gray4: string;
+	gray5: string;
+	gray6: string;
+	green: string;
+	indigo: string;
+	mint: string;
+	orange: string;
+	pink: string;
+	purple: string;
+	red: string;
+	teal: string;
+	yellow: string;
+	negativeLabel: string;
+	criticalLabel: string;
+	positiveLabel: string;
+	negativeBackground: string;
+	criticalBackground: string;
+	positiveBackground: string;
+	informativeBackground: string;
+}

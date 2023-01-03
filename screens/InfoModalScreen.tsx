@@ -13,7 +13,7 @@ export default function InfoModalScreen({
 	return (
 		<BlurView
 			intensity={40}
-			tint={t.theme === 'dark' ? 'dark' : 'light'}
+			tint={t.theme === 'dark' ? 'light' : 'dark'}
 			style={styles.container}
 		>
 			<InfoModalContent
@@ -31,6 +31,5 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: 'rgba(0,0,0,0)',
 	},
 });
