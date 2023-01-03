@@ -3,6 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import LoginInputField from '../atoms/LoginInputField';
 import PasswordInputField from '../atoms/PasswordInputField';
 import { CustomTheme } from '../../constants/Colors';
+import WelcomeToItcard from '../atoms/WelcomeToItcard';
 
 interface LoginBoxProps {
 	onLoginChangeText: (text: string) => void;
@@ -44,51 +45,60 @@ interface LoginBoxProps {
 export default function LoginBox(props: LoginBoxProps) {
 	const t = props.t;
 	return (
-		<LinearGradient style={styles.boxGrad} colors={[t.bgSecondary, t.gray6]}>
-			<Text style={[styles.mainText, { color: t.labelTertiary }]}>Logowanie</Text>
-			<View style={[styles.separator, { borderBottomColor: t.separator }]}></View>
-
-			<LoginInputField
-				onFocus={props.onLoginFocus}
-				logoColor={props.loginLogoColor}
-				onBlur={props.onLoginBlur}
-				t={t}
-				errorMessage={props.loginErrorMessage}
-				onChangeText={props.onLoginChangeText}
-				value={props.loginText}
-			/>
-			<PasswordInputField
-				onFocus={props.onPasswordFocus}
-				onBlur={props.onPasswordBlur}
-				logoColor={props.passwLogoColor}
-				onLockPress={props.onLockPress}
-				isPasswordHidden={props.isPasswordHidden}
-				t={t}
-				errorMessage={props.passwordErrorMessage}
-				onChangeText={props.onPasswordChangeText}
-				value={props.passwordText}
-			/>
-			<View>
-				<TouchableOpacity onPress={props.submitAction}>
-					<LinearGradient
-						colors={['rgb(121, 150, 174)', 'rgb(99, 116, 169)']}
-						style={styles.loginButton}
-					>
-						<Text style={[styles.loginBtnText, { color: 'white' }]}>Zaloguj</Text>
-					</LinearGradient>
-				</TouchableOpacity>
+		<>
+			<View style={styles.welcomeView}>
+				<WelcomeToItcard />
 			</View>
-		</LinearGradient>
+			<LinearGradient style={styles.boxGrad} colors={[t.bgSecondary, t.gray6]}>
+				<Text style={[styles.mainText, { color: t.labelTertiary }]}>Logowanie</Text>
+				<View style={[styles.separator, { borderBottomColor: t.separator }]}></View>
+
+				<LoginInputField
+					onFocus={props.onLoginFocus}
+					logoColor={props.loginLogoColor}
+					onBlur={props.onLoginBlur}
+					t={t}
+					errorMessage={props.loginErrorMessage}
+					onChangeText={props.onLoginChangeText}
+					value={props.loginText}
+				/>
+				<PasswordInputField
+					onFocus={props.onPasswordFocus}
+					onBlur={props.onPasswordBlur}
+					logoColor={props.passwLogoColor}
+					onLockPress={props.onLockPress}
+					isPasswordHidden={props.isPasswordHidden}
+					t={t}
+					errorMessage={props.passwordErrorMessage}
+					onChangeText={props.onPasswordChangeText}
+					value={props.passwordText}
+				/>
+				<View>
+					<TouchableOpacity onPress={props.submitAction}>
+						<LinearGradient
+							colors={['rgb(121, 150, 174)', 'rgb(99, 116, 169)']}
+							style={styles.loginButton}
+						>
+							<Text style={[styles.loginBtnText, { color: 'white' }]}>Zaloguj</Text>
+						</LinearGradient>
+					</TouchableOpacity>
+				</View>
+			</LinearGradient>
+		</>
 	);
 }
 
 const styles = StyleSheet.create({
+	welcomeView: {
+		width: '90%',
+		paddingLeft: 30,
+	},
 	boxGrad: {
 		width: '90%',
 		paddingHorizontal: 20,
 		paddingVertical: 40,
 		borderRadius: 12,
-		marginTop: 20,
+		marginTop: 10,
 	},
 	separator: {
 		top: -5,

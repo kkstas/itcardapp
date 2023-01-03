@@ -1,4 +1,10 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import {
+	ScrollView,
+	StyleSheet,
+	KeyboardAvoidingView,
+	View,
+	Platform,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Layout from '../../constants/Layout';
 import { CustomTheme, blueGradientColors } from '../../constants/Colors';
@@ -49,14 +55,26 @@ export default function LoginScreenTemplate(props: LoginScreenTemplateProps) {
 	const t = props.t;
 
 	return (
-		<View style={styles.mainView}>
-			<ScrollView style={[styles.scroll, { height: windowHeight }]}>
-				<LinearGradient style={styles.grad} colors={blueGradientColors}>
-					<WelcomeToItcard />
-				</LinearGradient>
+		<KeyboardAvoidingView
+			keyboardVerticalOffset={-200}
+			behavior={Platform.OS === 'ios' ? 'position' : 'height'}
+		>
+			<ScrollView style={{ height: windowHeight, paddingTop: windowHeight / 2.5 }}>
 				<LinearGradient
-					style={[styles.container, { height: windowHeight }]}
+					style={[styles.grad, { height: windowHeight, top: -windowHeight }]}
+					colors={blueGradientColors}
+				></LinearGradient>
+				<LinearGradient
+					style={[{ height: windowHeight }]}
 					colors={[t.bgPrimary, t.bgSecondaryGrouped]}
+				></LinearGradient>
+				<View
+					style={[
+						styles.loginBoxView,
+						{
+							top: -windowHeight / 6,
+						},
+					]}
 				>
 					<LoginBox
 						onLoginChangeText={props.onLoginChangeText}
@@ -76,31 +94,23 @@ export default function LoginScreenTemplate(props: LoginScreenTemplateProps) {
 						loginText={props.loginText}
 						passwordText={props.passwordText}
 					/>
-				</LinearGradient>
+				</View>
 			</ScrollView>
-		</View>
+		</KeyboardAvoidingView>
 	);
 }
 
 const styles = StyleSheet.create({
-	mainView: {
-		height: '100%',
-	},
-	container: {
-		paddingTop: 15,
+	loginBoxView: {
+		position: 'absolute',
+		justifyContent: 'flex-end',
 		alignItems: 'center',
-		borderRadius: 18,
-	},
-	scroll: {
-		paddingTop: 215,
+		width: '100%',
 	},
 	grad: {
 		position: 'absolute',
 		width: '100%',
-		height: 950,
-		top: -880,
 		paddingBottom: 80,
 		paddingHorizontal: 38,
-		justifyContent: 'flex-end',
 	},
 });
