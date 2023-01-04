@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
 	},
 	logo: {
 		position: 'absolute',
-		left: 8,
+		left: 5,
+		padding: 5,
 	},
 	inputLabel: {
 		marginTop: 10,

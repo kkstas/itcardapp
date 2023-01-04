@@ -8,7 +8,7 @@ export default function LoginScreen({ navigation }: RootStackScreenProps<'LoginS
 	const [loginText, setLoginText] = useState('');
 	const [passwordText, setPasswordText] = useState('');
 	const [isPasswordHidden, setIsPasswordHidden] = useState(true);
-	const logoUnfocusedColor = t.labelQuaternary;
+	const logoUnfocusedColor = t.gray2;
 	const logoFocusedColor = t.tint;
 	const [loginLogoColor, setLoginLogoColor] = useState(logoUnfocusedColor);
 	const [passwLogoColor, setPasswLogoColor] = useState(logoUnfocusedColor);

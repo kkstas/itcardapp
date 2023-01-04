@@ -11,11 +11,7 @@ export default function InfoModalScreen({
 	const t = useCustomColors();
 
 	return (
-		<BlurView
-			intensity={40}
-			tint={t.theme === 'dark' ? 'light' : 'dark'}
-			style={styles.container}
-		>
+		<BlurView intensity={20} style={styles.container}>
 			<InfoModalContent
 				appTitle="asdf"
 				appDescription="asdf"

@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import AppCardBlueprint from '../atoms/AppCardBlueprint';
 import useCustomColors from '../../hooks/useCustomColors';
 

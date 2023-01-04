@@ -1,8 +1,6 @@
-import { View, Pressable, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import SmallButtonWithIcon from '../atoms/SmallButtonWithIcon';
-import ContentBox from '../atoms/ContentBox';
 import useCustomColors from '../../hooks/useCustomColors';
-import { Ionicons } from '@expo/vector-icons';
 
 interface InfoModalContentProps {
 	appTitle: string;
@@ -34,7 +32,7 @@ export default function InfoModalContent({
 					ramach testów.
 				</Text>
 			</View>
-			<SmallButtonWithIcon text="powrót" onPress={closeModal} />
+			<SmallButtonWithIcon text="Powrót" onPress={closeModal} />
 		</View>
 	);
 }

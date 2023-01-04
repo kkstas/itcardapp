@@ -49,7 +49,7 @@ export default function LoginBox(props: LoginBoxProps) {
 			<View style={styles.welcomeView}>
 				<WelcomeToItcard />
 			</View>
-			<LinearGradient style={styles.boxGrad} colors={[t.bgSecondary, t.gray6]}>
+			<LinearGradient style={styles.boxGrad} colors={[t.bgSecondary, t.bgTertiary]}>
 				<Text style={[styles.mainText, { color: t.labelTertiary }]}>Logowanie</Text>
 				<View style={[styles.separator, { borderBottomColor: t.separator }]}></View>
 
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 8,
 		width: '100%',
 		borderRadius: 10,
-		marginTop: 35,
+		marginTop: 18,
 	},
 	mainText: {
 		fontSize: 48,

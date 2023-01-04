@@ -29,6 +29,14 @@ export default function PasswordInputField(props: PasswordInputFieldProps) {
 						color={props.logoColor}
 					/>
 				</TouchableOpacity>
+				<TouchableOpacity onPress={props.onLockPress} style={styles.eyeButton}>
+					<Ionicons
+						name={props.isPasswordHidden ? 'eye-off' : 'eye'}
+						size={18}
+						color={props.isPasswordHidden ? t.gray2 : t.tint}
+					/>
+				</TouchableOpacity>
+
 				<TextInput
 					value={props.value}
 					autoCapitalize="none"
@@ -58,6 +66,12 @@ export default function PasswordInputField(props: PasswordInputFieldProps) {
 }
 
 const styles = StyleSheet.create({
+	eyeButton: {
+		position: 'absolute',
+		right: 5,
+		zIndex: 10,
+		padding: 5,
+	},
 	errorView: {
 		flexDirection: 'row',
 		paddingLeft: 10,
@@ -70,8 +84,9 @@ const styles = StyleSheet.create({
 	},
 	logo: {
 		position: 'absolute',
-		left: 8,
+		left: 5,
 		zIndex: 10,
+		padding: 5,
 	},
 	inputLabel: {
 		marginTop: 10,
@@ -81,9 +96,8 @@ const styles = StyleSheet.create({
 	},
 	loginInput: {
 		paddingVertical: 7,
-		paddingHorizontal: 12,
 		borderRadius: 8,
 		fontSize: 16,
-		paddingLeft: 34,
+		paddingHorizontal: 34,
 	},
 });

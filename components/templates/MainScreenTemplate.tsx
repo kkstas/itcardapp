@@ -1,11 +1,10 @@
-import { View, ScrollView, Image, Text, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import ProfileHeading from '../organisms/ProfileHeading';
 import MainScreenApps from '../organisms/MainScreenApps';
-import useCustomColors from '../../hooks/useCustomColors';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
 import { blueGradientColors } from '../../constants/Colors';
 import WelcomeToItcard from '../atoms/WelcomeToItcard';
+import Layout from '../../constants/Layout';
 
 interface MainScreenTemplateProps {
 	navigateToProfile: () => void;
@@ -13,31 +12,24 @@ interface MainScreenTemplateProps {
 }
 
 export default function MainScreenTemplate(props: MainScreenTemplateProps) {
-	const t = useCustomColors();
+	const screenHeight = Layout.window.height;
 	return (
-		<ScrollView style={styles.scroll}>
-			<LinearGradient style={styles.grad} colors={blueGradientColors}>
-				<WelcomeToItcard />
+		<ScrollView
+			style={{ paddingTop: screenHeight / 10 }}
+			automaticallyAdjustKeyboardInsets={true}
+			showsVerticalScrollIndicator={false}
+		>
+			<LinearGradient
+				style={[styles.grad, { height: screenHeight, top: screenHeight * -0.87 }]}
+				colors={blueGradientColors}
+			>
+				{/* <WelcomeToItcard /> */}
 			</LinearGradient>
 			<View style={styles.container}>
-				<ProfileHeading onPress={props.navigateToProfile} />
-				{/* eksperyment ponizej */}
-				<View style={{}}>
-					<LinearGradient
-						colors={[t.fillTertiary, t.fillQuaternary]}
-						style={{
-							borderRadius: 10,
-							justifyContent: 'center',
-							alignItems: 'center',
-							paddingHorizontal: 10,
-							paddingVertical: 10,
-						}}
-					>
-						<Ionicons name="layers-outline" size={38} color={t.tint} />
-						<Text style={{ color: t.tint, paddingTop: 10, fontSize: 15 }}>Dokumenty</Text>
-					</LinearGradient>
+				<View style={{ width: '80%', marginBottom: 10 }}>
+					<WelcomeToItcard />
 				</View>
-				{/* eksperyment powyzej */}
+				<ProfileHeading onPress={props.navigateToProfile} />
 				<MainScreenApps navigateToInfo={props.navigateToInfo} />
 			</View>
 		</ScrollView>
@@ -46,22 +38,16 @@ export default function MainScreenTemplate(props: MainScreenTemplateProps) {
 
 const styles = StyleSheet.create({
 	container: {
-		paddingTop: 15,
+		// paddingTop: 15,
 		alignItems: 'center',
 		borderRadius: 25,
 		flex: 1,
 		paddingBottom: 180,
-	},
-	scroll: {
-		paddingTop: 135,
+		// backgroundColor: 'red',
 	},
 	grad: {
 		position: 'absolute',
 		width: '100%',
-		height: 880,
-		top: -830,
-		paddingBottom: 50,
-		paddingHorizontal: 38,
 		justifyContent: 'flex-end',
 	},
 });

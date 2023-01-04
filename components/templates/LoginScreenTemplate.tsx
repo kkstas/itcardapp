@@ -8,7 +8,6 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import Layout from '../../constants/Layout';
 import { CustomTheme, blueGradientColors } from '../../constants/Colors';
-import WelcomeToItcard from '../atoms/WelcomeToItcard';
 import LoginBox from '../organisms/LoginBox';
 
 interface LoginScreenTemplateProps {
@@ -53,20 +52,27 @@ interface LoginScreenTemplateProps {
 export default function LoginScreenTemplate(props: LoginScreenTemplateProps) {
 	const windowHeight = Layout.window.height;
 	const t = props.t;
+	const bottomGradientColors =
+		t.theme === 'dark'
+			? [t.bgPrimaryGrouped, t.bgSecondaryGrouped]
+			: [t.fillSecondary, t.fillQuaternary];
 
 	return (
 		<KeyboardAvoidingView
 			keyboardVerticalOffset={-200}
 			behavior={Platform.OS === 'ios' ? 'position' : 'height'}
 		>
-			<ScrollView style={{ height: windowHeight, paddingTop: windowHeight / 2.5 }}>
+			<ScrollView
+				style={{ height: windowHeight, paddingTop: windowHeight / 2.5 }}
+				showsVerticalScrollIndicator={false}
+			>
 				<LinearGradient
 					style={[styles.grad, { height: windowHeight, top: -windowHeight }]}
 					colors={blueGradientColors}
 				></LinearGradient>
 				<LinearGradient
 					style={[{ height: windowHeight }]}
-					colors={[t.bgPrimary, t.bgSecondaryGrouped]}
+					colors={bottomGradientColors}
 				></LinearGradient>
 				<View
 					style={[
