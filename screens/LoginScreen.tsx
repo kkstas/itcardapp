@@ -16,7 +16,7 @@ export default function LoginScreen({ navigation }: RootStackScreenProps<'LoginS
 	const [passwordError, setPasswordError] = useState<string | null>(null);
 
 	function submitHandler() {
-		if (loginText.length > 0 && passwordText.length > 0) {
+		if (loginText.length >= 0 && passwordText.length >= 0) {
 			// setLoginText('');
 			// setPasswordText('');
 			// setPasswordError(null);

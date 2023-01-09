@@ -4,21 +4,35 @@ import useCustomColors from '../../hooks/useCustomColors';
 
 interface MainScreenAppsProps {
 	navigateToInfo: () => void;
+	navigateToTicket: () => void;
+	navigateToScanReceipt: () => void;
+	navigateToLocateATM: () => void;
 }
 
-export default function MainScreenApps({ navigateToInfo }: MainScreenAppsProps) {
+export default function MainScreenApps({
+	navigateToInfo,
+	navigateToTicket,
+	navigateToScanReceipt,
+	navigateToLocateATM,
+}: MainScreenAppsProps) {
 	const t = useCustomColors();
-	const placeholderForPressHandlers = () => console.log('press');
 	return (
 		<>
 			<Text style={[styles.textApp, { color: t.labelSecondary }]}>Skróty aplikacji:</Text>
+			<AppCardBlueprint
+				title="Znajdź bankomat w okolicy"
+				content="Moduł służący do lokalizowania bankomatów na podstawie informacji o położeniu urządzenia oraz preferencji użytkownika"
+				showLearnMore={false}
+				icon="location-outline"
+				pressHandler={navigateToLocateATM}
+			/>
 			<AppCardBlueprint
 				title="Skanuj potwierdzenie"
 				content="Moduł służący do zapisywania elektronicznego potwierdzenia dokonania transakcji w bankomacie."
 				showLearnMore={true}
 				icon="qr-code-outline"
 				learnMoreHandler={navigateToInfo}
-				pressHandler={placeholderForPressHandlers}
+				pressHandler={navigateToScanReceipt}
 			/>
 			<AppCardBlueprint
 				title="Utwórz zgłoszenie"
@@ -30,7 +44,7 @@ export default function MainScreenApps({ navigateToInfo }: MainScreenAppsProps) 
 						"Dodaj tę funkcję w MainScreenTemplate (przeniesienie do ekranu tworzenia zgłoszenia). Console.log wywołany przez handler buttonu 'Dowiedz się więcej'"
 					)
 				}
-				pressHandler={placeholderForPressHandlers}
+				pressHandler={navigateToTicket}
 			/>
 			<AppCardBlueprint
 				title="Twoje zgłoszenia"
@@ -59,8 +73,6 @@ export default function MainScreenApps({ navigateToInfo }: MainScreenAppsProps) 
 }
 
 const styles = StyleSheet.create({
-	container: {},
-
 	textApp: {
 		marginTop: 25,
 		marginLeft: 15,

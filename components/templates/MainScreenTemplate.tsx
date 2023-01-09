@@ -9,6 +9,9 @@ import Layout from '../../constants/Layout';
 interface MainScreenTemplateProps {
 	navigateToProfile: () => void;
 	navigateToInfo: () => void;
+	navigateToTicket: () => void;
+	navigateToScanReceipt: () => void;
+	navigateToLocateATM: () => void;
 }
 
 export default function MainScreenTemplate(props: MainScreenTemplateProps) {
@@ -22,15 +25,18 @@ export default function MainScreenTemplate(props: MainScreenTemplateProps) {
 			<LinearGradient
 				style={[styles.grad, { height: screenHeight, top: screenHeight * -0.87 }]}
 				colors={blueGradientColors}
-			>
-				{/* <WelcomeToItcard /> */}
-			</LinearGradient>
+			/>
 			<View style={styles.container}>
 				<View style={{ width: '80%', marginBottom: 10 }}>
 					<WelcomeToItcard />
 				</View>
 				<ProfileHeading onPress={props.navigateToProfile} />
-				<MainScreenApps navigateToInfo={props.navigateToInfo} />
+				<MainScreenApps
+					navigateToInfo={props.navigateToInfo}
+					navigateToTicket={props.navigateToTicket}
+					navigateToScanReceipt={props.navigateToScanReceipt}
+					navigateToLocateATM={props.navigateToLocateATM}
+				/>
 			</View>
 		</ScrollView>
 	);
@@ -38,12 +44,10 @@ export default function MainScreenTemplate(props: MainScreenTemplateProps) {
 
 const styles = StyleSheet.create({
 	container: {
-		// paddingTop: 15,
 		alignItems: 'center',
 		borderRadius: 25,
 		flex: 1,
 		paddingBottom: 180,
-		// backgroundColor: 'red',
 	},
 	grad: {
 		position: 'absolute',

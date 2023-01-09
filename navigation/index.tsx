@@ -10,7 +10,12 @@ import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import {
+	RootStackParamList,
+	RootTabParamList,
+	RootTabScreenProps,
+	TabTwoMainStackParamList,
+} from '../types';
 
 import TabThreeScreen from '../screens/TabThreeScreen';
 import { CustomLightTheme, CustomDarkTheme } from '../constants/Colors';
@@ -18,12 +23,14 @@ import { Ionicons } from '@expo/vector-icons';
 import HeaderButton from '../components/atoms/HeaderButton';
 import LoginScreen from '../screens/LoginScreen';
 import InfoModalScreen from '../screens/InfoModalScreen';
+import CreateTicketScreen from '../screens/CreateTicketScreen';
+import ScanReceiptScreen from '../screens/ScanReceiptScreen';
+import LocateATMScreen from '../screens/LocateATMScreen';
 
 const CLTheme = {
 	...DefaultTheme,
 	colors: {
 		...DefaultTheme.colors,
-		primary: 'rgb(255, 45, 85)',
 		card: CustomLightTheme.bgTertiary,
 		background: CustomLightTheme.bgPrimaryGrouped,
 	},
@@ -129,7 +136,7 @@ function BottomTabNavigator() {
 			/>
 			<BottomTab.Screen
 				name="TabTwo"
-				component={TabTwoScreen}
+				component={TabTwoMainStackNavigator}
 				options={{
 					headerShown: false,
 					title: 'Ekran główny',
@@ -175,5 +182,22 @@ function BottomTabNavigator() {
 				})}
 			/>
 		</BottomTab.Navigator>
+	);
+}
+
+const TabTwoMainStack = createNativeStackNavigator<TabTwoMainStackParamList>();
+
+function TabTwoMainStackNavigator() {
+	return (
+		<TabTwoMainStack.Navigator initialRouteName="TabTwoScreen">
+			<TabTwoMainStack.Screen
+				name="TabTwoScreen"
+				component={TabTwoScreen}
+				options={{ headerShown: false }}
+			/>
+			<TabTwoMainStack.Screen name="CreateTicketScreen" component={CreateTicketScreen} />
+			<TabTwoMainStack.Screen name="ScanReceiptScreen" component={ScanReceiptScreen} />
+			<TabTwoMainStack.Screen name="LocateATMScreen" component={LocateATMScreen} />
+		</TabTwoMainStack.Navigator>
 	);
 }
