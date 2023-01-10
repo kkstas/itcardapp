@@ -2,7 +2,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName, Pressable, StyleSheet } from 'react-native';
+import { BlurView } from 'expo-blur';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -108,6 +109,10 @@ function BottomTabNavigator() {
 				name="TabOne"
 				component={TabOneScreen}
 				options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
+					headerTransparent: true,
+					headerBackground: () => (
+						<BlurView tint={colorScheme} intensity={50} style={StyleSheet.absoluteFill} />
+					),
 					title: 'Dokumenty',
 					tabBarIcon: ({ color }) => (
 						<Ionicons
@@ -154,6 +159,10 @@ function BottomTabNavigator() {
 				name="TabThree"
 				component={TabThreeScreen}
 				options={({ navigation }: RootTabScreenProps<'TabThree'>) => ({
+					headerTransparent: true,
+					headerBackground: () => (
+						<BlurView tint={colorScheme} intensity={60} style={StyleSheet.absoluteFill} />
+					),
 					headerLeft: () => (
 						<HeaderButton
 							text="Ekran główny"

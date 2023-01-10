@@ -1,17 +1,25 @@
 import { StyleSheet, ScrollView } from 'react-native';
-import { Text, View } from '../components/Themed';
+import { View } from '../components/Themed';
 import useCustomColors from '../hooks/useCustomColors';
 import List from '../components/atoms/List';
 import ProfileHeadingLarge from '../components/organisms/ProfileHeadingLarge';
 
+import { useHeaderHeight } from '@react-navigation/elements';
+
 export default function TabThreeScreen() {
 	const t = useCustomColors();
+	const headerHeight = useHeaderHeight();
 	return (
 		<ScrollView
 			automaticallyAdjustKeyboardInsets={true}
 			showsVerticalScrollIndicator={false}
 		>
-			<View style={[styles.container, { backgroundColor: t.bgPrimaryGrouped }]}>
+			<View
+				style={[
+					styles.container,
+					{ paddingTop: headerHeight, backgroundColor: t.bgPrimaryGrouped },
+				]}
+			>
 				<ProfileHeadingLarge />
 				<List />
 

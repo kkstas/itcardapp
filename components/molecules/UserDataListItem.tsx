@@ -6,6 +6,12 @@ import Animated, {
 	useAnimatedStyle,
 	withSpring,
 	withTiming,
+	FadeIn,
+	SlideInDown,
+	SlideInLeft,
+	SlideInRight,
+	SlideOutRight,
+	SlideOutLeft,
 } from 'react-native-reanimated';
 import {
 	PanGestureHandler,
@@ -23,8 +29,10 @@ const MAX_TRANSLATE = -BUTTON_WIDTH;
 
 type ListItemProps = {
 	item: Data;
+	fromLeft: boolean;
+	index: number;
 };
-export default function UserDataListItem({ item }: ListItemProps) {
+export default function UserDataListItem({ item, fromLeft, index }: ListItemProps) {
 	const isRemoving = useSharedValue(false);
 	const translateX = useSharedValue(0);
 	const t = useCustomColors();
@@ -101,18 +109,28 @@ export default function UserDataListItem({ item }: ListItemProps) {
 		BUTTON_WIDTH: BUTTON_WIDTH,
 	};
 
+	const removeButtonColor = useAnimatedStyle(() => {
+		return {
+			opacity: translateX.value === 0 ? 0 : 1,
+		};
+	});
+
 	return (
-		<View style={styles.item}>
+		<Animated.View
+			style={styles.item}
+			entering={(fromLeft ? SlideInLeft : SlideInRight).delay(index * 50)}
+			exiting={(fromLeft ? SlideOutLeft : SlideOutRight).delay(index * 50)}
+		>
 			<PanGestureHandler activeOffsetX={[-10, 10]} onGestureEvent={handler}>
 				<Animated.View style={stylesAnimation}>
 					<ListItemContent item={item} />
 
-					<View style={styles.buttonsContainer}>
+					<Animated.View style={[styles.buttonsContainer, removeButtonColor]}>
 						<DeleteListButton item={removeButton} />
-					</View>
+					</Animated.View>
 				</Animated.View>
 			</PanGestureHandler>
-		</View>
+		</Animated.View>
 	);
 }
 
