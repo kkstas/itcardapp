@@ -79,7 +79,11 @@ function RootNavigator() {
 					contentStyle: { backgroundColor: '#4040400' },
 				}}
 			>
-				<Stack.Screen name="Modal" component={ModalScreen} />
+				<Stack.Screen
+					name="Modal"
+					component={ModalScreen}
+					options={{ title: 'Informacje' }}
+				/>
 				<Stack.Screen
 					name="InfoModal"
 					component={InfoModalScreen}
@@ -111,7 +115,17 @@ function BottomTabNavigator() {
 				options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
 					headerTransparent: true,
 					headerBackground: () => (
-						<BlurView tint={colorScheme} intensity={50} style={StyleSheet.absoluteFill} />
+						<BlurView
+							tint={colorScheme}
+							intensity={30}
+							style={[
+								StyleSheet.absoluteFill,
+								{
+									backgroundColor:
+										colorScheme === 'light' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)',
+								},
+							]}
+						/>
 					),
 					title: 'Dokumenty',
 					tabBarIcon: ({ color }) => (
@@ -122,7 +136,7 @@ function BottomTabNavigator() {
 							style={{ marginBottom: -3 }}
 						/>
 					),
-					headerRight: () => (
+					headerLeft: () => (
 						<Pressable
 							onPress={() => navigation.navigate('Modal')}
 							style={({ pressed }) => ({
@@ -133,7 +147,7 @@ function BottomTabNavigator() {
 								name="information-circle-outline"
 								size={26}
 								color={Colors[colorScheme].tint}
-								style={{ marginRight: 15 }}
+								style={{ marginLeft: 15 }}
 							/>
 						</Pressable>
 					),
@@ -161,7 +175,17 @@ function BottomTabNavigator() {
 				options={({ navigation }: RootTabScreenProps<'TabThree'>) => ({
 					headerTransparent: true,
 					headerBackground: () => (
-						<BlurView tint={colorScheme} intensity={60} style={StyleSheet.absoluteFill} />
+						<BlurView
+							tint={colorScheme}
+							intensity={30}
+							style={[
+								StyleSheet.absoluteFill,
+								{
+									backgroundColor:
+										colorScheme === 'light' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)',
+								},
+							]}
+						/>
 					),
 					headerLeft: () => (
 						<HeaderButton

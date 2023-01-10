@@ -60,20 +60,20 @@ export default function UserDataList() {
 
 	const sliderOffset = useSharedValue(0);
 	const leftColorOffset = useSharedValue(t.tint);
-	const rightColorOffset = useSharedValue(t.gray4);
+	const rightColorOffset = useSharedValue(t.gray2);
 
 	const pressTicketsHandler = () => {
 		setDataState(data);
 		setFromLeft(true);
 		sliderOffset.value = withTiming(0);
 		leftColorOffset.value = withTiming(t.tint);
-		rightColorOffset.value = withTiming(t.gray4);
+		rightColorOffset.value = withTiming(t.gray2);
 	};
 	const pressReceiptsHandler = () => {
 		setDataState(dummyData);
 		setFromLeft(false);
 		sliderOffset.value = withTiming(1);
-		leftColorOffset.value = withTiming(t.gray4);
+		leftColorOffset.value = withTiming(t.gray2);
 		rightColorOffset.value = withTiming(t.tint);
 	};
 

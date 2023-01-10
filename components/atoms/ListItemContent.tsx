@@ -24,7 +24,7 @@ const s = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		paddingHorizontal: 8,
-		borderBottomWidth: 1,
+		borderBottomWidth: StyleSheet.hairlineWidth,
 	},
 	avatarContainer: {
 		width: 50,

@@ -1,7 +1,7 @@
 import { Text, StyleSheet } from 'react-native';
 import AppCardBlueprint from '../atoms/AppCardBlueprint';
 import useCustomColors from '../../hooks/useCustomColors';
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeOutDown } from 'react-native-reanimated';
 
 interface MainScreenAppsProps {
 	navigateToInfo: () => void;

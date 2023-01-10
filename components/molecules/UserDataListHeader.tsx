@@ -27,12 +27,12 @@ export default function UserDataListHeader({
 
 	const animateLeftStyle = useAnimatedStyle(() => {
 		return {
-			transform: [{ scale: 1 - 0.2 * sliderOffset.value }],
+			transform: [{ scale: 1 - 0.1 * sliderOffset.value }],
 		};
 	});
 	const animateRightStyle = useAnimatedStyle(() => {
 		return {
-			transform: [{ scale: 1 - 0.2 * (1 - sliderOffset.value) }],
+			transform: [{ scale: 1 - 0.1 * (1 - sliderOffset.value) }],
 		};
 	});
 
@@ -111,6 +111,8 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	btnText: {
+		paddingTop: 5,
+		letterSpacing: 0.4,
 		textAlign: 'center',
 	},
 });

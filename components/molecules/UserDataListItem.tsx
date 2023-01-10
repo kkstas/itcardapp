@@ -6,8 +6,6 @@ import Animated, {
 	useAnimatedStyle,
 	withSpring,
 	withTiming,
-	FadeIn,
-	SlideInDown,
 	SlideInLeft,
 	SlideInRight,
 	SlideOutRight,
@@ -86,8 +84,8 @@ export default function UserDataListItem({ item, fromLeft, index }: ListItemProp
 
 	function handleRemove() {
 		Alert.alert(
-			'Czy napewno usunąć ten element?',
-			'Po usunięciu nie będzie można przywrócić elementu',
+			'Czy napewno chcesz usunąć ten element?',
+			'Po usunięciu nie będzie można go przywrócić',
 			[
 				{ text: 'Usuń', onPress: () => (isRemoving.value = true), style: 'destructive' },
 				{
@@ -97,7 +95,6 @@ export default function UserDataListItem({ item, fromLeft, index }: ListItemProp
 				},
 			]
 		);
-		// isRemoving.value = true;
 	}
 
 	const removeButton = {
