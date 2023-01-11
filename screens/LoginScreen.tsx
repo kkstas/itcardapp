@@ -2,6 +2,9 @@ import { RootStackScreenProps } from '../types';
 import LoginScreenTemplate from '../components/templates/LoginScreenTemplate';
 import { useState } from 'react';
 import useCustomColors from '../hooks/useCustomColors';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
+import { logIn } from '../store/slices/userInfo';
+import users from '../constants/testUsers';
 
 export default function LoginScreen({ navigation }: RootStackScreenProps<'LoginScreen'>) {
 	const t = useCustomColors();
@@ -15,13 +18,27 @@ export default function LoginScreen({ navigation }: RootStackScreenProps<'LoginS
 	const [loginError, setLoginError] = useState<string | null>(null);
 	const [passwordError, setPasswordError] = useState<string | null>(null);
 
+	const dispatch = useAppDispatch();
+
 	function submitHandler() {
 		if (loginText.length >= 0 && passwordText.length >= 0) {
-			// setLoginText('');
-			// setPasswordText('');
-			// setPasswordError(null);
-			// setLoginError(null);
-			navigation.replace('Root');
+			const matchingUser = users.find(
+				(el) => loginText === el.login || loginText === el.email
+			);
+			if (matchingUser) {
+				const dataToDispatch = {
+					username: matchingUser.login,
+					email: matchingUser.email,
+					firstName: matchingUser.firstName,
+					lastName: matchingUser.lastName,
+				};
+				dispatch(logIn(dataToDispatch));
+			} else {
+				setLoginText('');
+				setPasswordText('');
+				setPasswordError('Dane logowania są nieprawidłowe.');
+				setLoginError(null);
+			}
 		} else if (loginText.length === 0 && passwordText.length > 0) {
 			setPasswordError(null);
 			setLoginError('Login lub adres e-mail nie został podany!');
@@ -32,6 +49,10 @@ export default function LoginScreen({ navigation }: RootStackScreenProps<'LoginS
 			setPasswordError('Hasło nie zostało podane!');
 			setLoginError('Login lub adres e-mail nie został podany!');
 		}
+	}
+	const userInfo = useAppSelector((state) => state.userInfo);
+	if (userInfo.isLoggedIn) {
+		console.log(userInfo);
 	}
 
 	return (

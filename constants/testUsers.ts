@@ -1,62 +1,62 @@
 export interface User {
-	name: string;
-	surname: string;
+	firstName: string;
+	lastName: string;
 	login: string;
 	email: string;
 	phone: string;
 }
 const users = [
 	{
-		name: 'Kamil',
-		surname: 'Stasiak',
+		firstName: 'Kamil',
+		lastName: 'Stasiak',
 		login: 'kstasiak',
 		email: 'k.stasiak@itcard.pl',
 		phone: '+48 516 944 100',
 		password: 'zob',
 	},
 	{
-		name: 'Arkadiusz',
-		surname: 'Sokal',
+		firstName: 'Arkadiusz',
+		lastName: 'Sokal',
 		login: 'asokal',
 		email: 'a.sokal@itcard.pl',
 		phone: '+48 000 000 000',
 		password: 'zob',
 	},
 	{
-		name: 'Michał',
-		surname: 'Podgruszecki',
+		firstName: 'Michał',
+		lastName: 'Podgruszecki',
 		login: 'mpodgruszecki',
 		email: 'm.podgruszecki@itcard.pl',
 		phone: '+48 000 000 000',
 		password: 'zob',
 	},
 	{
-		name: 'Paweł',
-		surname: 'Budziński',
+		firstName: 'Paweł',
+		lastName: 'Budziński',
 		login: 'pbudzinski',
 		email: 'p.budzinski@itcard.pl',
 		phone: '+48 000 000 000',
 		password: 'zob',
 	},
 	{
-		name: 'Grzegorz',
-		surname: 'Joachimiak',
+		firstName: 'Grzegorz',
+		lastName: 'Joachimiak',
 		login: 'gjoachimiak',
 		email: 'g.joachimiak@itcard.pl',
 		phone: '+48 000 000 000',
 		password: 'zob',
 	},
 	{
-		name: 'Roman',
-		surname: 'Słociak',
+		firstName: 'Roman',
+		lastName: 'Słociak',
 		login: 'rslociak',
 		email: 'r.slociak@itcard.pl',
 		phone: '+48 000 000 000',
 		password: 'zob',
 	},
 	{
-		name: 'Patryk',
-		surname: 'Gryglak',
+		firstName: 'Patryk',
+		lastName: 'Gryglak',
 		login: 'pgryglak',
 		email: 'p.gryglak@itcard.pl',
 		phone: '+48 000 000 000',

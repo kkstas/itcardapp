@@ -3,6 +3,7 @@ import useCustomColors from '../hooks/useCustomColors';
 
 export default function LocateATMScreen() {
 	const t = useCustomColors();
+
 	return <View style={[styles.container, { backgroundColor: t.tint }]}></View>;
 }
 const styles = StyleSheet.create({
