@@ -31,6 +31,7 @@ export default function LoginScreen({ navigation }: RootStackScreenProps<'LoginS
 					email: matchingUser.email,
 					firstName: matchingUser.firstName,
 					lastName: matchingUser.lastName,
+					jobTitle: matchingUser.jobTitle,
 				};
 				dispatch(logIn(dataToDispatch));
 			} else {

@@ -59,7 +59,14 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-	const isLoggedIn = useAppSelector((state) => state.userInfo.isLoggedIn);
+	const userInfo = useAppSelector((state) => state.userInfo);
+	const isLoggedIn =
+		userInfo.isLoggedIn &&
+		userInfo.email &&
+		userInfo.firstName &&
+		userInfo.lastName &&
+		userInfo.username;
+
 	return (
 		<Stack.Navigator>
 			{!isLoggedIn ? (

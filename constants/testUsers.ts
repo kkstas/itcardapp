@@ -4,6 +4,8 @@ export interface User {
 	login: string;
 	email: string;
 	phone: string;
+	password: string;
+	jobTitle: string;
 }
 const users = [
 	{
@@ -13,6 +15,7 @@ const users = [
 		email: 'k.stasiak@itcard.pl',
 		phone: '+48 516 944 100',
 		password: 'zob',
+		jobTitle: 'Młodszy Specjalista ds. Aplikacji ATM',
 	},
 	{
 		firstName: 'Arkadiusz',
@@ -21,6 +24,7 @@ const users = [
 		email: 'a.sokal@itcard.pl',
 		phone: '+48 000 000 000',
 		password: 'zob',
+		jobTitle: 'Specjalista ds. Łączności Bankomatów',
 	},
 	{
 		firstName: 'Michał',
@@ -29,6 +33,7 @@ const users = [
 		email: 'm.podgruszecki@itcard.pl',
 		phone: '+48 000 000 000',
 		password: 'zob',
+		jobTitle: 'Specjalista ds. Procesów Bankomatowych',
 	},
 	{
 		firstName: 'Paweł',
@@ -37,6 +42,7 @@ const users = [
 		email: 'p.budzinski@itcard.pl',
 		phone: '+48 000 000 000',
 		password: 'zob',
+		jobTitle: 'Kierownik Działu Zarządzania Procesami i Aplikacją ATM',
 	},
 	{
 		firstName: 'Grzegorz',
@@ -45,6 +51,7 @@ const users = [
 		email: 'g.joachimiak@itcard.pl',
 		phone: '+48 000 000 000',
 		password: 'zob',
+		jobTitle: 'Ekspert ds. Procesów Administracyjnych',
 	},
 	{
 		firstName: 'Roman',
@@ -53,6 +60,7 @@ const users = [
 		email: 'r.slociak@itcard.pl',
 		phone: '+48 000 000 000',
 		password: 'zob',
+		jobTitle: 'Starszy Specjalista ds. Administracji Systemów Bankomatowych',
 	},
 	{
 		firstName: 'Patryk',
@@ -61,6 +69,7 @@ const users = [
 		email: 'p.gryglak@itcard.pl',
 		phone: '+48 000 000 000',
 		password: 'zob',
+		jobTitle: 'Specjalista ds. Zarządzania Aplikacją ATM',
 	},
 ];
 

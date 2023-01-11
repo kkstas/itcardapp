@@ -5,6 +5,7 @@ import ContentBox from '../atoms/ContentBox';
 import useCustomColors from '../../hooks/useCustomColors';
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { useAppSelector } from '../../hooks/reduxHooks';
 
 interface ProfileHeadingProps {
 	onPress?: () => void;
@@ -12,6 +13,8 @@ interface ProfileHeadingProps {
 
 export default function ProfileHeading(props: ProfileHeadingProps) {
 	const t = useCustomColors();
+	const userInfo = useAppSelector((state) => state.userInfo);
+
 	return (
 		<ContentBox style={styles.container}>
 			<TouchableOpacity onPress={props.onPress} style={styles.mainBox}>
@@ -19,8 +22,8 @@ export default function ProfileHeading(props: ProfileHeadingProps) {
 					<Ionicons name="person-circle" color={t.labelTertiary} style={styles.icon} />
 				</View>
 				<View style={styles.textView}>
-					<TextTitle text="Kamil Stasiak" color={t.text} />
-					<TextContent text="k.stasiak@itcard.pl" color={t.labelTertiary} />
+					<TextTitle text={userInfo.firstName + ' ' + userInfo.lastName} color={t.text} />
+					<TextContent text={userInfo.email || ' '} color={t.labelTertiary} />
 				</View>
 
 				<View style={styles.chevronView}>
