@@ -77,6 +77,7 @@ export const CustomDarkTheme: CustomTheme = {
 	criticalBackground: '#ffc933',
 	positiveBackground: '#66ff90',
 	informativeBackground: '#366cfe',
+	textInput: '#161C21',
 };
 export const CustomLightTheme: CustomTheme = {
 	theme: 'light',
@@ -130,6 +131,7 @@ export const CustomLightTheme: CustomTheme = {
 	criticalBackground: '#ffd500',
 	positiveBackground: '#bdde54',
 	informativeBackground: '#85d4ff',
+	textInput: 'rgba(91, 115, 139, 0.1)',
 };
 
 export interface CustomTheme {
@@ -184,4 +186,5 @@ export interface CustomTheme {
 	criticalBackground: string;
 	positiveBackground: string;
 	informativeBackground: string;
+	textInput: string;
 }

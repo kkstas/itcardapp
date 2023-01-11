@@ -40,10 +40,7 @@ export default function TicketContentInput({
 					onFocus={() => setIsFocused(true)}
 					onBlur={() => setIsFocused(false)}
 					onChangeText={(x) => setValue(x)}
-					style={[
-						styles.contentInput,
-						{ backgroundColor: t.fillQuaternary, color: t.text },
-					]}
+					style={[styles.contentInput, { backgroundColor: t.textInput, color: t.text }]}
 				/>
 			</View>
 			{errMessage && (

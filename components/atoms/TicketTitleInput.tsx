@@ -41,7 +41,10 @@ export default function TicketTitleInput({
 					onChangeText={(x) => setValue(x)}
 					style={[
 						styles.loginInput,
-						{ backgroundColor: t.fillQuaternary, color: t.text },
+						{
+							backgroundColor: t.textInput,
+							color: t.text,
+						},
 					]}
 				/>
 			</View>

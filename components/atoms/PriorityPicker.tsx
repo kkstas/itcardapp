@@ -64,11 +64,11 @@ export default function PriorityPicker({ pickedState }: PriorityPickerProps) {
 	return (
 		<View>
 			<Text style={[styles.inputLabel, { color: t.labelSecondary }]}>Priorytet</Text>
-			<View style={[styles.container, { backgroundColor: t.fillQuaternary }]}>
+			<View style={[styles.container, { backgroundColor: t.textInput }]}>
 				<Animated.View
 					style={[
 						styles.slidingBox,
-						{ width: windowWidth / 3.1, backgroundColor: t.bgSecondaryGrouped },
+						{ width: windowWidth / 3.1, backgroundColor: t.bgSecondary },
 						slidingBoxStyle,
 					]}
 				/>

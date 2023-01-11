@@ -3,6 +3,7 @@ import TicketTitleInput, { TicketTitleInputProps } from '../atoms/TicketTitleInp
 import TicketContentInput, { TicketContentInputProps } from '../atoms/TicketContentInput';
 import PriorityPicker, { PriorityPickerProps } from '../atoms/PriorityPicker';
 import useCustomColors from '../../hooks/useCustomColors';
+import MediaButtons from '../molecules/MediaButtons';
 
 interface TicketFormProps {
 	titleInputProps: TicketTitleInputProps;
@@ -32,19 +33,25 @@ export default function TicketForm(props: TicketFormProps) {
 			<View style={styles.priorityPickerView}>
 				<PriorityPicker pickedState={props.priorityPickerProps.pickedState} />
 			</View>
+			<View style={styles.addMedia}>
+				<MediaButtons />
+			</View>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
+	addMedia: {
+		marginVertical: 10,
+	},
 	priorityPickerView: {
-		marginVertical: 5,
+		marginVertical: 9,
 	},
 	ticketContentView: {
-		marginVertical: 5,
+		marginVertical: 8,
 	},
 	ticketTitleView: {
-		marginVertical: 5,
+		marginVertical: 8,
 	},
 	container: {
 		flex: 1,

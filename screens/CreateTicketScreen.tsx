@@ -16,7 +16,7 @@ export default function CreateTicketScreen() {
 	return (
 		<Pressable
 			onPress={() => Keyboard.dismiss()}
-			style={[styles.container, { backgroundColor: t.bgSecondary }]}
+			style={[styles.container, { backgroundColor: t.bgPrimaryGrouped }]}
 		>
 			<TicketForm
 				titleInputProps={{
