@@ -12,10 +12,10 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import {
-	RootStackParamList,
-	RootTabParamList,
-	RootTabScreenProps,
-	TabTwoMainStackParamList,
+  RootStackParamList,
+  RootTabParamList,
+  RootTabScreenProps,
+  TabTwoMainStackParamList,
 } from '../types';
 
 import TabThreeScreen from '../screens/TabThreeScreen';
@@ -29,208 +29,220 @@ import ScanReceiptScreen from '../screens/ScanReceiptScreen';
 import LocateATMScreen from '../screens/LocateATMScreen';
 
 const CLTheme = {
-	...DefaultTheme,
-	colors: {
-		...DefaultTheme.colors,
-		card: CustomLightTheme.bgTertiary,
-		background: CustomLightTheme.bgPrimaryGrouped,
-	},
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    card: CustomLightTheme.bgTertiary,
+    background: CustomLightTheme.bgPrimaryGrouped,
+  },
 };
 
 const CDTheme = {
-	...DarkTheme,
-	colors: {
-		...DarkTheme.colors,
-		card: CustomDarkTheme.bgSecondary,
-	},
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    card: CustomDarkTheme.bgSecondary,
+  },
 };
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
-	return (
-		<NavigationContainer theme={colorScheme === 'dark' ? CDTheme : CLTheme}>
-			<RootNavigator />
-		</NavigationContainer>
-	);
+  return (
+    <NavigationContainer theme={colorScheme === 'dark' ? CDTheme : CLTheme}>
+      <RootNavigator />
+    </NavigationContainer>
+  );
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-	return (
-		<Stack.Navigator>
-			<Stack.Screen
-				name="LoginScreen"
-				component={LoginScreen}
-				options={{ headerShown: false }}
-			/>
-			<Stack.Screen
-				name="Root"
-				component={BottomTabNavigator}
-				options={{ headerShown: false }}
-			/>
-			<Stack.Screen
-				name="NotFound"
-				component={NotFoundScreen}
-				options={{ title: 'Oops!' }}
-			/>
-			<Stack.Group
-				screenOptions={{
-					presentation: 'modal',
-					contentStyle: { backgroundColor: '#4040400' },
-				}}
-			>
-				<Stack.Screen
-					name="Modal"
-					component={ModalScreen}
-					options={{ title: 'Informacje' }}
-				/>
-				<Stack.Screen
-					name="InfoModal"
-					component={InfoModalScreen}
-					options={{
-						headerShown: false,
-						presentation: 'modal',
-					}}
-				/>
-			</Stack.Group>
-		</Stack.Navigator>
-	);
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Root"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NotFound"
+        component={NotFoundScreen}
+        options={{ title: 'Oops!' }}
+      />
+      <Stack.Group
+        screenOptions={{
+          presentation: 'modal',
+          contentStyle: { backgroundColor: '#4040400' },
+        }}
+      >
+        <Stack.Screen
+          name="Modal"
+          component={ModalScreen}
+          options={{ title: 'Informacje' }}
+        />
+        <Stack.Screen
+          name="InfoModal"
+          component={InfoModalScreen}
+          options={{
+            headerShown: false,
+            presentation: 'modal',
+          }}
+        />
+      </Stack.Group>
+    </Stack.Navigator>
+  );
 }
 
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-	const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme();
 
-	return (
-		<BottomTab.Navigator
-			initialRouteName="TabTwo"
-			screenOptions={{
-				tabBarActiveTintColor: Colors[colorScheme].tint,
-			}}
-		>
-			<BottomTab.Screen
-				name="TabOne"
-				component={TabOneScreen}
-				options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-					headerTransparent: true,
-					headerBackground: () => (
-						<BlurView
-							tint={colorScheme}
-							intensity={30}
-							style={[
-								StyleSheet.absoluteFill,
-								{
-									backgroundColor:
-										colorScheme === 'light' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)',
-								},
-							]}
-						/>
-					),
-					title: 'Dokumenty',
-					tabBarIcon: ({ color }) => (
-						<Ionicons
-							name="layers-outline"
-							size={28}
-							color={color}
-							style={{ marginBottom: -3 }}
-						/>
-					),
-					headerLeft: () => (
-						<Pressable
-							onPress={() => navigation.navigate('Modal')}
-							style={({ pressed }) => ({
-								opacity: pressed ? 0.5 : 1,
-							})}
-						>
-							<Ionicons
-								name="information-circle-outline"
-								size={26}
-								color={Colors[colorScheme].tint}
-								style={{ marginLeft: 15 }}
-							/>
-						</Pressable>
-					),
-				})}
-			/>
-			<BottomTab.Screen
-				name="TabTwo"
-				component={TabTwoMainStackNavigator}
-				options={{
-					headerShown: false,
-					title: 'Ekran główny',
-					tabBarIcon: ({ color }) => (
-						<Ionicons
-							size={28}
-							name="home-outline"
-							color={color}
-							style={{ marginBottom: -3 }}
-						/>
-					),
-				}}
-			/>
-			<BottomTab.Screen
-				name="TabThree"
-				component={TabThreeScreen}
-				options={({ navigation }: RootTabScreenProps<'TabThree'>) => ({
-					headerTransparent: true,
-					headerBackground: () => (
-						<BlurView
-							tint={colorScheme}
-							intensity={30}
-							style={[
-								StyleSheet.absoluteFill,
-								{
-									backgroundColor:
-										colorScheme === 'light' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)',
-								},
-							]}
-						/>
-					),
-					headerLeft: () => (
-						<HeaderButton
-							text="Ekran główny"
-							position="left"
-							icon="chevron-back-outline"
-							onPress={() => navigation.navigate('TabTwo')}
-						/>
-					),
-					headerRight: () => (
-						<HeaderButton
-							onPress={() => navigation.replace('LoginScreen')}
-							text="Wyloguj "
-							position="right"
-							icon="log-out-outline"
-						/>
-					),
-					title: 'Profil',
-					tabBarIcon: ({ color }) => (
-						<Ionicons
-							style={{ marginBottom: -3 }}
-							name="person-outline"
-							size={28}
-							color={color}
-						/>
-					),
-				})}
-			/>
-		</BottomTab.Navigator>
-	);
+  return (
+    <BottomTab.Navigator
+      initialRouteName="TabTwo"
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme].tint,
+      }}
+    >
+      <BottomTab.Screen
+        name="TabOne"
+        component={TabOneScreen}
+        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
+          headerTransparent: true,
+          headerBackground: () => (
+            <BlurView
+              tint={colorScheme}
+              intensity={30}
+              style={[
+                StyleSheet.absoluteFill,
+                {
+                  backgroundColor:
+                    colorScheme === 'light' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)',
+                },
+              ]}
+            />
+          ),
+          title: 'Dokumenty',
+          tabBarIcon: ({ color }) => (
+            <Ionicons
+              name="layers-outline"
+              size={28}
+              color={color}
+              style={{ marginBottom: -3 }}
+            />
+          ),
+          headerLeft: () => (
+            <Pressable
+              onPress={() => navigation.navigate('Modal')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <Ionicons
+                name="information-circle-outline"
+                size={26}
+                color={Colors[colorScheme].tint}
+                style={{ marginLeft: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
+      />
+      <BottomTab.Screen
+        name="TabTwo"
+        component={TabTwoMainStackNavigator}
+        options={{
+          headerShown: false,
+          title: 'Ekran główny',
+          tabBarIcon: ({ color }) => (
+            <Ionicons
+              size={28}
+              name="home-outline"
+              color={color}
+              style={{ marginBottom: -3 }}
+            />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="TabThree"
+        component={TabThreeScreen}
+        options={({ navigation }: RootTabScreenProps<'TabThree'>) => ({
+          headerTransparent: true,
+          headerBackground: () => (
+            <BlurView
+              tint={colorScheme}
+              intensity={30}
+              style={[
+                StyleSheet.absoluteFill,
+                {
+                  backgroundColor:
+                    colorScheme === 'light' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)',
+                },
+              ]}
+            />
+          ),
+          headerLeft: () => (
+            <HeaderButton
+              text="Ekran główny"
+              position="left"
+              icon="chevron-back-outline"
+              onPress={() => navigation.navigate('TabTwo')}
+            />
+          ),
+          headerRight: () => (
+            <HeaderButton
+              onPress={() => navigation.replace('LoginScreen')}
+              text="Wyloguj "
+              position="right"
+              icon="log-out-outline"
+            />
+          ),
+          title: 'Profil',
+          tabBarIcon: ({ color }) => (
+            <Ionicons
+              style={{ marginBottom: -3 }}
+              name="person-outline"
+              size={28}
+              color={color}
+            />
+          ),
+        })}
+      />
+    </BottomTab.Navigator>
+  );
 }
 
 const TabTwoMainStack = createNativeStackNavigator<TabTwoMainStackParamList>();
 
 function TabTwoMainStackNavigator() {
-	return (
-		<TabTwoMainStack.Navigator initialRouteName="TabTwoScreen">
-			<TabTwoMainStack.Screen
-				name="TabTwoScreen"
-				component={TabTwoScreen}
-				options={{ headerShown: false }}
-			/>
-			<TabTwoMainStack.Screen name="CreateTicketScreen" component={CreateTicketScreen} />
-			<TabTwoMainStack.Screen name="ScanReceiptScreen" component={ScanReceiptScreen} />
-			<TabTwoMainStack.Screen name="LocateATMScreen" component={LocateATMScreen} />
-		</TabTwoMainStack.Navigator>
-	);
+  return (
+    <TabTwoMainStack.Navigator initialRouteName="TabTwoScreen">
+      <TabTwoMainStack.Screen
+        name="TabTwoScreen"
+        component={TabTwoScreen}
+        options={{ headerShown: false }}
+      />
+      <TabTwoMainStack.Screen
+        name="CreateTicketScreen"
+        options={{ title: "Ekran zgłoszenia" }}
+        component={CreateTicketScreen}
+      />
+      <TabTwoMainStack.Screen
+        name="ScanReceiptScreen"
+        component={ScanReceiptScreen}
+        options={{ title: "Skanuj potwierdzenie" }}
+      />
+      <TabTwoMainStack.Screen
+        name="LocateATMScreen"
+        options={{ title: "Znajdź bankomat" }}
+        component={LocateATMScreen}
+      />
+    </TabTwoMainStack.Navigator>
+  );
 }
