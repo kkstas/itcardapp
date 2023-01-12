@@ -45,6 +45,7 @@ export default function PasswordInputField(props: PasswordInputFieldProps) {
 					secureTextEntry={props.isPasswordHidden}
 					maxLength={maxPasswordFieldLength}
 					onFocus={props.onFocus}
+					selectionColor={t.tint}
 					onBlur={props.onBlur}
 					onChangeText={props.onChangeText}
 					style={[

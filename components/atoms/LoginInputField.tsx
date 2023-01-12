@@ -37,6 +37,7 @@ export default function LoginInputField(props: LoginInputFieldProps) {
 					onFocus={props.onFocus}
 					onBlur={props.onBlur}
 					onChangeText={props.onChangeText}
+					selectionColor={t.tint}
 					style={[
 						styles.loginInput,
 						{ backgroundColor: t.fillQuaternary, color: t.text },

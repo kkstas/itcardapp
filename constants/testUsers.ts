@@ -71,6 +71,15 @@ const users = [
 		password: 'zob',
 		jobTitle: 'Specjalista ds. Zarządzania Aplikacją ATM',
 	},
+	{
+		firstName: 'Przemysław',
+		lastName: 'Margas',
+		login: 'pmargas',
+		email: 'p.margas@itcard.pl',
+		phone: '+48 000 000 000',
+		password: 'zob',
+		jobTitle: 'Specjalista ds. Administracji Systemów Bankomatowych',
+	},
 ];
 
 export default users;

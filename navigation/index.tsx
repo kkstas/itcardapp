@@ -60,12 +60,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
 	const userInfo = useAppSelector((state) => state.userInfo);
-	const isLoggedIn =
-		userInfo.isLoggedIn &&
-		userInfo.email &&
-		userInfo.firstName &&
-		userInfo.lastName &&
-		userInfo.username;
+	const isLoggedIn = userInfo.isLoggedIn;
 
 	return (
 		<Stack.Navigator>

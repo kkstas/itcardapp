@@ -21,12 +21,7 @@ export default function TicketTitleInput({
 
 	return (
 		<View>
-			<Text
-				style={[
-					styles.inputLabel,
-					{ color: isFocused ? t.tintTapState : t.labelSecondary },
-				]}
-			>
+			<Text style={[styles.inputLabel, { color: isFocused ? t.tint : t.labelSecondary }]}>
 				Tytuł zgłoszenia
 			</Text>
 			<View style={{ justifyContent: 'center' }}>
@@ -39,6 +34,7 @@ export default function TicketTitleInput({
 					onFocus={() => setIsFocused(true)}
 					onBlur={() => setIsFocused(false)}
 					onChangeText={(x) => setValue(x)}
+					selectionColor={t.tint}
 					style={[
 						styles.loginInput,
 						{

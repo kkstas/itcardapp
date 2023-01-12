@@ -21,12 +21,7 @@ export default function TicketContentInput({
 
 	return (
 		<View>
-			<Text
-				style={[
-					styles.inputLabel,
-					{ color: isFocused ? t.tintTapState : t.labelSecondary },
-				]}
-			>
+			<Text style={[styles.inputLabel, { color: isFocused ? t.tint : t.labelSecondary }]}>
 				Opis zgłoszenia
 			</Text>
 			<View style={styles.contentView}>
@@ -39,6 +34,7 @@ export default function TicketContentInput({
 					maxLength={maxContentInputLength}
 					onFocus={() => setIsFocused(true)}
 					onBlur={() => setIsFocused(false)}
+					selectionColor={t.tint}
 					onChangeText={(x) => setValue(x)}
 					style={[styles.contentInput, { backgroundColor: t.textInput, color: t.text }]}
 				/>

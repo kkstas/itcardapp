@@ -16,7 +16,7 @@ export default function PriorityPicker({ pickedState }: PriorityPickerProps) {
 
 	const windowWidth = Layout.window.width;
 	const offset = useSharedValue(windowWidth / -3.4);
-	const leftColorOffset = useSharedValue(t.text);
+	const leftColorOffset = useSharedValue(t.tint);
 	const midColorOffset = useSharedValue(t.labelSecondary);
 	const rightColorOffset = useSharedValue(t.labelSecondary);
 
@@ -28,14 +28,14 @@ export default function PriorityPicker({ pickedState }: PriorityPickerProps) {
 
 	const leftPressHandler = () => {
 		offset.value = withTiming(windowWidth / -3.4);
-		leftColorOffset.value = withTiming(t.tintTapState);
+		leftColorOffset.value = withTiming(t.tint);
 		midColorOffset.value = withTiming(t.labelSecondary);
 		rightColorOffset.value = withTiming(t.labelSecondary);
 	};
 	const midPressHandler = () => {
 		offset.value = withTiming(0);
 		leftColorOffset.value = withTiming(t.labelSecondary);
-		midColorOffset.value = withTiming(t.tintTapState);
+		midColorOffset.value = withTiming(t.tint);
 		rightColorOffset.value = withTiming(t.labelSecondary);
 	};
 	const rightPressHandler = () => {
