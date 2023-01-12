@@ -18,9 +18,7 @@ export default function LoginInputField(props: LoginInputFieldProps) {
 
 	return (
 		<>
-			<Text style={[styles.inputLabel, { color: t.labelSecondary }]}>
-				Login lub adres e-mail
-			</Text>
+			<Text style={[styles.inputLabel, { color: t.labelSecondary }]}>Adres e-mail</Text>
 			<View style={{ justifyContent: 'center' }}>
 				<Ionicons
 					style={styles.logo}

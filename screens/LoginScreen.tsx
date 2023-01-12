@@ -4,7 +4,9 @@ import { useState } from 'react';
 import useCustomColors from '../hooks/useCustomColors';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { logIn } from '../store/slices/userInfo';
-import users from '../constants/testUsers';
+import { logInAsync } from '../util/auth';
+import TestSplashElement from '../components/molecules/TestSplashElement';
+import { Keyboard } from 'react-native';
 
 export default function LoginScreen({ navigation }: RootStackScreenProps<'LoginScreen'>) {
 	const t = useCustomColors();
@@ -17,63 +19,63 @@ export default function LoginScreen({ navigation }: RootStackScreenProps<'LoginS
 	const [passwLogoColor, setPasswLogoColor] = useState(logoUnfocusedColor);
 	const [loginError, setLoginError] = useState<string | null>(null);
 	const [passwordError, setPasswordError] = useState<string | null>(null);
+	const [isFetching, setIsFetching] = useState(false);
 
 	const dispatch = useAppDispatch();
 
-	function submitHandler() {
-		if (loginText.length >= 0 && passwordText.length >= 0) {
-			const matchingUser = users.find(
-				(el) => loginText === el.login || loginText === el.email
-			);
-			if (matchingUser) {
-				const dataToDispatch = {
-					username: matchingUser.login,
-					email: matchingUser.email,
-					firstName: matchingUser.firstName,
-					lastName: matchingUser.lastName,
-					jobTitle: matchingUser.jobTitle,
-				};
-				dispatch(logIn(dataToDispatch));
-			} else {
-				setLoginText('');
-				setPasswordText('');
+	async function submitHandler() {
+		Keyboard.dismiss();
+		if (loginText.length >= 6 && passwordText.length >= 6) {
+			setIsFetching(true);
+			try {
+				const userData = await logInAsync(loginText, passwordText);
+				if (userData && userData.firstName && userData.lastName) {
+					dispatch(logIn(userData));
+				} else {
+					setPasswordError(
+						'Konto jest niepoprawnie skonfigurowane. Skontaktuj się z administracją.'
+					);
+				}
+			} catch (error) {
 				setPasswordError('Dane logowania są nieprawidłowe.');
 				setLoginError(null);
 			}
-		} else if (loginText.length === 0 && passwordText.length > 0) {
+			setIsFetching(false);
+		} else if (loginText.length < 6 && passwordText.length > 6) {
 			setPasswordError(null);
-			setLoginError('Login lub adres e-mail nie został podany!');
-		} else if (loginText.length > 0 && passwordText.length === 0) {
+			setLoginError('Adres e-mail jest za krótki!');
+		} else if (loginText.length > 6 && passwordText.length < 6) {
 			setLoginError(null);
-			setPasswordError('Hasło nie zostało podane!');
+			setPasswordError('Hasło jest za krótkie!');
 		} else {
-			setPasswordError('Hasło nie zostało podane!');
-			setLoginError('Login lub adres e-mail nie został podany!');
+			setPasswordError('Hasło jest za krótkie!');
+			setLoginError('Adres e-mail jest za krótki!');
 		}
-	}
-	const userInfo = useAppSelector((state) => state.userInfo);
-	if (userInfo.isLoggedIn) {
-		console.log(userInfo);
+		setLoginText('');
+		setPasswordText('');
 	}
 
 	return (
-		<LoginScreenTemplate
-			loginText={loginText}
-			passwordText={passwordText}
-			onLoginChangeText={(text: string) => setLoginText(text)}
-			onPasswordChangeText={(text: string) => setPasswordText(text)}
-			submitAction={submitHandler}
-			onLoginFocus={() => setLoginLogoColor(logoFocusedColor)}
-			onLoginBlur={() => setLoginLogoColor(logoUnfocusedColor)}
-			loginLogoColor={loginLogoColor}
-			onPasswordFocus={() => setPasswLogoColor(logoFocusedColor)}
-			onPasswordBlur={() => setPasswLogoColor(logoUnfocusedColor)}
-			passwLogoColor={passwLogoColor}
-			onLockPress={() => setIsPasswordHidden((prev) => !prev)}
-			isPasswordHidden={isPasswordHidden}
-			t={t}
-			loginErrorMessage={loginError}
-			passwordErrorMessage={passwordError}
-		/>
+		<>
+			{isFetching && <TestSplashElement />}
+			<LoginScreenTemplate
+				loginText={loginText}
+				passwordText={passwordText}
+				onLoginChangeText={(text: string) => setLoginText(text)}
+				onPasswordChangeText={(text: string) => setPasswordText(text)}
+				submitAction={submitHandler}
+				onLoginFocus={() => setLoginLogoColor(logoFocusedColor)}
+				onLoginBlur={() => setLoginLogoColor(logoUnfocusedColor)}
+				loginLogoColor={loginLogoColor}
+				onPasswordFocus={() => setPasswLogoColor(logoFocusedColor)}
+				onPasswordBlur={() => setPasswLogoColor(logoUnfocusedColor)}
+				passwLogoColor={passwLogoColor}
+				onLockPress={() => setIsPasswordHidden((prev) => !prev)}
+				isPasswordHidden={isPasswordHidden}
+				t={t}
+				loginErrorMessage={loginError}
+				passwordErrorMessage={passwordError}
+			/>
+		</>
 	);
 }
