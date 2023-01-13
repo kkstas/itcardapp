@@ -1,5 +1,5 @@
 import useCustomColors from '../hooks/useCustomColors';
-import { Pressable, Keyboard, StyleSheet } from 'react-native';
+import { Pressable, View, TextInput, Text, Keyboard, StyleSheet } from 'react-native';
 import { useState } from 'react';
 import TicketForm from '../components/organisms/TicketForm';
 
@@ -13,10 +13,7 @@ export default function CreateTicketScreen() {
 	const maxContentInputLength = 400;
 
 	return (
-		<Pressable
-			onPress={() => Keyboard.dismiss()}
-			style={[styles.container, { backgroundColor: t.bgPrimaryGrouped }]}
-		>
+		<View style={[styles.container, { backgroundColor: t.bgPrimaryGrouped }]}>
 			<TicketForm
 				titleInputProps={{
 					value: value,
@@ -34,7 +31,7 @@ export default function CreateTicketScreen() {
 					pickedState: 'normal',
 				}}
 			/>
-		</Pressable>
+		</View>
 	);
 }
 
