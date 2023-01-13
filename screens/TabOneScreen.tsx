@@ -1,5 +1,4 @@
-import { StyleSheet } from 'react-native';
-import { Text, View } from '../components/Themed';
+import { StyleSheet, View } from 'react-native';
 import { RootTabScreenProps } from '../types';
 import UserDataList from '../components/organisms/UserDataList';
 import useCustomColors from '../hooks/useCustomColors';

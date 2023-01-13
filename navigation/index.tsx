@@ -29,7 +29,7 @@ import ScanReceiptScreen from '../screens/ScanReceiptScreen';
 import LocateATMScreen from '../screens/LocateATMScreen';
 
 import { useAppSelector, useAppDispatch } from '../hooks/reduxHooks';
-import userInfo, { logOut } from '../store/slices/userInfo';
+import { logOut } from '../store/slices/userInfo';
 
 const CLTheme = {
 	...DefaultTheme,

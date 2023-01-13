@@ -1,12 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import { Platform, Text, View, StyleSheet } from 'react-native';
+import useCustomColors from '../hooks/useCustomColors';
 
 export default function ModalScreen() {
+	const t = useCustomColors();
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container, { backgroundColor: t.bgPrimary }]}>
 			<Text style={styles.title}>Dokumenty</Text>
 
 			<Text style={styles.content}>

@@ -1,5 +1,4 @@
-import { StyleSheet, ScrollView } from 'react-native';
-import { View } from '../components/Themed';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import useCustomColors from '../hooks/useCustomColors';
 import List from '../components/atoms/List';
 import ProfileHeadingLarge from '../components/organisms/ProfileHeadingLarge';

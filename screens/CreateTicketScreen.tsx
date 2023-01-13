@@ -1,6 +1,5 @@
 import useCustomColors from '../hooks/useCustomColors';
-import { Pressable, View, TextInput, Text, Keyboard, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Pressable, Keyboard, StyleSheet } from 'react-native';
 import { useState } from 'react';
 import TicketForm from '../components/organisms/TicketForm';
 
