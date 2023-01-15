@@ -2,10 +2,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
 
-import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
@@ -30,6 +29,8 @@ import LocateATMScreen from '../screens/LocateATMScreen';
 
 import { useAppSelector, useAppDispatch } from '../hooks/reduxHooks';
 import { logOut } from '../store/slices/userInfo';
+import useCustomColors from '../hooks/useCustomColors';
+import { StatusBar } from 'expo-status-bar';
 
 const CLTheme = {
 	...DefaultTheme,
@@ -48,11 +49,15 @@ const CDTheme = {
 	},
 };
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export default function Navigation() {
+	const t = useCustomColors();
 	return (
-		<NavigationContainer theme={colorScheme === 'dark' ? CDTheme : CLTheme}>
-			<RootNavigator />
-		</NavigationContainer>
+		<>
+			<StatusBar animated={true} style={t.theme === 'light' ? 'dark' : 'light'} />
+			<NavigationContainer theme={t.theme === 'dark' ? CDTheme : CLTheme}>
+				<RootNavigator />
+			</NavigationContainer>
+		</>
 	);
 }
 
@@ -112,6 +117,7 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
 	const colorScheme = useColorScheme();
+	const t = useCustomColors();
 
 	const dispatch = useAppDispatch();
 	function logOutHandler() {
@@ -122,7 +128,7 @@ function BottomTabNavigator() {
 		<BottomTab.Navigator
 			initialRouteName="TabTwo"
 			screenOptions={{
-				tabBarActiveTintColor: Colors[colorScheme].tint,
+				tabBarActiveTintColor: t.tint,
 			}}
 		>
 			<BottomTab.Screen
@@ -132,7 +138,7 @@ function BottomTabNavigator() {
 					headerTransparent: true,
 					headerBackground: () => (
 						<BlurView
-							tint={colorScheme}
+							tint={t.theme === 'dark' ? 'dark' : 'light'}
 							intensity={30}
 							style={[
 								StyleSheet.absoluteFill,
@@ -162,7 +168,7 @@ function BottomTabNavigator() {
 							<Ionicons
 								name="information-circle-outline"
 								size={26}
-								color={Colors[colorScheme].tint}
+								color={t.tintTapState}
 								style={{ marginLeft: 15 }}
 							/>
 						</Pressable>
@@ -192,7 +198,7 @@ function BottomTabNavigator() {
 					headerTransparent: true,
 					headerBackground: () => (
 						<BlurView
-							tint={colorScheme}
+							tint={t.theme === 'dark' ? 'dark' : 'light'}
 							intensity={30}
 							style={[
 								StyleSheet.absoluteFill,

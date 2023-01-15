@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './slices/userInfo';
 import ticketMediaReducer from './slices/ticketMedia';
+import userPreferencesReducer from './slices/userPreferences';
 
 export const store = configureStore({
 	reducer: {
 		userInfo: userReducer,
 		ticketMedia: ticketMediaReducer,
+		userPreferences: userPreferencesReducer,
 	},
 });
 
