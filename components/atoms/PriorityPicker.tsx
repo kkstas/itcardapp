@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
-	useAnimatedRef,
 	withTiming,
 } from 'react-native-reanimated';
 import Layout from '../../constants/Layout';
