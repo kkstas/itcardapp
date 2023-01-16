@@ -5,7 +5,8 @@ import TicketForm from '../components/organisms/TicketForm';
 import { useAppSelector } from '../hooks/reduxHooks';
 import { addNewTicket } from '../hooks/asyncStorage';
 import { useNavigation } from '@react-navigation/native';
-import { PriorityPickerProps } from '../components/atoms/PriorityPicker';
+import { useAppDispatch } from '../hooks/reduxHooks';
+import { clearAll } from '../store/slices/ticketMedia';
 
 export default function CreateTicketScreen() {
 	const t = useCustomColors();
@@ -21,6 +22,7 @@ export default function CreateTicketScreen() {
 
 	const { media, thumbnailUri } = useAppSelector((state) => state.ticketMedia);
 	const navigation = useNavigation();
+	const dispatch = useAppDispatch();
 	function submitTicketToAsyncStorage() {
 		if (value && contentValue) {
 			const data = {
@@ -32,16 +34,17 @@ export default function CreateTicketScreen() {
 				thumbnailUri: thumbnailUri,
 			};
 			addNewTicket(data);
+			dispatch(clearAll());
 			navigation.goBack();
 		} else if (!value && contentValue) {
-			setErrMessage('Uzupełnij tytuł');
+			setErrMessage('Uzupełnij tytuł zgłoszenia');
 			setContentErrMessage('');
 		} else if (value && !contentValue) {
 			setErrMessage('');
-			setContentErrMessage('Uzupełnij treśc');
+			setContentErrMessage('Uzupełnij treść zgłoszenia');
 		} else {
-			setErrMessage('Uzupełnij tytuł');
-			setContentErrMessage('Uzupelnij tresc');
+			setErrMessage('Uzupełnij tytuł zgłoszenia');
+			setContentErrMessage('Uzupełnij treść zgłoszenia');
 		}
 	}
 

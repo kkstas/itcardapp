@@ -1,24 +1,62 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { TouchableOpacity, Alert, StyleSheet, View, Text } from 'react-native';
 import useCustomColors from '../../hooks/useCustomColors';
+import { Ionicons } from '@expo/vector-icons';
 
 export type Data = {
 	id: string;
-	title: string;
+	datetime: string;
+	location: string;
+	trxType: string;
+	trxAmount: string;
 };
 export default function ListItemContent({ item }: { item: Data }) {
 	const t = useCustomColors();
+	const iconsColor = item.trxType === 'Wpłata' ? t.tint : t.green2;
 	return (
 		<View style={[s.itemContainer, { borderBottomColor: t.separator }]}>
 			<View style={[s.avatarContainer, { backgroundColor: t.fillSecondary }]}>
-				<Text style={[s.avatarText, { color: t.text }]}>{item.title[0]}</Text>
+				<Ionicons
+					name={item.trxType === 'Wpłata' ? 'card-outline' : 'wallet-outline'}
+					color={iconsColor}
+					size={25}
+				/>
 			</View>
-			<Text style={[s.title, { color: t.text }]}>{item.title}</Text>
+			<View style={s.contentView}>
+				<Text style={[s.datetime, { color: t.labelQuaternary }]}>{item.datetime}</Text>
+				<Text style={[s.title, { color: t.text }]}>
+					{item.trxType} {item.trxAmount}
+				</Text>
+				<Text style={[s.datetime, { color: t.labelSecondary }]}>{item.location}</Text>
+			</View>
+			<TouchableOpacity
+				onPress={() =>
+					Alert.alert(
+						'Roboty drogowe!',
+						'Nie można pobrać potwierdzenia testowej transakcji. Moduł jest w trakcie budowy.'
+					)
+				}
+				style={s.downloadBtn}
+			>
+				<Ionicons name="download-outline" size={22} color={iconsColor} />
+			</TouchableOpacity>
 		</View>
 	);
 }
 
 const s = StyleSheet.create({
+	downloadBtn: {
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	datetime: {
+		fontSize: 12,
+	},
+	contentView: {
+		marginLeft: 16,
+		flexDirection: 'column',
+		width: '76%',
+	},
 	itemContainer: {
 		flex: 1,
 		flexDirection: 'row',
@@ -38,6 +76,5 @@ const s = StyleSheet.create({
 	},
 	title: {
 		fontSize: 18,
-		marginLeft: 16,
 	},
 });

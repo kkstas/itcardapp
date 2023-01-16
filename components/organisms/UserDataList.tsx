@@ -14,35 +14,45 @@ import { useNavigation } from '@react-navigation/native';
 const data: Data[] = [
 	{
 		id: '1',
-		title: 'Arkadiusz Sokal',
+		datetime: '07:44, 12.01.2023',
+		trxType: 'Wypłata',
+		trxAmount: '200.00 PLN',
+		location: 'Zwycięska 14a, 53-033 Wrocław',
 	},
 	{
 		id: '2',
-		title: 'Grzegorz Joachimiak',
+		datetime: '22:01, 01.12.2022',
+		trxType: 'Wypłata',
+		trxAmount: '1300.00 PLN',
+		location: 'Powstańców Śląskich 159, 53-139 Wrocław',
 	},
 	{
 		id: '3',
-		title: 'Paweł Budziński',
+		datetime: '09:51, 09.11.2022',
+		trxType: 'Wpłata',
+		trxAmount: '500.00 PLN',
+		location: 'Borowska 114, 50-159 Wrocław',
 	},
 	{
 		id: '4',
-		title: 'Michał Podgruszecki',
+		datetime: '11:50, 22.10.2022',
+		trxType: 'Wypłata',
+		trxAmount: '100.00 PLN',
+		location: 'CH Arkady Wrocławskie, Powstańców Śląskich 2-4, 53-333 Wrocław',
 	},
 	{
 		id: '5',
-		title: 'Roman Słociak',
+		datetime: '10:01, 22.10.2022',
+		trxType: 'Wpłata',
+		trxAmount: '900.00 PLN',
+		location: 'Krzycka 45A, 53-019 Wrocław',
 	},
 	{
 		id: '6',
-		title: 'Patryk Gryglak',
-	},
-	{
-		id: '7',
-		title: 'Miłosz Czerw',
-	},
-	{
-		id: '8',
-		title: 'Przemysław Margas',
+		datetime: '23:10, 10.09.2022',
+		trxType: 'Wypłata',
+		trxAmount: '150.00 PLN',
+		location: 'Komandorska 147, 53-344 Wrocław',
 	},
 ];
 

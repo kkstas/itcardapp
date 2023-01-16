@@ -1,4 +1,4 @@
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, Alert } from 'react-native';
 import AppCardBlueprint from '../atoms/AppCardBlueprint';
 import useCustomColors from '../../hooks/useCustomColors';
 import Animated, { FadeInDown, FadeOutDown } from 'react-native-reanimated';
@@ -58,27 +58,20 @@ export default function MainScreenApps({
 
 			<Animated.View entering={FadeInDown.duration(300).delay(300)}>
 				<AppCardBlueprint
-					title="Twoje zgłoszenia"
-					content="Tu znajdziesz wysłane przez Ciebie zgłoszenia."
-					icon="layers-outline"
-					showLearnMore={false}
-					learnMoreHandler={() =>
-						console.log(
-							"Dodaj tę funkcję w MainScreenTemplate (przeniesienie do ekranu tworzenia zgłoszenia). Console.log wywołany przez handler buttonu 'Dowiedz się więcej'"
-						)
-					}
-				/>
-			</Animated.View>
-
-			<Animated.View entering={FadeInDown.duration(300).delay(400)}>
-				<AppCardBlueprint
 					title="Serwisant"
 					content="Moduł pracowniczy służący do tworzenia formularzy serwisowych."
 					icon="settings-outline"
 					showLearnMore={true}
 					learnMoreHandler={() =>
-						console.log(
-							"Dodaj tę funkcję w MainScreenTemplate (przeniesienie do ekranu tworzenia zgłoszenia). Console.log wywołany przez handler buttonu 'Dowiedz się więcej'"
+						Alert.alert(
+							'Aplikacja w wersji testowej',
+							'Moduł Serwisanta nie został jeszcze ukończony.'
+						)
+					}
+					pressHandler={() =>
+						Alert.alert(
+							'Aplikacja w wersji testowej',
+							'Moduł Serwisanta nie został jeszcze ukończony.'
 						)
 					}
 				/>
