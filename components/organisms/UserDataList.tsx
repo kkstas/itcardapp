@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
@@ -7,6 +7,9 @@ import UserDataListItem from '../molecules/UserDataListItem';
 import UserDataListHeader from '../molecules/UserDataListHeader';
 import { useSharedValue, withTiming } from 'react-native-reanimated';
 import useCustomColors from '../../hooks/useCustomColors';
+import TicketDataListItem from '../molecules/TicketDataListItem';
+import { TicketDataType, getAllTickets } from '../../hooks/asyncStorage';
+import { useNavigation } from '@react-navigation/native';
 
 const data: Data[] = [
 	{
@@ -44,16 +47,12 @@ const data: Data[] = [
 ];
 
 export default function UserDataList() {
+	const navigation = useNavigation();
+
+	useEffect(() => {
+		navigation.addListener('focus', () => pressTicketsHandler());
+	}, []);
 	const t = useCustomColors();
-	const dummyData = [
-		{
-			id: 'asdf',
-			title: 'title',
-		},
-		{ id: 'asdfsf', title: 'asdfsaddfawe' },
-		{ id: 'fweefw', title: 'fj3849jf893jf98fj flsj' },
-		{ id: 'f4f4fd', title: 'fasdfowid fjkl ajdfl ' },
-	];
 
 	const [dataState, setDataState] = useState(data);
 	const [fromLeft, setFromLeft] = useState(true);
@@ -62,19 +61,36 @@ export default function UserDataList() {
 	const leftColorOffset = useSharedValue(t.tint);
 	const rightColorOffset = useSharedValue(t.gray2);
 
-	const pressTicketsHandler = () => {
-		setDataState(data);
+	const pressTicketsHandler = async () => {
+		const mydata = await getAllTickets();
+		setDataState(mydata);
 		setFromLeft(true);
 		sliderOffset.value = withTiming(0);
 		leftColorOffset.value = withTiming(t.tint);
 		rightColorOffset.value = withTiming(t.gray2);
 	};
 	const pressReceiptsHandler = () => {
-		setDataState(dummyData);
+		setDataState(data);
 		setFromLeft(false);
 		sliderOffset.value = withTiming(1);
 		leftColorOffset.value = withTiming(t.gray2);
 		rightColorOffset.value = withTiming(t.tint);
+	};
+
+	const ItemForRender = ({
+		item,
+		fromLeft,
+		index,
+	}: {
+		item: any;
+		fromLeft: boolean;
+		index: any;
+	}) => {
+		if (fromLeft) {
+			return <TicketDataListItem item={item} fromLeft={true} index={index} />;
+		} else {
+			return <UserDataListItem item={item} fromLeft={false} index={index} />;
+		}
 	};
 
 	return (
@@ -91,7 +107,7 @@ export default function UserDataList() {
 				)}
 				data={dataState}
 				renderItem={({ item, index }) => (
-					<UserDataListItem item={item} fromLeft={fromLeft} index={index} />
+					<ItemForRender item={item} fromLeft={fromLeft} index={index} />
 				)}
 				keyExtractor={(item) => item.id}
 			/>

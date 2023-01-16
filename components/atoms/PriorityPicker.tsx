@@ -8,9 +8,17 @@ import Animated, {
 import Layout from '../../constants/Layout';
 export interface PriorityPickerProps {
 	pickedState: 'normal' | 'high' | 'critical';
+	setNormalPriority: () => void;
+	setHighPriority: () => void;
+	setCriticalPriority: () => void;
 }
 
-export default function PriorityPicker({ pickedState }: PriorityPickerProps) {
+export default function PriorityPicker({
+	pickedState,
+	setNormalPriority,
+	setHighPriority,
+	setCriticalPriority,
+}: PriorityPickerProps) {
 	const t = useCustomColors();
 
 	const windowWidth = Layout.window.width;
@@ -30,18 +38,21 @@ export default function PriorityPicker({ pickedState }: PriorityPickerProps) {
 		leftColorOffset.value = withTiming(t.tint);
 		midColorOffset.value = withTiming(t.labelSecondary);
 		rightColorOffset.value = withTiming(t.labelSecondary);
+		setNormalPriority();
 	};
 	const midPressHandler = () => {
 		offset.value = withTiming(0);
 		leftColorOffset.value = withTiming(t.labelSecondary);
 		midColorOffset.value = withTiming(t.tint);
 		rightColorOffset.value = withTiming(t.labelSecondary);
+		setHighPriority();
 	};
 	const rightPressHandler = () => {
 		offset.value = withTiming(windowWidth / 3.4);
 		leftColorOffset.value = withTiming(t.labelSecondary);
 		midColorOffset.value = withTiming(t.labelSecondary);
 		rightColorOffset.value = withTiming(t.pink);
+		setCriticalPriority();
 	};
 
 	const leftTextStyle = useAnimatedStyle(() => {

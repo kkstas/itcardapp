@@ -1,16 +1,13 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import useCustomColors from '../../hooks/useCustomColors';
+import { TicketDataType } from '../../hooks/asyncStorage';
 
-export type Data = {
-	id: string;
-	title: string;
-};
-export default function ListItemContent({ item }: { item: Data }) {
+export default function TicketItemContent({ item }: { item: TicketDataType }) {
 	const t = useCustomColors();
 	return (
 		<View style={[s.itemContainer, { borderBottomColor: t.separator }]}>
-			<View style={[s.avatarContainer, { backgroundColor: t.fillSecondary }]}>
+			<View style={[s.avatarContainer, { backgroundColor: t.fillPrimary }]}>
 				<Text style={[s.avatarText, { color: t.text }]}>{item.title[0]}</Text>
 			</View>
 			<Text style={[s.title, { color: t.text }]}>{item.title}</Text>

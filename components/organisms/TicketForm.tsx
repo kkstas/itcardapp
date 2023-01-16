@@ -4,11 +4,14 @@ import TicketContentInput, { TicketContentInputProps } from '../atoms/TicketCont
 import PriorityPicker, { PriorityPickerProps } from '../atoms/PriorityPicker';
 import useCustomColors from '../../hooks/useCustomColors';
 import ImageBox from './ImageBox';
+import LocationButtons from '../molecules/LocatingButtons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface TicketFormProps {
 	titleInputProps: TicketTitleInputProps;
 	contentInputProps: TicketContentInputProps;
 	priorityPickerProps: PriorityPickerProps;
+	submitTicket: () => void;
 }
 
 export default function TicketForm(props: TicketFormProps) {
@@ -34,7 +37,12 @@ export default function TicketForm(props: TicketFormProps) {
 						/>
 					</View>
 					<View style={styles.priorityPickerView}>
-						<PriorityPicker pickedState={props.priorityPickerProps.pickedState} />
+						<PriorityPicker
+							pickedState={props.priorityPickerProps.pickedState}
+							setNormalPriority={props.priorityPickerProps.setNormalPriority}
+							setHighPriority={props.priorityPickerProps.setHighPriority}
+							setCriticalPriority={props.priorityPickerProps.setCriticalPriority}
+						/>
 					</View>
 					<View style={styles.addMedia}>
 						<Text style={[styles.inputLabel, { color: t.labelSecondary }]}>
@@ -42,6 +50,15 @@ export default function TicketForm(props: TicketFormProps) {
 						</Text>
 						<ImageBox />
 					</View>
+					<View style={styles.addLocation}>
+						<Text style={[styles.inputLabel, { color: t.labelSecondary }]}>
+							Dołącz lokalizację
+						</Text>
+						<LocationButtons />
+					</View>
+					<TouchableOpacity onPress={props.submitTicket} style={[styles.submitButton]}>
+						<Text style={[styles.btnText]}>Wyślij zgłoszenie</Text>
+					</TouchableOpacity>
 				</View>
 			</Pressable>
 		</ScrollView>
@@ -49,6 +66,20 @@ export default function TicketForm(props: TicketFormProps) {
 }
 
 const styles = StyleSheet.create({
+	btnText: {
+		fontSize: 16,
+		color: '#fff',
+	},
+	submitButton: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 15,
+		borderRadius: 8,
+		width: '100%',
+		height: 35,
+		backgroundColor: '#39405a',
+	},
+	addLocation: {},
 	pickMediaView: {},
 	inputLabel: {
 		paddingLeft: 8,
@@ -72,6 +103,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		marginHorizontal: 10,
 		marginTop: 15,
+		paddingBottom: 30,
 		justifyContent: 'flex-start',
 	},
 });

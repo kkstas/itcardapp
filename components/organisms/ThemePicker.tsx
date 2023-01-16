@@ -5,16 +5,8 @@ import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
 	withTiming,
-	FadeInLeft,
-	FadeOutRight,
-	SlideInDown,
-	SlideInLeft,
-	SlideOutRight,
 } from 'react-native-reanimated';
 import Layout from '../../constants/Layout';
-import { CustomTheme } from '../../constants/Colors';
-import { useEffect, useState } from 'react';
-import { CustomDarkTheme, CustomLightTheme } from '../../constants/Colors';
 import ThemeDescription from '../atoms/ThemeDescription';
 import themeText from '../../constants/Themes';
 
