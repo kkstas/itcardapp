@@ -32,7 +32,7 @@ export default function ListItemContent({ item }: { item: Data }) {
 			<TouchableOpacity
 				onPress={() =>
 					Alert.alert(
-						'Roboty drogowe!',
+						'Pobranie potwierdzenia nie powiodło się!',
 						'Nie można pobrać potwierdzenia testowej transakcji. Moduł jest w trakcie budowy.'
 					)
 				}

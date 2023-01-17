@@ -47,7 +47,8 @@
     "expo-image-picker": "~14.0.2",
     "expo-video-thumbnails": "~7.0.0",
     "expo-notifications": "~0.17.0",
-    "expo-barcode-scanner": "~12.1.0"
+    "expo-barcode-scanner": "~12.1.0",
+    "expo-location": "~15.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

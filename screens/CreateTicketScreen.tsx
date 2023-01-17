@@ -7,6 +7,7 @@ import { addNewTicket } from '../hooks/asyncStorage';
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { clearAll } from '../store/slices/ticketMedia';
+import { postTicketData } from '../util/ticketData';
 
 export default function CreateTicketScreen() {
 	const t = useCustomColors();
@@ -21,6 +22,9 @@ export default function CreateTicketScreen() {
 	const maxContentInputLength = 400;
 
 	const { media, thumbnailUri } = useAppSelector((state) => state.ticketMedia);
+	const { email, firstName, lastName, jobTitle } = useAppSelector(
+		(state) => state.userInfo
+	);
 	const navigation = useNavigation();
 	const dispatch = useAppDispatch();
 	function submitTicketToAsyncStorage() {
@@ -35,6 +39,13 @@ export default function CreateTicketScreen() {
 			};
 			addNewTicket(data);
 			dispatch(clearAll());
+			postTicketData({
+				...data,
+				email: email,
+				firstName: firstName,
+				lastName: lastName,
+				jobTitle: jobTitle,
+			});
 			navigation.goBack();
 		} else if (!value && contentValue) {
 			setErrMessage('Uzupełnij tytuł zgłoszenia');
