@@ -14,10 +14,10 @@ const ticketMedia = createSlice({
 	name: 'ticketMedia',
 	initialState,
 	reducers: {
-		setMedia: (state, action) => {
+		setMedia: (state, action: PayloadAction<string>) => {
 			state.media = action.payload;
 		},
-		setThumbnailUri: (state, action) => {
+		setThumbnailUri: (state, action: PayloadAction<string>) => {
 			state.thumbnailUri = action.payload;
 		},
 		clearAll: (state) => {
