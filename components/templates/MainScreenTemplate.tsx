@@ -1,17 +1,13 @@
 import { View, ScrollView, StyleSheet } from 'react-native';
 import ProfileHeading from '../organisms/ProfileHeading';
-import MainScreenApps from '../organisms/MainScreenApps';
+import MainScreenApps, { MainScreenAppsProps } from '../organisms/MainScreenApps';
 import { LinearGradient } from 'expo-linear-gradient';
 import { blueGradientColors } from '../../constants/Colors';
 import WelcomeToItcard from '../atoms/WelcomeToItcard';
 import Layout from '../../constants/Layout';
 
-interface MainScreenTemplateProps {
+interface MainScreenTemplateProps extends MainScreenAppsProps {
 	navigateToProfile: () => void;
-	navigateToInfo: () => void;
-	navigateToTicket: () => void;
-	navigateToScanReceipt: () => void;
-	navigateToLocateATM: () => void;
 }
 
 export default function MainScreenTemplate(props: MainScreenTemplateProps) {
@@ -27,7 +23,7 @@ export default function MainScreenTemplate(props: MainScreenTemplateProps) {
 				colors={blueGradientColors}
 			/>
 			<View style={styles.container}>
-				<View style={{ width: '80%', marginBottom: 10 }}>
+				<View style={styles.welcomeToItCardView}>
 					<WelcomeToItcard />
 				</View>
 				<ProfileHeading onPress={props.navigateToProfile} />
@@ -43,10 +39,12 @@ export default function MainScreenTemplate(props: MainScreenTemplateProps) {
 }
 
 const styles = StyleSheet.create({
+	welcomeToItCardView: {
+		width: '80%',
+		marginBottom: 10,
+	},
 	container: {
 		alignItems: 'center',
-		borderRadius: 25,
-		flex: 1,
 		paddingBottom: 180,
 	},
 	grad: {

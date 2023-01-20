@@ -1,9 +1,9 @@
 import useCustomColors from '../hooks/useCustomColors';
-import { Pressable, View, TextInput, Text, Keyboard, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useState } from 'react';
 import TicketForm from '../components/organisms/TicketForm';
 import { useAppSelector } from '../hooks/reduxHooks';
-import { addNewTicket } from '../hooks/asyncStorage';
+import { TicketDataType, addNewTicket } from '../hooks/asyncStorage';
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { clearAll } from '../store/slices/ticketMedia';
@@ -19,17 +19,19 @@ export default function CreateTicketScreen() {
 		'normal'
 	);
 	const maxTitleInputLength = 100;
-	const maxContentInputLength = 400;
+	const maxContentInputLength = 800;
 
 	const { media, thumbnailUri } = useAppSelector((state) => state.ticketMedia);
 	const { email, firstName, lastName, jobTitle } = useAppSelector(
 		(state) => state.userInfo
 	);
+
 	const navigation = useNavigation();
 	const dispatch = useAppDispatch();
+
 	function submitTicketToAsyncStorage() {
 		if (value && contentValue) {
-			const data = {
+			const data: TicketDataType = {
 				id: Date.now(),
 				title: value,
 				priority: pickedPriority,

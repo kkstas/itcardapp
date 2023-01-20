@@ -1,4 +1,4 @@
-import { Pressable, Text, View, Image, StyleSheet } from 'react-native';
+import { Text, View, Image, StyleSheet } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { clearAll } from '../../store/slices/ticketMedia';
 import useCustomColors from '../../hooks/useCustomColors';
@@ -18,13 +18,11 @@ export default function ImageBox() {
 
 	return (
 		<View style={styles.mainView}>
-			{/* <LinearGradient colors={['#fff', '#ffffff']} style={styles.imagePreview}> */}
 			<View style={[styles.imagePreview, { backgroundColor: t.textInput }]}>
 				{mediaPreview}
 				{thumbnailUri && (
 					<ImageDeleteButton onPress={() => dispatch(clearAll())} color={t.pink} />
 				)}
-				{/* </LinearGradient> */}
 				{!thumbnailUri && (
 					<View style={styles.buttonsContainer}>
 						<MediaBtn />
@@ -40,7 +38,6 @@ const styles = StyleSheet.create({
 	imagePreview: {
 		width: '100%',
 		height: 250,
-		// marginHorizontal: 5,
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderRadius: 10,

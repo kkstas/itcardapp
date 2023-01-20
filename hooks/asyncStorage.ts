@@ -16,9 +16,9 @@ export const removeSingleItem = async (deleteId: number) => {
 	try {
 		const ticketData = await AsyncStorage.getItem('ticketData');
 		if (ticketData) {
-			const parsedData = JSON.parse(ticketData);
+			const parsedData: TicketDataType[] = JSON.parse(ticketData);
 			if (Array.isArray(parsedData)) {
-				const filteredData = parsedData.filter((t) => t.ticketId != deleteId);
+				const filteredData = parsedData.filter((t) => t.id != deleteId);
 				await AsyncStorage.setItem('ticketData', JSON.stringify(filteredData));
 			}
 		}
@@ -29,11 +29,12 @@ export const removeSingleItem = async (deleteId: number) => {
 
 export const getAllTickets = async () => {
 	try {
+		console.log('Fetching tickets from AsyncStorage (ticketData):');
 		const jsonValue = await AsyncStorage.getItem('ticketData');
-		console.log('fetching tickets');
 		console.log(jsonValue);
 		return jsonValue != null ? JSON.parse(jsonValue) : null;
 	} catch (e) {
+		console.log('Fetching tickets from AsyncStorage failed');
 		console.log(e);
 	}
 };

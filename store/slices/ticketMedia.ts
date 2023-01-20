@@ -1,11 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+export interface TicketMediaState {
+	media: string | null;
+	thumbnailUri: string | null;
+}
+
+const initialState: TicketMediaState = {
+	media: null,
+	thumbnailUri: null,
+};
 
 const ticketMedia = createSlice({
 	name: 'ticketMedia',
-	initialState: {
-		media: null,
-		thumbnailUri: null,
-	},
+	initialState,
 	reducers: {
 		setMedia: (state, action) => {
 			state.media = action.payload;

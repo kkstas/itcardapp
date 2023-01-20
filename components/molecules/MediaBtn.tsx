@@ -54,10 +54,10 @@ export default function MediaBtn() {
 						time: 1000,
 					}
 				);
-				dispatch(setMedia(image));
+				dispatch(setMedia(image.assets[0].uri));
 				dispatch(setThumbnailUri(thumbnailImage.uri));
 			} else {
-				dispatch(setMedia(image));
+				dispatch(setMedia(image.assets[0].uri));
 				dispatch(setThumbnailUri(image.assets[0].uri));
 			}
 		}
