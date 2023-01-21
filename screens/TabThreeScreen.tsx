@@ -68,9 +68,6 @@ export default function TabThreeScreen() {
 						asyncThemeState={asyncThemeState}
 					/>
 				</View>
-				<List />
-
-				<List />
 			</View>
 		</ScrollView>
 	);
