@@ -3,23 +3,17 @@ import { Platform, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
 import InfoModalContent from '../components/organisms/InfoModalContent';
 import { RootStackScreenProps } from '../types';
+import TicketModalContent from '../components/organisms/TicketModalContent';
 
-export default function InfoModalScreen({
+export default function TicketModalScreen({
 	navigation,
 	route,
-}: RootStackScreenProps<'InfoModal'>) {
-	const appTitle = route.params?.appTitle || '';
-	const appDescription = route.params?.appDescription || '';
-	const bottomInfo = route.params?.bottomInfo || '';
+}: RootStackScreenProps<'TicketModal'>) {
+	const data = route.params.data;
 
 	return (
 		<BlurView intensity={20} style={styles.container}>
-			<InfoModalContent
-				appTitle={appTitle}
-				appDescription={appDescription}
-				bottomInfo={bottomInfo}
-				closeModal={() => navigation.goBack()}
-			/>
+			<TicketModalContent data={data} closeModal={() => navigation.goBack()} />
 			<StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
 		</BlurView>
 	);

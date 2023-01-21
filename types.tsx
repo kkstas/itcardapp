@@ -1,6 +1,7 @@
 import { BottomTabBarProps, BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { TicketDataType } from './hooks/asyncStorage';
 
 declare global {
 	namespace ReactNavigation {
@@ -12,7 +13,10 @@ export type RootStackParamList = {
 	LoginScreen: undefined;
 	Root: NavigatorScreenParams<RootTabParamList> | undefined;
 	Modal: undefined;
-	InfoModal: undefined;
+	InfoModal:
+		| { appTitle: string; appDescription: string; bottomInfo?: string }
+		| undefined;
+	TicketModal: { data: TicketDataType };
 	NotFound: undefined;
 };
 

@@ -1,11 +1,34 @@
 import React from 'react';
-import { Image, StyleSheet, View, Text } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import useCustomColors from '../../hooks/useCustomColors';
 import { TicketDataType } from '../../hooks/asyncStorage';
+import { Ionicons } from '@expo/vector-icons';
 
-export default function TicketItemContent({ item }: { item: TicketDataType }) {
+export default function TicketItemContent({
+	item,
+	goToTicketModal,
+}: {
+	item: TicketDataType;
+	goToTicketModal: () => void;
+}) {
 	const t = useCustomColors();
-	const date = new Date(item.id).toLocaleDateString();
+	const date = new Date(item.id).toLocaleString();
+
+	const priorityDisplay = {
+		text:
+			item.priority === 'critical'
+				? 'Krytyczny'
+				: item.priority === 'high'
+				? 'Wysoki'
+				: 'Normalny',
+		color:
+			item.priority === 'critical'
+				? t.red
+				: item.priority === 'high'
+				? t.tintTapState
+				: t.labelSecondary,
+	};
+
 	return (
 		<View style={[s.itemContainer, { borderBottomColor: t.separator }]}>
 			<View style={[s.avatarContainer, { backgroundColor: t.fillSecondary }]}>
@@ -16,14 +39,34 @@ export default function TicketItemContent({ item }: { item: TicketDataType }) {
 				)}
 			</View>
 			<View style={[s.contentContainer]}>
-				<Text style={[s.dateText, { color: t.labelPrimary }]}>{date}</Text>
+				<View style={{ flexDirection: 'column' }}>
+					<View style={{ flexDirection: 'row' }}>
+						<Text style={[s.priorityText, { color: t.labelSecondary }]}>Priorytet: </Text>
+						<Text style={[s.priorityText, { color: priorityDisplay.color }]}>
+							{priorityDisplay.text}
+						</Text>
+					</View>
+					<Text style={[s.dateText, { color: t.labelSecondary }]}>{date}</Text>
+				</View>
 				<Text style={[s.title, { color: t.text }]}>{item.title}</Text>
 			</View>
+			<TouchableOpacity style={s.btn} onPress={goToTicketModal}>
+				<Ionicons name="information-circle-outline" size={22} color={t.tint} />
+			</TouchableOpacity>
 		</View>
 	);
 }
 
 const s = StyleSheet.create({
+	btn: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		position: 'absolute',
+		right: 10,
+	},
+	priorityText: {
+		fontSize: 7,
+	},
 	img: {
 		borderRadius: 25,
 		width: 50,
@@ -31,10 +74,12 @@ const s = StyleSheet.create({
 	},
 	contentContainer: {
 		flexDirection: 'column',
-		paddingLeft: 10,
+		paddingBottom: 10,
+		paddingLeft: 14,
+		width: '78%',
 	},
 	dateText: {
-		fontSize: 11,
+		fontSize: 10,
 	},
 	itemContainer: {
 		flex: 1,

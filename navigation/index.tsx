@@ -31,6 +31,7 @@ import { useAppSelector, useAppDispatch } from '../hooks/reduxHooks';
 import { logOut } from '../store/slices/userInfo';
 import useCustomColors from '../hooks/useCustomColors';
 import { StatusBar } from 'expo-status-bar';
+import TicketModalScreen from '../screens/TicketModalScreen';
 
 const CLTheme = {
 	...DefaultTheme,
@@ -101,6 +102,14 @@ function RootNavigator() {
 						<Stack.Screen
 							name="InfoModal"
 							component={InfoModalScreen}
+							options={{
+								headerShown: false,
+								presentation: 'modal',
+							}}
+						/>
+						<Stack.Screen
+							name="TicketModal"
+							component={TicketModalScreen}
 							options={{
 								headerShown: false,
 								presentation: 'modal',

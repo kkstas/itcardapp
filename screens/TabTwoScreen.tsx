@@ -7,8 +7,12 @@ export default function TabTwoScreen({
 	function navigateToProfile() {
 		navigation.navigate('Root', { screen: 'TabThree' });
 	}
-	function navigateToInfo() {
-		navigation.navigate('InfoModal');
+	function navigateToInfo(appTitle: string, appDescription: string, bottomInfo: string) {
+		navigation.navigate('InfoModal', {
+			appTitle: appTitle,
+			appDescription: appDescription,
+			bottomInfo: bottomInfo,
+		});
 	}
 
 	function navigateToTicket() {

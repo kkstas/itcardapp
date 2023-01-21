@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Alert } from 'react-native';
+import { StyleSheet, View, Dimensions, Alert, TouchableOpacity } from 'react-native';
 import Animated, {
 	useSharedValue,
 	useAnimatedGestureHandler,
@@ -23,6 +23,8 @@ import useCustomColors from '../../hooks/useCustomColors';
 import { TicketDataType, removeSingleItem } from '../../hooks/asyncStorage';
 import TicketItemContent from '../atoms/TicketItemContent';
 
+import { useNavigation } from '@react-navigation/native';
+
 const windowDimensions = Dimensions.get('window');
 const BUTTON_WIDTH = 80;
 const MAX_TRANSLATE = -BUTTON_WIDTH;
@@ -36,6 +38,7 @@ export default function TicketDataListItem({ item, fromLeft, index }: ListItemPr
 	const isRemoving = useSharedValue(false);
 	const translateX = useSharedValue(0);
 	const t = useCustomColors();
+	const navigation = useNavigation();
 
 	type AnimatedGHContext = {
 		startX: number;
@@ -121,22 +124,28 @@ export default function TicketDataListItem({ item, fromLeft, index }: ListItemPr
 		};
 	});
 
-	return (
-		<Animated.View
-			style={styles.item}
-			entering={(fromLeft ? SlideInLeft : SlideInRight).delay(index * 50)}
-			exiting={(fromLeft ? SlideOutLeft : SlideOutRight).delay(index * 50)}
-		>
-			<PanGestureHandler activeOffsetX={[-10, 10]} onGestureEvent={handler}>
-				<Animated.View style={stylesAnimation}>
-					<TicketItemContent item={item} />
+	const goToTicketModal = () => {
+		navigation.navigate('TicketModal', { data: item });
+	};
 
-					<Animated.View style={[styles.buttonsContainer, removeButtonColor]}>
-						<DeleteListButton item={removeButton} />
+	return (
+		<TouchableOpacity onPress={goToTicketModal}>
+			<Animated.View
+				style={styles.item}
+				entering={(fromLeft ? SlideInLeft : SlideInRight).delay(index * 50)}
+				exiting={(fromLeft ? SlideOutLeft : SlideOutRight).delay(index * 50)}
+			>
+				<PanGestureHandler activeOffsetX={[-10, 10]} onGestureEvent={handler}>
+					<Animated.View style={stylesAnimation}>
+						<TicketItemContent goToTicketModal={goToTicketModal} item={item} />
+
+						<Animated.View style={[styles.buttonsContainer, removeButtonColor]}>
+							<DeleteListButton item={removeButton} />
+						</Animated.View>
 					</Animated.View>
-				</Animated.View>
-			</PanGestureHandler>
-		</Animated.View>
+				</PanGestureHandler>
+			</Animated.View>
+		</TouchableOpacity>
 	);
 }
 

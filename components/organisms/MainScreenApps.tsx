@@ -4,7 +4,7 @@ import useCustomColors from '../../hooks/useCustomColors';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
 export interface MainScreenAppsProps {
-	navigateToInfo: () => void;
+	navigateToInfo: (appTitle: string, appDescription: string, bottomInfo: string) => void;
 	navigateToTicket: () => void;
 	navigateToScanReceipt: () => void;
 	navigateToLocateATM: () => void;
@@ -17,6 +17,21 @@ export default function MainScreenApps({
 	navigateToLocateATM,
 }: MainScreenAppsProps) {
 	const t = useCustomColors();
+	const scannerLearnMoreHandler = () => {
+		navigateToInfo(
+			'Skanuj potwierdzenie',
+			`Zadaniem modułu jest skanowanie kodu QR wyświetlającego się na końcu transakcji. Uzyskane w ten sposób dane są odszyfrowywane i zapisywane lokalnie w pamięci urządzenia, stanowiąc dowód dokonania transakcji. Zeskanowane transakcje można znaleźć w zakładce "Dokumenty".`,
+			'Moduł jest w trakcie tworzenia i został tu udostępniony eksperymentalnie w ramach testów.'
+		);
+	};
+
+	const ticketLearnMoreHandler = () => {
+		navigateToInfo(
+			'Utwórz zgłoszenie',
+			'Zadaniem modułu jest umożliwienie przekazania informacji, lokalizacji i zdjęć/nagrań celem zgłoszenia uszkodzenia lub niepożądanego stanu bankomatu. Utworzone zgłoszenia zostają wysłane do serwera oraz (dla referencji użytkownika) są zapisywane w pamięci telefonu. Przycisk usuwania zgłoszenia ujawniający się na gest przesunięcia palcem w lewą stronę służy do usunięcia zgłoszenia wyłącznie z pamięci telefonu. Zgłoszenie wysłane do serwera pozostaje zapisane.',
+			''
+		);
+	};
 	return (
 		<>
 			<Text style={[styles.textApp, { color: t.labelSecondary }]}>Skróty aplikacji:</Text>
@@ -36,7 +51,7 @@ export default function MainScreenApps({
 					content="Moduł służący do zapisywania elektronicznego potwierdzenia dokonania transakcji w bankomacie."
 					showLearnMore={true}
 					icon="qr-code-outline"
-					learnMoreHandler={navigateToInfo}
+					learnMoreHandler={scannerLearnMoreHandler}
 					pressHandler={navigateToScanReceipt}
 				/>
 			</Animated.View>
@@ -47,11 +62,7 @@ export default function MainScreenApps({
 					content="Moduł służący do zgłaszania niezgodności w stanie lub działaniu bankomatów."
 					icon="paper-plane-outline"
 					showLearnMore={true}
-					learnMoreHandler={() =>
-						console.log(
-							"Dodaj tę funkcję w MainScreenTemplate (przeniesienie do ekranu tworzenia zgłoszenia). Console.log wywołany przez handler buttonu 'Dowiedz się więcej'"
-						)
-					}
+					learnMoreHandler={ticketLearnMoreHandler}
 					pressHandler={navigateToTicket}
 				/>
 			</Animated.View>

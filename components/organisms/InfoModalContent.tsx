@@ -6,31 +6,27 @@ interface InfoModalContentProps {
 	appTitle: string;
 	appDescription: string;
 	closeModal: () => void;
+	bottomInfo: string;
 }
 
 export default function InfoModalContent({
 	appTitle,
 	appDescription,
 	closeModal,
+	bottomInfo,
 }: InfoModalContentProps) {
 	const t = useCustomColors();
 	return (
 		<View style={[styles.container, { backgroundColor: t.bgPrimary }]}>
 			<View style={styles.textContainer}>
 				<Text style={{ fontSize: 12, color: t.text }}>Opis modułu</Text>
-				<Text style={[styles.appTitle, { color: t.text }]}>Skanuj potwierdzenie</Text>
+				<Text style={[styles.appTitle, { color: t.text }]}>{appTitle}</Text>
 
 				<Text style={[styles.appDescription, { color: t.labelPrimary }]}>
-					Zadaniem modułu jest skanowanie kodu QR wyświetlającego się na końcu transakcji.
-					Uzyskane w ten sposób dane są odszyfrowywane i zapisywane lokalnie w pamięci
-					urządzenia, stanowiąc dowód dokonania transakcji. Zeskanowane transakcje można
-					znaleźć w zakładce "Dokumenty".
+					{appDescription}
 				</Text>
 				<View style={[styles.separator, { borderBottomColor: t.text }]} />
-				<Text style={{ color: t.labelPrimary, fontWeight: '600' }}>
-					Moduł jest w trakcie tworzenia i został tu udostępniony eksperymentalnie w
-					ramach testów.
-				</Text>
+				<Text style={{ color: t.labelPrimary, fontWeight: '600' }}>{bottomInfo}</Text>
 			</View>
 			<SmallButtonWithIcon text="Powrót" onPress={closeModal} />
 		</View>
@@ -42,7 +38,6 @@ const styles = StyleSheet.create({
 		borderBottomWidth: StyleSheet.hairlineWidth,
 		marginVertical: 10,
 		paddingTop: 5,
-		marginRight: '40%',
 	},
 	textContainer: {
 		paddingHorizontal: 10,
