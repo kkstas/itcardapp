@@ -4,12 +4,15 @@ import { useState } from 'react';
 import TicketForm from '../components/organisms/TicketForm';
 import { useAppSelector } from '../hooks/reduxHooks';
 import { TicketDataType, addNewTicket } from '../hooks/asyncStorage';
-import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { clearAll } from '../store/slices/ticketMedia';
 import { postTicketData } from '../util/ticketData';
+import { TabTwoMainStackScreenProps } from '../types';
 
-export default function CreateTicketScreen() {
+export default function CreateTicketScreen({
+	navigation,
+	route,
+}: TabTwoMainStackScreenProps<'CreateTicketScreen'>) {
 	const t = useCustomColors();
 	const [value, setValue] = useState<string>('');
 	const [contentValue, setContentValue] = useState<string>('');
@@ -18,6 +21,7 @@ export default function CreateTicketScreen() {
 	const [pickedPriority, setPickedPriority] = useState<'normal' | 'high' | 'critical'>(
 		'normal'
 	);
+	const [locationUri, setLocationUri] = useState<string | null>(null);
 	const maxTitleInputLength = 100;
 	const maxContentInputLength = 800;
 
@@ -26,10 +30,12 @@ export default function CreateTicketScreen() {
 		(state) => state.userInfo
 	);
 
-	const navigation = useNavigation();
 	const dispatch = useAppDispatch();
 
+	// sends data to AsyncStorage (addNewTicket function)
+	// AND sends POST request to database (postTicketData function)
 	function submitTicketToAsyncStorage() {
+		// if title and content of the form is not empty
 		if (value && contentValue) {
 			const data: TicketDataType = {
 				id: Date.now(),
@@ -38,9 +44,13 @@ export default function CreateTicketScreen() {
 				content: contentValue,
 				media: media,
 				thumbnailUri: thumbnailUri,
+				locationUri: locationUri,
 			};
+			// add to AsyncStorage
 			addNewTicket(data);
+			// clear media and thumbnail data from redux
 			dispatch(clearAll());
+			// send POST request to database
 			postTicketData({
 				...data,
 				email: email,
@@ -60,6 +70,10 @@ export default function CreateTicketScreen() {
 			setContentErrMessage('Uzupełnij treść zgłoszenia');
 		}
 	}
+
+	const goToMapScreen = (lat: number, lng: number) => {
+		navigation.navigate('MapScreen', { lat: lat, lng: lng });
+	};
 
 	return (
 		<View style={[styles.container, { backgroundColor: t.bgPrimaryGrouped }]}>
@@ -83,6 +97,13 @@ export default function CreateTicketScreen() {
 					setCriticalPriority: () => setPickedPriority('critical'),
 				}}
 				submitTicket={submitTicketToAsyncStorage}
+				goToMapScreen={goToMapScreen}
+				pickedLocationParams={
+					route.params
+						? { lat: route.params.pickedLat, lng: route.params.pickedLng }
+						: null
+				}
+				setLocationUri={setLocationUri}
 			/>
 		</View>
 	);
@@ -92,7 +113,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 	},
-
 	errorView: {
 		flexDirection: 'row',
 		paddingLeft: 10,

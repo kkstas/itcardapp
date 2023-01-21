@@ -1,15 +1,40 @@
-import { Alert, Text, Pressable, View, StyleSheet } from 'react-native';
+import { Alert, Text, Pressable, Image, View, StyleSheet } from 'react-native';
 import useCustomColors from '../../hooks/useCustomColors';
 import {
 	PermissionStatus,
 	getCurrentPositionAsync,
 	useForegroundPermissions,
 } from 'expo-location';
+import { useEffect, useState } from 'react';
+import { getMapPreview } from '../../util/getMapPreview';
+import { useIsFocused } from '@react-navigation/native';
 
-export default function LocationButtons() {
+export default function LocationButtons({
+	goToMapScreen,
+	pickedLocationParams,
+	setLocationUri,
+}: {
+	goToMapScreen: (lat: number, lng: number) => void;
+	pickedLocationParams: { lat: number; lng: number } | null;
+	setLocationUri: React.Dispatch<React.SetStateAction<string | null>>;
+}) {
 	const t = useCustomColors();
+	const [isFetchingLocation, setIsFetchingLocation] = useState(false);
+	const [pickedLocation, setPickedLocation] = useState<{
+		lat: number;
+		lng: number;
+	} | null>(null);
+
+	const isFocused = useIsFocused();
 
 	const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
+
+	useEffect(() => {
+		if (isFocused && pickedLocationParams) {
+			setPickedLocation(pickedLocationParams);
+			setLocationUri(getMapPreview(pickedLocationParams.lat, pickedLocationParams.lng));
+		}
+	}, [isFocused, pickedLocationParams]);
 
 	async function verifyPermissions() {
 		if (locationPermissionInformation?.status === PermissionStatus.UNDETERMINED) {
@@ -27,20 +52,52 @@ export default function LocationButtons() {
 	}
 
 	async function locateMeHandler() {
+		setIsFetchingLocation(true);
 		const hasPermission = await verifyPermissions();
 		if (!hasPermission) {
+			setIsFetchingLocation(false);
 			return;
 		}
 		const location = await getCurrentPositionAsync();
-		console.log(location);
+
+		setPickedLocation({
+			lat: location.coords.latitude,
+			lng: location.coords.longitude,
+		});
+		setLocationUri(getMapPreview(location.coords.latitude, location.coords.longitude));
+		setIsFetchingLocation(false);
 	}
 
-	function pickOnMapHandler() {
-		console.log('pick on map func');
+	async function pickOnMapHandler() {
+		setIsFetchingLocation(true);
+		const hasPermission = await verifyPermissions();
+		if (!hasPermission) {
+			setIsFetchingLocation(false);
+			return;
+		}
+		const location = await getCurrentPositionAsync();
+		setIsFetchingLocation(false);
+		goToMapScreen(location.coords.latitude, location.coords.longitude);
+	}
+
+	console.log('LocatingButtons refreshed');
+
+	let locationPreview = <Text>Lokalizacja nie zostala wybrana</Text>;
+	if (pickedLocation) {
+		locationPreview = (
+			<Image
+				style={styles.image}
+				source={{ uri: getMapPreview(pickedLocation.lat, pickedLocation.lng) }}
+			/>
+		);
 	}
 
 	return (
 		<View style={[styles.container, { backgroundColor: t.textInput }]}>
+			{isFetchingLocation && (
+				<View style={{ width: 50, height: 50, backgroundColor: 'red' }} />
+			)}
+			{locationPreview}
 			<Pressable onPress={locateMeHandler} style={styles.locateMeButton}>
 				<Text style={styles.locateMeText}>Zlokalizuj mnie</Text>
 			</Pressable>
@@ -57,10 +114,16 @@ const styles = StyleSheet.create({
 	locateMeText: {},
 	locateMeButton: {},
 	container: {
-		height: 200,
+		height: 220,
 		justifyContent: 'center',
 		flexDirection: 'row',
 		alignItems: 'center',
 		borderRadius: 10,
+		overflow: 'hidden',
+	},
+	image: {
+		position: 'absolute',
+		width: '100%',
+		height: '100%',
 	},
 });

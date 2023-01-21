@@ -12,6 +12,9 @@ interface TicketFormProps {
 	contentInputProps: TicketContentInputProps;
 	priorityPickerProps: PriorityPickerProps;
 	submitTicket: () => void;
+	goToMapScreen: (lat: number, lng: number) => void;
+	pickedLocationParams: { lat: number; lng: number } | null;
+	setLocationUri: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export default function TicketForm(props: TicketFormProps) {
@@ -54,7 +57,11 @@ export default function TicketForm(props: TicketFormProps) {
 						<Text style={[styles.inputLabel, { color: t.labelSecondary }]}>
 							Dołącz lokalizację
 						</Text>
-						<LocationButtons />
+						<LocationButtons
+							goToMapScreen={props.goToMapScreen}
+							pickedLocationParams={props.pickedLocationParams}
+							setLocationUri={props.setLocationUri}
+						/>
 					</View>
 					<TouchableOpacity onPress={props.submitTicket} style={[styles.submitButton]}>
 						<Text style={[styles.btnText]}>Wyślij zgłoszenie</Text>

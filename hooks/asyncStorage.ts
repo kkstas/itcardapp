@@ -10,6 +10,7 @@ export interface TicketDataType {
 	content: string;
 	media: string | null;
 	thumbnailUri: string | null;
+	locationUri: string | null;
 }
 
 export const removeSingleItem = async (deleteId: number) => {

@@ -15,6 +15,7 @@ import {
 	RootTabParamList,
 	RootTabScreenProps,
 	TabTwoMainStackParamList,
+	TabTwoMainStackScreenProps,
 } from '../types';
 
 import TabThreeScreen from '../screens/TabThreeScreen';
@@ -32,6 +33,7 @@ import { logOut } from '../store/slices/userInfo';
 import useCustomColors from '../hooks/useCustomColors';
 import { StatusBar } from 'expo-status-bar';
 import TicketModalScreen from '../screens/TicketModalScreen';
+import MapScreen from '../screens/MapScreen';
 
 const CLTheme = {
 	...DefaultTheme,
@@ -273,6 +275,11 @@ function TabTwoMainStackNavigator() {
 				name="LocateATMScreen"
 				options={{ title: 'Znajdź bankomat' }}
 				component={LocateATMScreen}
+			/>
+			<TabTwoMainStack.Screen
+				name="MapScreen"
+				component={MapScreen}
+				options={{ title: 'tytul mapaa' }}
 			/>
 		</TabTwoMainStack.Navigator>
 	);
