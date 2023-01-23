@@ -1,4 +1,13 @@
-import { Alert, Text, Pressable, Image, View, StyleSheet } from 'react-native';
+import {
+	TouchableOpacity,
+	Alert,
+	Text,
+	Pressable,
+	Image,
+	View,
+	StyleSheet,
+	Touchable,
+} from 'react-native';
 import useCustomColors from '../../hooks/useCustomColors';
 import {
 	PermissionStatus,
@@ -8,6 +17,9 @@ import {
 import { useEffect, useState } from 'react';
 import { getMapPreview, getAddress } from '../../util/location';
 import { useIsFocused } from '@react-navigation/native';
+import LocateMeButton from '../atoms/LocateMeButton';
+import LoadingOverlay from '../atoms/LoadingOverlay';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function LocationButtons({
 	goToMapScreen,
@@ -96,7 +108,7 @@ export default function LocationButtons({
 
 	console.log('LocatingButtons refreshed');
 
-	let locationPreview = <Text>Lokalizacja nie zostala wybrana</Text>;
+	let locationPreview = <Text style={{ position: 'absolute' }}></Text>;
 	if (pickedLocation) {
 		locationPreview = (
 			<Image
@@ -108,27 +120,44 @@ export default function LocationButtons({
 
 	return (
 		<View style={[styles.container, { backgroundColor: t.textInput }]}>
-			{isFetchingLocation && (
-				<View style={{ width: 50, height: 50, backgroundColor: 'red' }} />
-			)}
+			{isFetchingLocation && <LoadingOverlay />}
 			{locationPreview}
-			<Pressable
-				onPress={locateMeHandler}
-				style={styles.locateMeButton}
-			>
-				<Text style={styles.locateMeText}>Zlokalizuj mnie</Text>
-			</Pressable>
-			<Pressable
-				onPress={pickOnMapHandler}
-				style={styles.pickOnMapButton}
-			>
-				<Text style={styles.pickOnMapText}>Wybierz na mapie</Text>
-			</Pressable>
+			{pickedLocation && (
+				<TouchableOpacity
+					style={styles.exitBtnView}
+					onPress={() => setPickedLocation(null)}
+				>
+					<Ionicons
+						name='close'
+						color={t.pink}
+						size={32}
+					/>
+				</TouchableOpacity>
+			)}
+			{!pickedLocation && !isFetchingLocation && (
+				<>
+					<LocateMeButton
+						icon='navigate-circle-outline'
+						text='Zlokalizuj mnie'
+						onPress={locateMeHandler}
+					/>
+					<LocateMeButton
+						icon='map-outline'
+						text='Wybierz na mapie'
+						onPress={pickOnMapHandler}
+					/>
+				</>
+			)}
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
+	exitBtnView: {
+		position: 'absolute',
+		right: 10,
+		top: 10,
+	},
 	pickOnMapText: {},
 	pickOnMapButton: {},
 	locateMeText: {},

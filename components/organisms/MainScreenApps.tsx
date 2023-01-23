@@ -1,18 +1,21 @@
-import { Text, StyleSheet, Alert } from 'react-native';
+import { Text, StyleSheet, Alert, View } from 'react-native';
 import AppCardBlueprint from '../atoms/AppCardBlueprint';
 import useCustomColors from '../../hooks/useCustomColors';
 import Animated, { FadeInDown } from 'react-native-reanimated';
+import LoadingOverlay from '../atoms/LoadingOverlay';
 
 export interface MainScreenAppsProps {
 	navigateToInfo: (appTitle: string, appDescription: string, bottomInfo: string) => void;
 	navigateToTicket: () => void;
 	navigateToScanReceipt: () => void;
 	navigateToLocateATM: () => void;
+	isFetchingLocation: boolean;
 }
 
 export default function MainScreenApps({
 	navigateToInfo,
 	navigateToTicket,
+	isFetchingLocation,
 	navigateToScanReceipt,
 	navigateToLocateATM,
 }: MainScreenAppsProps) {
@@ -35,22 +38,31 @@ export default function MainScreenApps({
 	return (
 		<>
 			<Text style={[styles.textApp, { color: t.labelSecondary }]}>Skróty aplikacji:</Text>
-			<Animated.View entering={FadeInDown.duration(300)}>
+			<Animated.View
+				style={{ justifyContent: 'flex-end', alignItems: 'center' }}
+				entering={FadeInDown.duration(300)}
+			>
 				<AppCardBlueprint
-					title="Znajdź bankomat w okolicy"
-					content="Moduł służący do lokalizowania bankomatów na podstawie informacji o położeniu urządzenia oraz preferencji użytkownika"
+					title='Znajdź bankomat w okolicy'
+					content='Moduł służący do lokalizowania bankomatów na podstawie informacji o położeniu urządzenia oraz preferencji użytkownika'
 					showLearnMore={false}
-					icon="location-outline"
+					icon='location-outline'
 					pressHandler={navigateToLocateATM}
 				/>
+				{isFetchingLocation && (
+					<LoadingOverlay
+						paddingBottom={12}
+						fontSize={14}
+					/>
+				)}
 			</Animated.View>
 
 			<Animated.View entering={FadeInDown.duration(300).delay(100)}>
 				<AppCardBlueprint
-					title="Skanuj potwierdzenie"
-					content="Moduł służący do zapisywania elektronicznego potwierdzenia dokonania transakcji w bankomacie."
+					title='Skanuj potwierdzenie'
+					content='Moduł służący do zapisywania elektronicznego potwierdzenia dokonania transakcji w bankomacie.'
 					showLearnMore={true}
-					icon="qr-code-outline"
+					icon='qr-code-outline'
 					learnMoreHandler={scannerLearnMoreHandler}
 					pressHandler={navigateToScanReceipt}
 				/>
@@ -58,9 +70,9 @@ export default function MainScreenApps({
 
 			<Animated.View entering={FadeInDown.duration(300).delay(200)}>
 				<AppCardBlueprint
-					title="Utwórz zgłoszenie"
-					content="Moduł służący do zgłaszania niezgodności w stanie lub działaniu bankomatów."
-					icon="paper-plane-outline"
+					title='Utwórz zgłoszenie'
+					content='Moduł służący do zgłaszania niezgodności w stanie lub działaniu bankomatów.'
+					icon='paper-plane-outline'
 					showLearnMore={true}
 					learnMoreHandler={ticketLearnMoreHandler}
 					pressHandler={navigateToTicket}
@@ -69,9 +81,9 @@ export default function MainScreenApps({
 
 			<Animated.View entering={FadeInDown.duration(300).delay(300)}>
 				<AppCardBlueprint
-					title="Serwisant"
-					content="Moduł pracowniczy służący do tworzenia formularzy serwisowych."
-					icon="settings-outline"
+					title='Serwisant'
+					content='Moduł pracowniczy służący do tworzenia formularzy serwisowych.'
+					icon='settings-outline'
 					showLearnMore={true}
 					learnMoreHandler={() =>
 						Alert.alert(

@@ -1,53 +1,20 @@
-import MapView, { MapPressEvent, Marker, UrlTile } from 'react-native-maps';
-import { StyleSheet, Alert, Platform } from 'react-native';
+import MapView, { Callout, MapPressEvent, Marker, UrlTile } from 'react-native-maps';
+import { StyleSheet, Alert, Platform, View, Text } from 'react-native';
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { TabTwoMainStackScreenProps } from '../types';
 import HeaderButton from '../components/atoms/HeaderButton';
 import openMap, { createOpenLink, createMapLink } from 'react-native-open-maps';
 import * as Linking from 'expo-linking';
+import { IatmElement, atmsDummyData } from '../constants/atmsDummyData';
+import MarkerCustomCallout from '../components/atoms/MarkerCustomCallout';
+import useCustomColors from '../hooks/useCustomColors';
 
-interface IatmElement {
-	lat: number;
-	lng: number;
-	title: string;
-	description: string;
-	pinColor: string;
-}
 export default function LocateATMScreen({
 	navigation,
 	route,
 }: TabTwoMainStackScreenProps<'LocateATMScreen'>) {
-	const atmData: IatmElement[] = [
-		{
-			lat: 51.09999485226624,
-			lng: 17.067454706266,
-			title: 'title',
-			description: 'desc',
-			pinColor: 'red',
-		},
-		{
-			lat: 51.09799144029021,
-			lng: 17.071068452616803,
-			title: 'title2',
-			description: 'descasfw3',
-			pinColor: 'yellow',
-		},
-		{
-			lat: 51.097452,
-			lng: 17.063619,
-			title: 'dfadf',
-			description: 'fefe',
-			pinColor: 'purple',
-		},
-		{
-			lat: 51.10261543016718,
-			lng: 17.052772784658345,
-			title: 'Biedronka',
-			description: 'ul. Szybka',
-			pinColor: 'lightblue',
-		},
-	];
-
+	const atmData: IatmElement[] = atmsDummyData;
+	const t = useCustomColors();
 	const region = {
 		latitude: route.params.lat,
 		longitude: route.params.lng,
@@ -71,11 +38,15 @@ export default function LocateATMScreen({
 					stopPropagation={true}
 					key={index}
 					coordinate={{ latitude: element.lat, longitude: element.lng }}
-					onPress={() => openLinkToMap(element.lat, element.lng, element.title)}
+					onCalloutPress={() => openLinkToMap(element.lat, element.lng, element.title)}
 					title={element.title}
 					pinColor={element.pinColor}
 					description={element.description}
-				/>
+				>
+					<Callout>
+						<MarkerCustomCallout />
+					</Callout>
+				</Marker>
 			))}
 		</MapView>
 	);

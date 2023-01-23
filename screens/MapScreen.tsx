@@ -3,14 +3,8 @@ import { StyleSheet, Alert } from 'react-native';
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { TabTwoMainStackScreenProps } from '../types';
 import HeaderButton from '../components/atoms/HeaderButton';
+import { IatmElement, atmsDummyData } from '../constants/atmsDummyData';
 
-interface IatmElement {
-	lat: number;
-	lng: number;
-	title: string;
-	description: string;
-	pinColor: string;
-}
 export default function MapScreen({
 	navigation,
 	route,
@@ -19,29 +13,7 @@ export default function MapScreen({
 		{ lat: number; lng: number } | undefined
 	>(undefined);
 
-	const atmData: IatmElement[] = [
-		{
-			lat: 51.09999485226624,
-			lng: 17.067454706266,
-			title: 'title',
-			description: 'desc',
-			pinColor: 'red',
-		},
-		{
-			lat: 51.09799144029021,
-			lng: 17.071068452616803,
-			title: 'title2',
-			description: 'descasfw3',
-			pinColor: 'yellow',
-		},
-		{
-			lat: 51.097452,
-			lng: 17.063619,
-			title: 'dfadf',
-			description: 'fefe',
-			pinColor: 'purple',
-		},
-	];
+	const atmData = atmsDummyData;
 
 	const region = {
 		latitude: route.params?.lat || 51.059412936330716,

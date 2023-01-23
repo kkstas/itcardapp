@@ -72,6 +72,7 @@ export default function TabTwoScreen({
 			navigateToTicket={navigateToTicket}
 			navigateToScanReceipt={navigateToScanReceipt}
 			navigateToLocateATM={navigateToLocateATM}
+			isFetchingLocation={isFetchingLocation}
 		/>
 	);
 }

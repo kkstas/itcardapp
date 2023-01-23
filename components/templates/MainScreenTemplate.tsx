@@ -8,6 +8,7 @@ import Layout from '../../constants/Layout';
 
 interface MainScreenTemplateProps extends MainScreenAppsProps {
 	navigateToProfile: () => void;
+	isFetchingLocation: boolean;
 }
 
 export default function MainScreenTemplate(props: MainScreenTemplateProps) {
@@ -32,6 +33,7 @@ export default function MainScreenTemplate(props: MainScreenTemplateProps) {
 					navigateToTicket={props.navigateToTicket}
 					navigateToScanReceipt={props.navigateToScanReceipt}
 					navigateToLocateATM={props.navigateToLocateATM}
+					isFetchingLocation={props.isFetchingLocation}
 				/>
 			</View>
 		</ScrollView>
