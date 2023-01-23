@@ -8,13 +8,14 @@ import * as Linking from 'expo-linking';
 import { IatmElement, atmsDummyData } from '../constants/atmsDummyData';
 import MarkerCustomCallout from '../components/atoms/MarkerCustomCallout';
 import useCustomColors from '../hooks/useCustomColors';
+import Colors, { CustomLightTheme } from '../constants/Colors';
 
 export default function LocateATMScreen({
 	navigation,
 	route,
 }: TabTwoMainStackScreenProps<'LocateATMScreen'>) {
 	const atmData: IatmElement[] = atmsDummyData;
-	const t = useCustomColors();
+	const t = { ...Colors, ...CustomLightTheme };
 	const region = {
 		latitude: route.params.lat,
 		longitude: route.params.lng,
@@ -38,13 +39,25 @@ export default function LocateATMScreen({
 					stopPropagation={true}
 					key={index}
 					coordinate={{ latitude: element.lat, longitude: element.lng }}
-					onCalloutPress={() => openLinkToMap(element.lat, element.lng, element.title)}
-					title={element.title}
-					pinColor={element.pinColor}
-					description={element.description}
+					onCalloutPress={() =>
+						openLinkToMap(element.lat, element.lng, element.adresLokalizacji)
+					}
+					title={element.lokalizacja}
+					pinColor={
+						element.instytucja === 'PlanetCash'
+							? 'rgb(0,146,255)'
+							: element.instytucja === 'ING' || element.instytucja === 'PlanetING'
+							? 'rgb(255,98,0)'
+							: element.instytucja === 'PlanetBNPP'
+							? 'rgb(26,158,106)'
+							: element.instytucja === 'CreditAgricole'
+							? '#19b9b9'
+							: 't.brown'
+					}
+					description={element.moduly}
 				>
 					<Callout>
-						<MarkerCustomCallout />
+						<MarkerCustomCallout element={element} />
 					</Callout>
 				</Marker>
 			))}

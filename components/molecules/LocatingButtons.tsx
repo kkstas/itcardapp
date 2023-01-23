@@ -134,7 +134,7 @@ export default function LocationButtons({
 					/>
 				</TouchableOpacity>
 			)}
-			{!pickedLocation && !isFetchingLocation && (
+			{!isFetchingLocation && !pickedLocation && (
 				<>
 					<LocateMeButton
 						icon='navigate-circle-outline'

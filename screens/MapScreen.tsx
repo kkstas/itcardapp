@@ -1,9 +1,11 @@
-import MapView, { MapPressEvent, Marker } from 'react-native-maps';
+import MapView, { MapPressEvent, Callout, Marker } from 'react-native-maps';
 import { StyleSheet, Alert } from 'react-native';
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { TabTwoMainStackScreenProps } from '../types';
 import HeaderButton from '../components/atoms/HeaderButton';
 import { IatmElement, atmsDummyData } from '../constants/atmsDummyData';
+import MarkerCustomCallout from '../components/atoms/MarkerCustomCallout';
+import Colors, { CustomLightTheme } from '../constants/Colors';
 
 export default function MapScreen({
 	navigation,
@@ -13,6 +15,7 @@ export default function MapScreen({
 		{ lat: number; lng: number } | undefined
 	>(undefined);
 
+	const t = { ...Colors.light, ...CustomLightTheme };
 	const atmData = atmsDummyData;
 
 	const region = {
@@ -62,10 +65,14 @@ export default function MapScreen({
 					onPress={() => {
 						setSelectedLocation({ lat: element.lat, lng: element.lng });
 					}}
-					title={element.title}
-					pinColor={element.pinColor}
-					description={element.description}
-				/>
+					title={element.nazwaLokalizacji}
+					pinColor={element.instytucja === 'PlanetCash' ? t.tint : t.brown}
+					description={element.lokalizacja}
+				>
+					<Callout>
+						<MarkerCustomCallout element={element} />
+					</Callout>
+				</Marker>
 			))}
 		</MapView>
 	);
