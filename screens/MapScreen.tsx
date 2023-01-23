@@ -4,6 +4,13 @@ import { useCallback, useLayoutEffect, useState } from 'react';
 import { TabTwoMainStackScreenProps } from '../types';
 import HeaderButton from '../components/atoms/HeaderButton';
 
+interface IatmElement {
+	lat: number;
+	lng: number;
+	title: string;
+	description: string;
+	pinColor: string;
+}
 export default function MapScreen({
 	navigation,
 	route,
@@ -12,18 +19,35 @@ export default function MapScreen({
 		{ lat: number; lng: number } | undefined
 	>(undefined);
 
+	const atmData: IatmElement[] = [
+		{
+			lat: 51.09999485226624,
+			lng: 17.067454706266,
+			title: 'title',
+			description: 'desc',
+			pinColor: 'red',
+		},
+		{
+			lat: 51.09799144029021,
+			lng: 17.071068452616803,
+			title: 'title2',
+			description: 'descasfw3',
+			pinColor: 'yellow',
+		},
+		{
+			lat: 51.097452,
+			lng: 17.063619,
+			title: 'dfadf',
+			description: 'fefe',
+			pinColor: 'purple',
+		},
+	];
+
 	const region = {
 		latitude: route.params?.lat || 51.059412936330716,
 		longitude: route.params?.lng || 17.01280990859961,
 		latitudeDelta: 0.0922 / 2,
 		longitudeDelta: 0.0421 / 2,
-	};
-
-	const selectLocationHandler = (event: MapPressEvent) => {
-		const lat = event.nativeEvent.coordinate.latitude;
-		const lng = event.nativeEvent.coordinate.longitude;
-
-		setSelectedLocation({ lat: lat, lng: lng });
 	};
 
 	const savePickedLocationHandler = useCallback(() => {
@@ -44,9 +68,9 @@ export default function MapScreen({
 		navigation.setOptions({
 			headerRight: () => (
 				<HeaderButton
-					icon="save-outline"
-					text="Zapisz"
-					position="right"
+					icon='save-outline'
+					text='Zapisz'
+					position='right'
 					onPress={savePickedLocationHandler}
 				/>
 			),
@@ -54,13 +78,23 @@ export default function MapScreen({
 	}, [navigation, savePickedLocationHandler]);
 
 	return (
-		<MapView style={styles.map} initialRegion={region} onPress={selectLocationHandler}>
-			{selectedLocation && (
+		<MapView
+			style={styles.map}
+			initialRegion={region}
+		>
+			{atmData.map((element, index) => (
 				<Marker
-					title="Wybrana lokalizacja"
-					coordinate={{ latitude: selectedLocation.lat, longitude: selectedLocation.lng }}
+					stopPropagation={true}
+					key={index}
+					coordinate={{ latitude: element.lat, longitude: element.lng }}
+					onPress={() => {
+						setSelectedLocation({ lat: element.lat, lng: element.lng });
+					}}
+					title={element.title}
+					pinColor={element.pinColor}
+					description={element.description}
 				/>
-			)}
+			))}
 		</MapView>
 	);
 }

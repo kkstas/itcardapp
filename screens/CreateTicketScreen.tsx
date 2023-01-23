@@ -22,6 +22,7 @@ export default function CreateTicketScreen({
 		'normal'
 	);
 	const [locationUri, setLocationUri] = useState<string | null>(null);
+	const [address, setAddress] = useState<string | null>(null);
 	const maxTitleInputLength = 100;
 	const maxContentInputLength = 800;
 
@@ -45,6 +46,7 @@ export default function CreateTicketScreen({
 				media: media,
 				thumbnailUri: thumbnailUri,
 				locationUri: locationUri,
+				address: address,
 			};
 			// add to AsyncStorage
 			addNewTicket(data);
@@ -104,6 +106,7 @@ export default function CreateTicketScreen({
 						: null
 				}
 				setLocationUri={setLocationUri}
+				setAddress={setAddress}
 			/>
 		</View>
 	);

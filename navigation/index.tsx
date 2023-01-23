@@ -56,7 +56,10 @@ export default function Navigation() {
 	const t = useCustomColors();
 	return (
 		<>
-			<StatusBar animated={true} style={t.theme === 'light' ? 'dark' : 'light'} />
+			<StatusBar
+				animated={true}
+				style={t.theme === 'light' ? 'dark' : 'light'}
+			/>
 			<NavigationContainer theme={t.theme === 'dark' ? CDTheme : CLTheme}>
 				<RootNavigator />
 			</NavigationContainer>
@@ -74,19 +77,19 @@ function RootNavigator() {
 		<Stack.Navigator>
 			{!isLoggedIn ? (
 				<Stack.Screen
-					name="LoginScreen"
+					name='LoginScreen'
 					component={LoginScreen}
 					options={{ headerShown: false }}
 				/>
 			) : (
 				<>
 					<Stack.Screen
-						name="Root"
+						name='Root'
 						component={BottomTabNavigator}
 						options={{ headerShown: false }}
 					/>
 					<Stack.Screen
-						name="NotFound"
+						name='NotFound'
 						component={NotFoundScreen}
 						options={{ title: 'Oops!' }}
 					/>
@@ -97,12 +100,12 @@ function RootNavigator() {
 						}}
 					>
 						<Stack.Screen
-							name="Modal"
+							name='Modal'
 							component={ModalScreen}
 							options={{ title: 'Informacje' }}
 						/>
 						<Stack.Screen
-							name="InfoModal"
+							name='InfoModal'
 							component={InfoModalScreen}
 							options={{
 								headerShown: false,
@@ -110,7 +113,7 @@ function RootNavigator() {
 							}}
 						/>
 						<Stack.Screen
-							name="TicketModal"
+							name='TicketModal'
 							component={TicketModalScreen}
 							options={{
 								headerShown: false,
@@ -137,13 +140,13 @@ function BottomTabNavigator() {
 
 	return (
 		<BottomTab.Navigator
-			initialRouteName="TabTwo"
+			initialRouteName='TabTwo'
 			screenOptions={{
 				tabBarActiveTintColor: t.tint,
 			}}
 		>
 			<BottomTab.Screen
-				name="TabOne"
+				name='TabOne'
 				component={TabOneScreen}
 				options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
 					headerTransparent: true,
@@ -163,7 +166,7 @@ function BottomTabNavigator() {
 					title: 'Dokumenty',
 					tabBarIcon: ({ color }) => (
 						<Ionicons
-							name="layers-outline"
+							name='layers-outline'
 							size={28}
 							color={color}
 							style={{ marginBottom: -3 }}
@@ -177,7 +180,7 @@ function BottomTabNavigator() {
 							})}
 						>
 							<Ionicons
-								name="information-circle-outline"
+								name='information-circle-outline'
 								size={26}
 								color={t.tintTapState}
 								style={{ marginLeft: 15 }}
@@ -187,7 +190,7 @@ function BottomTabNavigator() {
 				})}
 			/>
 			<BottomTab.Screen
-				name="TabTwo"
+				name='TabTwo'
 				component={TabTwoMainStackNavigator}
 				options={{
 					headerShown: false,
@@ -195,7 +198,7 @@ function BottomTabNavigator() {
 					tabBarIcon: ({ color }) => (
 						<Ionicons
 							size={28}
-							name="home-outline"
+							name='home-outline'
 							color={color}
 							style={{ marginBottom: -3 }}
 						/>
@@ -203,7 +206,7 @@ function BottomTabNavigator() {
 				}}
 			/>
 			<BottomTab.Screen
-				name="TabThree"
+				name='TabThree'
 				component={TabThreeScreen}
 				options={({ navigation }: RootTabScreenProps<'TabThree'>) => ({
 					headerTransparent: true,
@@ -222,25 +225,25 @@ function BottomTabNavigator() {
 					),
 					headerLeft: () => (
 						<HeaderButton
-							text="Ekran główny"
-							position="left"
-							icon="chevron-back-outline"
+							text='Ekran główny'
+							position='left'
+							icon='chevron-back-outline'
 							onPress={() => navigation.navigate('TabTwo')}
 						/>
 					),
 					headerRight: () => (
 						<HeaderButton
 							onPress={logOutHandler}
-							text="Wyloguj "
-							position="right"
-							icon="log-out-outline"
+							text='Wyloguj '
+							position='right'
+							icon='log-out-outline'
 						/>
 					),
 					title: 'Profil',
 					tabBarIcon: ({ color }) => (
 						<Ionicons
 							style={{ marginBottom: -3 }}
-							name="person-outline"
+							name='person-outline'
 							size={28}
 							color={color}
 						/>
@@ -255,31 +258,31 @@ const TabTwoMainStack = createNativeStackNavigator<TabTwoMainStackParamList>();
 
 function TabTwoMainStackNavigator() {
 	return (
-		<TabTwoMainStack.Navigator initialRouteName="TabTwoScreen">
+		<TabTwoMainStack.Navigator initialRouteName='TabTwoScreen'>
 			<TabTwoMainStack.Screen
-				name="TabTwoScreen"
+				name='TabTwoScreen'
 				component={TabTwoScreen}
 				options={{ headerShown: false }}
 			/>
 			<TabTwoMainStack.Screen
-				name="CreateTicketScreen"
+				name='CreateTicketScreen'
 				options={{ title: 'Ekran zgłoszenia' }}
 				component={CreateTicketScreen}
 			/>
 			<TabTwoMainStack.Screen
-				name="ScanReceiptScreen"
+				name='ScanReceiptScreen'
 				component={ScanReceiptScreen}
 				options={{ title: 'Skanuj potwierdzenie' }}
 			/>
 			<TabTwoMainStack.Screen
-				name="LocateATMScreen"
+				name='LocateATMScreen'
 				options={{ title: 'Znajdź bankomat' }}
 				component={LocateATMScreen}
 			/>
 			<TabTwoMainStack.Screen
-				name="MapScreen"
+				name='MapScreen'
 				component={MapScreen}
-				options={{ title: 'tytul mapaa' }}
+				options={{ title: 'Wybierz lokalizację' }}
 			/>
 		</TabTwoMainStack.Navigator>
 	);

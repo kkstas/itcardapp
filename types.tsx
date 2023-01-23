@@ -34,13 +34,13 @@ export type TabTwoMainStackParamList = {
 	CreateTicketScreen: { pickedLat: number; pickedLng: number } | undefined;
 	MapScreen: { lat: number; lng: number } | undefined;
 	ScanReceiptScreen: undefined;
-	LocateATMScreen: undefined;
+	LocateATMScreen: { lat: number; lng: number };
 };
 
 export type TabTwoMainStackScreenProps<Screen extends keyof TabTwoMainStackParamList> =
 	CompositeScreenProps<
 		NativeStackScreenProps<TabTwoMainStackParamList, Screen>,
-		NativeStackScreenProps<TabTwoMainStackParamList>
+		NativeStackScreenProps<RootStackParamList>
 	>;
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

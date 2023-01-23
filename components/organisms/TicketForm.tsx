@@ -15,6 +15,7 @@ interface TicketFormProps {
 	goToMapScreen: (lat: number, lng: number) => void;
 	pickedLocationParams: { lat: number; lng: number } | null;
 	setLocationUri: React.Dispatch<React.SetStateAction<string | null>>;
+	setAddress: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export default function TicketForm(props: TicketFormProps) {
@@ -61,9 +62,13 @@ export default function TicketForm(props: TicketFormProps) {
 							goToMapScreen={props.goToMapScreen}
 							pickedLocationParams={props.pickedLocationParams}
 							setLocationUri={props.setLocationUri}
+							setAddress={props.setAddress}
 						/>
 					</View>
-					<TouchableOpacity onPress={props.submitTicket} style={[styles.submitButton]}>
+					<TouchableOpacity
+						onPress={props.submitTicket}
+						style={[styles.submitButton]}
+					>
 						<Text style={[styles.btnText]}>Wyślij zgłoszenie</Text>
 					</TouchableOpacity>
 				</View>

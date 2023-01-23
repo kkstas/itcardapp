@@ -11,6 +11,7 @@ export interface TicketDataType {
 	media: string | null;
 	thumbnailUri: string | null;
 	locationUri: string | null;
+	address: string | null;
 }
 
 export const removeSingleItem = async (deleteId: number) => {
@@ -32,8 +33,11 @@ export const getAllTickets = async () => {
 	try {
 		console.log('Fetching tickets from AsyncStorage (ticketData):');
 		const jsonValue = await AsyncStorage.getItem('ticketData');
-		console.log(jsonValue);
-		return jsonValue != null ? JSON.parse(jsonValue) : null;
+		const parsedValue = jsonValue != null ? JSON.parse(jsonValue) : null;
+		for (const e of parsedValue) {
+			console.log(`id: ${e.id}, title: ${e.title}`);
+		}
+		return parsedValue;
 	} catch (e) {
 		console.log('Fetching tickets from AsyncStorage failed');
 		console.log(e);

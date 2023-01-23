@@ -125,9 +125,21 @@ export default function UserDataList() {
 		index: any;
 	}) => {
 		if (fromLeft) {
-			return <TicketDataListItem item={item} fromLeft={true} index={index} />;
+			return (
+				<TicketDataListItem
+					item={item}
+					fromLeft={true}
+					index={index}
+				/>
+			);
 		} else {
-			return <UserDataListItem item={item} fromLeft={false} index={index} />;
+			return (
+				<UserDataListItem
+					item={item}
+					fromLeft={false}
+					index={index}
+				/>
+			);
 		}
 	};
 
@@ -145,7 +157,11 @@ export default function UserDataList() {
 				)}
 				data={dataState}
 				renderItem={({ item, index }) => (
-					<ItemForRender item={item} fromLeft={fromLeft} index={index} />
+					<ItemForRender
+						item={item}
+						fromLeft={fromLeft}
+						index={index}
+					/>
 				)}
 				keyExtractor={(item) => item.id}
 			/>

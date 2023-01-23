@@ -18,7 +18,6 @@ import {
 import { springConfig, timingConfig } from '../../animations/UserDataListAnimationConfig';
 
 import DeleteListButton from '../atoms/DeleteListButton';
-import ListItemContent, { Data } from '../atoms/ListItemContent';
 import useCustomColors from '../../hooks/useCustomColors';
 import { TicketDataType, removeSingleItem } from '../../hooks/asyncStorage';
 import TicketItemContent from '../atoms/TicketItemContent';
@@ -125,7 +124,9 @@ export default function TicketDataListItem({ item, fromLeft, index }: ListItemPr
 	});
 
 	const goToTicketModal = () => {
-		navigation.navigate('TicketModal', { data: item });
+		if (translateX.value === 0) {
+			navigation.navigate('TicketModal', { data: item });
+		}
 	};
 
 	return (
@@ -135,9 +136,15 @@ export default function TicketDataListItem({ item, fromLeft, index }: ListItemPr
 				entering={(fromLeft ? SlideInLeft : SlideInRight).delay(index * 50)}
 				exiting={(fromLeft ? SlideOutLeft : SlideOutRight).delay(index * 50)}
 			>
-				<PanGestureHandler activeOffsetX={[-10, 10]} onGestureEvent={handler}>
+				<PanGestureHandler
+					activeOffsetX={[-10, 10]}
+					onGestureEvent={handler}
+				>
 					<Animated.View style={stylesAnimation}>
-						<TicketItemContent goToTicketModal={goToTicketModal} item={item} />
+						<TicketItemContent
+							goToTicketModal={goToTicketModal}
+							item={item}
+						/>
 
 						<Animated.View style={[styles.buttonsContainer, removeButtonColor]}>
 							<DeleteListButton item={removeButton} />

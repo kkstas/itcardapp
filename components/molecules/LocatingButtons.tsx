@@ -6,17 +6,19 @@ import {
 	useForegroundPermissions,
 } from 'expo-location';
 import { useEffect, useState } from 'react';
-import { getMapPreview } from '../../util/getMapPreview';
+import { getMapPreview, getAddress } from '../../util/location';
 import { useIsFocused } from '@react-navigation/native';
 
 export default function LocationButtons({
 	goToMapScreen,
 	pickedLocationParams,
 	setLocationUri,
+	setAddress,
 }: {
 	goToMapScreen: (lat: number, lng: number) => void;
 	pickedLocationParams: { lat: number; lng: number } | null;
 	setLocationUri: React.Dispatch<React.SetStateAction<string | null>>;
+	setAddress: React.Dispatch<React.SetStateAction<string | null>>;
 }) {
 	const t = useCustomColors();
 	const [isFetchingLocation, setIsFetchingLocation] = useState(false);
@@ -30,10 +32,18 @@ export default function LocationButtons({
 	const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
 
 	useEffect(() => {
-		if (isFocused && pickedLocationParams) {
-			setPickedLocation(pickedLocationParams);
-			setLocationUri(getMapPreview(pickedLocationParams.lat, pickedLocationParams.lng));
+		async function handleLocation() {
+			if (isFocused && pickedLocationParams) {
+				setPickedLocation(pickedLocationParams);
+				setLocationUri(getMapPreview(pickedLocationParams.lat, pickedLocationParams.lng));
+				const currentAddress = await getAddress(
+					pickedLocationParams.lat,
+					pickedLocationParams.lng
+				);
+				setAddress(currentAddress);
+			}
 		}
+		handleLocation();
 	}, [isFocused, pickedLocationParams]);
 
 	async function verifyPermissions() {
@@ -59,7 +69,11 @@ export default function LocationButtons({
 			return;
 		}
 		const location = await getCurrentPositionAsync();
-
+		const currentAddress = await getAddress(
+			location.coords.latitude,
+			location.coords.longitude
+		);
+		setAddress(currentAddress);
 		setPickedLocation({
 			lat: location.coords.latitude,
 			lng: location.coords.longitude,
@@ -98,10 +112,16 @@ export default function LocationButtons({
 				<View style={{ width: 50, height: 50, backgroundColor: 'red' }} />
 			)}
 			{locationPreview}
-			<Pressable onPress={locateMeHandler} style={styles.locateMeButton}>
+			<Pressable
+				onPress={locateMeHandler}
+				style={styles.locateMeButton}
+			>
 				<Text style={styles.locateMeText}>Zlokalizuj mnie</Text>
 			</Pressable>
-			<Pressable onPress={pickOnMapHandler} style={styles.pickOnMapButton}>
+			<Pressable
+				onPress={pickOnMapHandler}
+				style={styles.pickOnMapButton}
+			>
 				<Text style={styles.pickOnMapText}>Wybierz na mapie</Text>
 			</Pressable>
 		</View>
