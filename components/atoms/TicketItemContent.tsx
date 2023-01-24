@@ -49,9 +49,7 @@ export default function TicketItemContent({
 			<View style={[s.contentContainer]}>
 				<View style={{ flexDirection: 'row' }}>
 					<Text style={[s.priorityText, { color: t.labelSecondary }]}>Priorytet:</Text>
-					<Text
-						style={[s.priorityText, { color: priorityDisplay.color, paddingLeft: 2 }]}
-					>
+					<Text style={[s.priorityText, { color: priorityDisplay.color }]}>
 						{priorityDisplay.text}
 					</Text>
 				</View>
@@ -100,7 +98,8 @@ const s = StyleSheet.create({
 	},
 	priorityText: {
 		fontSize: 7,
-		paddingLeft: 1,
+		paddingLeft: 2,
+		paddingTop: 5,
 	},
 	img: {
 		borderRadius: 25,
@@ -111,7 +110,7 @@ const s = StyleSheet.create({
 		flexDirection: 'column',
 		paddingBottom: 8,
 		paddingLeft: 14,
-		width: '78%',
+		width: '75%',
 	},
 	dateText: {
 		fontSize: 10,

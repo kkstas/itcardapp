@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
 	address: {
 		fontWeight: '500',
 		fontSize: 12,
+		color: '#464d83',
 	},
 	mainText: {
 		fontSize: 22,

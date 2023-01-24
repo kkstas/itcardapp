@@ -27,8 +27,8 @@ export default function ImageBtn() {
 		}
 		if (cameraPermissionInformation?.status === PermissionStatus.DENIED) {
 			Alert.alert(
-				'Nie wyrażono zgody na dostęp do kamery / biblioteki zdjęć',
-				'Aby aplikacja poprawnie działa, musisz wyraźić zgody.'
+				'Nie wyrażono zgody na dostęp do Aparatu.',
+				'Poprzednie zapytanie o zgodę na dostęp zostało odrzucone. Aby aplikacja poprawnie działa, musisz wyrazić zgodę na dostęp w ustawieniach Twojego urządzenia.'
 			);
 			return false;
 		}
@@ -68,7 +68,11 @@ export default function ImageBtn() {
 			onPress={takeImageHandler}
 			style={[styles.container, { backgroundColor: t.bgTertiaryGrouped }]}
 		>
-			<Ionicons name="camera-outline" color={t.tint} size={32} />
+			<Ionicons
+				name='camera-outline'
+				color={t.tint}
+				size={32}
+			/>
 			<Text style={[styles.text, { color: t.tint }]}>Zrób zdjęcie</Text>
 		</TouchableOpacity>
 	);

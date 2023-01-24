@@ -77,7 +77,7 @@ export default function TicketDataListItem({ item, fromLeft, index }: ListItemPr
 		}
 
 		return {
-			height: 78,
+			height: 83,
 			transform: [
 				{
 					translateX: translateX.value,

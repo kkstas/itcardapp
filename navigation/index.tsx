@@ -242,7 +242,7 @@ function BottomTabNavigator() {
 					title: 'Profil',
 					tabBarIcon: ({ color }) => (
 						<Ionicons
-							style={{ marginBottom: -3 }}
+							style={{ marginBottom: -3, marginRight: 1 }}
 							name='person-outline'
 							size={28}
 							color={color}
@@ -257,6 +257,7 @@ function BottomTabNavigator() {
 const TabTwoMainStack = createNativeStackNavigator<TabTwoMainStackParamList>();
 
 function TabTwoMainStackNavigator() {
+	const t = useCustomColors();
 	return (
 		<TabTwoMainStack.Navigator initialRouteName='TabTwoScreen'>
 			<TabTwoMainStack.Screen
@@ -276,13 +277,47 @@ function TabTwoMainStackNavigator() {
 			/>
 			<TabTwoMainStack.Screen
 				name='LocateATMScreen'
-				options={{ title: 'Znajdź bankomat', headerBackTitle: 'Powrót' }}
+				options={{
+					title: 'Znajdź bankomat',
+					headerBackTitle: 'Powrót',
+					headerTransparent: true,
+					headerBackground: () => (
+						<BlurView
+							tint={t.theme === 'dark' ? 'dark' : 'light'}
+							intensity={30}
+							style={[
+								StyleSheet.absoluteFill,
+								{
+									backgroundColor:
+										t.theme === 'light' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)',
+								},
+							]}
+						/>
+					),
+				}}
 				component={LocateATMScreen}
 			/>
 			<TabTwoMainStack.Screen
 				name='MapScreen'
 				component={MapScreen}
-				options={{ title: 'Wybierz lokalizację', headerBackTitle: 'Powrót' }}
+				options={{
+					title: 'Wybierz lokalizację',
+					headerBackTitle: 'Powrót',
+					headerTransparent: true,
+					headerBackground: () => (
+						<BlurView
+							tint={t.theme === 'dark' ? 'dark' : 'light'}
+							intensity={30}
+							style={[
+								StyleSheet.absoluteFill,
+								{
+									backgroundColor:
+										t.theme === 'light' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)',
+								},
+							]}
+						/>
+					),
+				}}
 			/>
 		</TabTwoMainStack.Navigator>
 	);

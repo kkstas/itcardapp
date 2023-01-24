@@ -17,13 +17,15 @@
 		},
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"bundleIdentifier": "com.itcdev.itcardapp"
 		},
 		"android": {
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/images/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
-			}
+			},
+			"permissions": ["android.permission.RECORD_AUDIO"]
 		},
 		"web": {
 			"favicon": "./assets/images/favicon.png"
@@ -32,9 +34,9 @@
 			[
 				"expo-image-picker",
 				{
-					"photosPermission": "The app accesses your photos to let you share them with your friends.",
-					"cameraPermission": "The app needs access to your camera to perform action.",
-					"microphonePermission": "The app needs access to your microphone to perform action."
+					"photosPermission": "Aby uzyskać możliwość udostępnienia mediów wewnątrz aplikacji, aplikacja ITCARD potrzebuje zgody na dostęp do Zdjęć.",
+					"cameraPermission": "Aby uzyskać możliwość robienia zdjęć oraz nagrywania filmów mediów wewnątrz aplikacji, aplikacja ITCARD potrzebuje zgody na dostęp do kamery urządzenia.",
+					"microphonePermission": "Aby mieć możliwość nagrywania filmów z dźwiękiem, aplikacja ITCARD potrzebuje zgody na dostęp do mikrofonu."
 				}
 			],
 			[
@@ -44,6 +46,11 @@
 					"color": "#ffffff"
 				}
 			]
-		]
+		],
+		"extra": {
+			"eas": {
+				"projectId": "39dfb59f-9c53-46c5-8dc5-42a7993264e2"
+			}
+		}
 	}
 }

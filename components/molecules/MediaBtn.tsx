@@ -27,8 +27,8 @@ export default function MediaBtn() {
 		}
 		if (mediaLibraryPermissionInformation?.status === PermissionStatus.DENIED) {
 			Alert.alert(
-				'Nie wyrażono zgody na dostęp do kamery / biblioteki zdjęć',
-				'Aby aplikacja poprawnie działa, musisz wyraźić zgody.'
+				'Nie wyrażono zgody na dostęp do biblioteki zdjęć',
+				'Poprzednie zapytanie o udzielenie zgód zostało odrzucone. Aby aplikacja poprawnie działa, musisz wyrazić zgodę w ustawieniach Twojego urządzenia.'
 			);
 			return false;
 		}
@@ -68,7 +68,11 @@ export default function MediaBtn() {
 			onPress={pickMediaHandler}
 			style={[styles.container, { backgroundColor: t.bgTertiaryGrouped }]}
 		>
-			<Ionicons name="image-outline" color={t.tint} size={32} />
+			<Ionicons
+				name='image-outline'
+				color={t.tint}
+				size={32}
+			/>
 			<Text style={[styles.text, { color: t.tint }]}>Wybierz z galerii</Text>
 		</TouchableOpacity>
 	);
