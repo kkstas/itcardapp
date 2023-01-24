@@ -67,7 +67,17 @@ export default function MapScreen({
 						setSelectedLocation({ lat: element.lat, lng: element.lng });
 					}}
 					title={element.nazwaLokalizacji}
-					pinColor={element.instytucja === 'PlanetCash' ? t.tint : t.brown}
+					pinColor={
+						element.instytucja === 'PlanetCash'
+							? 'rgb(0,146,255)'
+							: element.instytucja === 'ING' || element.instytucja === 'PlanetING'
+							? 'rgb(255,98,0)'
+							: element.instytucja === 'PlanetBNPP'
+							? 'rgb(26,158,106)'
+							: element.instytucja === 'CreditAgricole'
+							? '#19b9b9'
+							: 't.brown'
+					}
 					description={element.lokalizacja}
 				>
 					<Callout>
