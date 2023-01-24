@@ -3,12 +3,12 @@ import useCustomColors from '../../hooks/useCustomColors';
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-interface ILocateMeButton {
+interface IPickOnMapButton {
 	onPress: () => void;
 	text: string;
 	icon: keyof typeof Ionicons.glyphMap;
 }
-export default function LocateMeButton({ onPress, text, icon }: ILocateMeButton) {
+export default function PickOnMapButton({ onPress, text, icon }: IPickOnMapButton) {
 	const t = useCustomColors();
 
 	return (

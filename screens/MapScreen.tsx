@@ -45,6 +45,7 @@ export default function MapScreen({
 				<HeaderButton
 					icon='save-outline'
 					text='Zapisz'
+					color={t.blue}
 					position='right'
 					onPress={savePickedLocationHandler}
 				/>

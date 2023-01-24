@@ -7,6 +7,7 @@ interface HeaderButtonProps {
 	position: 'left' | 'right';
 	icon?: keyof typeof Ionicons.glyphMap;
 	onPress?: () => void;
+	color?: string;
 }
 
 export default function HeaderButton({
@@ -14,21 +15,37 @@ export default function HeaderButton({
 	text,
 	position,
 	onPress,
+	color,
 }: HeaderButtonProps) {
 	const t = useCustomColors();
 	return (
-		<TouchableOpacity style={[styles.container]} onPress={onPress}>
-			{icon && position === 'left' && <Ionicons name={icon} size={30} color={t.tint} />}
+		<TouchableOpacity
+			style={[styles.container]}
+			onPress={onPress}
+		>
+			{icon && position === 'left' && (
+				<Ionicons
+					name={icon}
+					size={30}
+					color={t.tint}
+				/>
+			)}
 			<Text
 				style={{
-					color: t.tint,
+					color: color || t.tint,
 					marginHorizontal: icon ? 1 : 14,
 					fontSize: 16,
 				}}
 			>
 				{text}
 			</Text>
-			{icon && position === 'right' && <Ionicons name={icon} size={30} color={t.tint} />}
+			{icon && position === 'right' && (
+				<Ionicons
+					name={icon}
+					size={30}
+					color={color || t.tint}
+				/>
+			)}
 		</TouchableOpacity>
 	);
 }

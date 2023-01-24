@@ -266,23 +266,23 @@ function TabTwoMainStackNavigator() {
 			/>
 			<TabTwoMainStack.Screen
 				name='CreateTicketScreen'
-				options={{ title: 'Ekran zgłoszenia' }}
+				options={{ title: 'Ekran zgłoszenia', headerBackTitle: 'Powrót' }}
 				component={CreateTicketScreen}
 			/>
 			<TabTwoMainStack.Screen
 				name='ScanReceiptScreen'
 				component={ScanReceiptScreen}
-				options={{ title: 'Skanuj potwierdzenie' }}
+				options={{ title: 'Skanuj potwierdzenie', headerBackTitle: 'Powrót' }}
 			/>
 			<TabTwoMainStack.Screen
 				name='LocateATMScreen'
-				options={{ title: 'Znajdź bankomat' }}
+				options={{ title: 'Znajdź bankomat', headerBackTitle: 'Powrót' }}
 				component={LocateATMScreen}
 			/>
 			<TabTwoMainStack.Screen
 				name='MapScreen'
 				component={MapScreen}
-				options={{ title: 'Wybierz lokalizację' }}
+				options={{ title: 'Wybierz lokalizację', headerBackTitle: 'Powrót' }}
 			/>
 		</TabTwoMainStack.Navigator>
 	);

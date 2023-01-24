@@ -17,7 +17,7 @@ export default function LoadingOverlay({
 			exiting={FadeOutUp}
 			style={[styles.container, { paddingBottom: paddingBottom || 0 }]}
 		>
-			<Text style={[styles.text, { fontSize: fSize, color: t.tint }]}>Loading...</Text>
+			<Text style={[styles.text, { fontSize: fSize, color: t.tint }]}>Ładowanie...</Text>
 		</Animated.View>
 	);
 }

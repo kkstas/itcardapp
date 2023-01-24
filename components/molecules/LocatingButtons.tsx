@@ -40,12 +40,11 @@ export default function LocationButtons({
 	} | null>(null);
 
 	const isFocused = useIsFocused();
-
 	const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
 
 	useEffect(() => {
 		async function handleLocation() {
-			if (isFocused && pickedLocationParams) {
+			if (isFocused && pickedLocationParams && !pickedLocation) {
 				setPickedLocation(pickedLocationParams);
 				setLocationUri(getMapPreview(pickedLocationParams.lat, pickedLocationParams.lng));
 				const currentAddress = await getAddress(
@@ -81,21 +80,25 @@ export default function LocationButtons({
 			return;
 		}
 		const location = await getCurrentPositionAsync();
+		console.log('LOCATE ME COORDS:');
+
+		setPickedLocation({
+			lat: location.coords.latitude,
+			lng: location.coords.longitude,
+		});
+		console.log(location.coords);
 		const currentAddress = await getAddress(
 			location.coords.latitude,
 			location.coords.longitude
 		);
 		setAddress(currentAddress);
-		setPickedLocation({
-			lat: location.coords.latitude,
-			lng: location.coords.longitude,
-		});
 		setLocationUri(getMapPreview(location.coords.latitude, location.coords.longitude));
 		setIsFetchingLocation(false);
 	}
 
 	async function pickOnMapHandler() {
 		setIsFetchingLocation(true);
+		setLocationUri(null);
 		const hasPermission = await verifyPermissions();
 		if (!hasPermission) {
 			setIsFetchingLocation(false);
@@ -108,24 +111,30 @@ export default function LocationButtons({
 
 	console.log('LocatingButtons refreshed');
 
-	let locationPreview = <Text style={{ position: 'absolute' }}></Text>;
-	if (pickedLocation) {
+	let locationPreview = null;
+	if (pickedLocation && !locationPreview) {
 		locationPreview = (
 			<Image
 				style={styles.image}
-				source={{ uri: getMapPreview(pickedLocation.lat, pickedLocation.lng) }}
+				source={{
+					uri: getMapPreview(pickedLocation.lat, pickedLocation.lng),
+				}}
 			/>
 		);
 	}
 
+	const resetLocationHandler = () => {
+		setPickedLocation(null);
+	};
+
 	return (
 		<View style={[styles.container, { backgroundColor: t.textInput }]}>
 			{isFetchingLocation && <LoadingOverlay />}
-			{locationPreview}
+			{!isFetchingLocation && locationPreview}
 			{pickedLocation && (
 				<TouchableOpacity
+					onPress={resetLocationHandler}
 					style={styles.exitBtnView}
-					onPress={() => setPickedLocation(null)}
 				>
 					<Ionicons
 						name='close'
