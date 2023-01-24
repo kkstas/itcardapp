@@ -37,8 +37,13 @@ export default function TicketItemContent({
 						source={{ uri: item.thumbnailUri }}
 						style={s.img}
 					/>
+				) : item.locationUri ? (
+					<Image
+						source={{ uri: item.locationUri }}
+						style={s.img}
+					/>
 				) : (
-					<Text style={[s.avatarText, { color: t.text }]}></Text>
+					<Text></Text>
 				)}
 			</View>
 			<View style={[s.contentContainer]}>
