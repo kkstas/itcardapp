@@ -1,102 +1,37 @@
-import { StyleSheet, View, ScrollView } from 'react-native';
-import useCustomColors from '../hooks/useCustomColors';
-import List from '../components/atoms/List';
-import ProfileHeadingLarge from '../components/organisms/ProfileHeadingLarge';
-
-import { useHeaderHeight } from '@react-navigation/elements';
-import { getThemePreference, setThemePreference } from '../hooks/asyncStorage';
-import { setThemeState } from '../store/slices/userPreferences';
-import { useAppDispatch } from '../hooks/reduxHooks';
-import ThemePicker from '../components/organisms/ThemePicker';
-import { useState } from 'react';
-import { ThemePreference } from '../hooks/asyncStorage';
+import { getThemePreference, setThemePreference } from "../hooks/asyncStorage";
+import { setThemeState } from "../store/slices/userPreferences";
+import { useAppDispatch } from "../hooks/reduxHooks";
+import { useState } from "react";
+import { ThemePreference } from "../hooks/asyncStorage";
+import TabThreeScreenTemplate from "../components/templates/TabThreeScreenTemplate";
 
 export default function TabThreeScreen() {
-	const t = useCustomColors();
-	const headerHeight = useHeaderHeight();
-	const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+  const [asyncThemeState, setAsyncThemeState] =
+    useState<ThemePreference>("default");
 
-	const [asyncThemeState, setAsyncThemeState] = useState<ThemePreference>('default');
+  async function setThemePrefToState() {
+    const currentAsyncStorageTheme = await getThemePreference();
+    setAsyncThemeState(
+      currentAsyncStorageTheme === "light"
+        ? "light"
+        : currentAsyncStorageTheme === "dark"
+        ? "dark"
+        : "default"
+    );
+  }
+  setThemePrefToState();
 
-	async function setThemePrefToState() {
-		const currentAsyncStorageTheme = await getThemePreference();
-		if (currentAsyncStorageTheme === 'light') {
-			setAsyncThemeState('light');
-		} else if (currentAsyncStorageTheme === 'dark') {
-			setAsyncThemeState('dark');
-		} else {
-			setAsyncThemeState('default');
-		}
-	}
-	setThemePrefToState();
+  const setTheme = async (theme: ThemePreference) => {
+    setThemePreference(theme);
+    dispatch(setThemeState({ theme: theme }));
+    setAsyncThemeState(theme);
+  };
 
-	async function setThemeToDark() {
-		setThemePreference('dark');
-		dispatch(setThemeState({ theme: 'dark' }));
-		setAsyncThemeState('dark');
-	}
-	async function setThemeToLight() {
-		setThemePreference('light');
-		dispatch(setThemeState({ theme: 'light' }));
-		setAsyncThemeState('light');
-	}
-	async function setThemeToDefault() {
-		setThemePreference('default');
-		dispatch(setThemeState({ theme: 'default' }));
-		setAsyncThemeState('default');
-	}
-
-	return (
-		<ScrollView
-			automaticallyAdjustKeyboardInsets={true}
-			showsVerticalScrollIndicator={false}
-		>
-			<View
-				style={[
-					styles.container,
-					{ paddingTop: headerHeight, backgroundColor: t.bgPrimaryGrouped },
-				]}
-			>
-				<ProfileHeadingLarge />
-				<List />
-
-				<View style={styles.themePickerView}>
-					<ThemePicker
-						lightThemeHandler={setThemeToLight}
-						defaultThemeHandler={setThemeToDefault}
-						darkThemeHandler={setThemeToDark}
-						asyncThemeState={asyncThemeState}
-					/>
-				</View>
-			</View>
-		</ScrollView>
-	);
+  return (
+    <TabThreeScreenTemplate
+      asyncThemeState={asyncThemeState}
+      setTheme={setTheme}
+    />
+  );
 }
-
-const styles = StyleSheet.create({
-	themePickerView: {
-		width: '100%',
-		paddingHorizontal: 12,
-		marginVertical: 10,
-	},
-	textView: {
-		paddingHorizontal: '5%',
-	},
-	text: {
-		textAlign: 'center',
-	},
-	container: {
-		flex: 1,
-		alignItems: 'center',
-		marginTop: 10,
-	},
-	title: {
-		fontSize: 20,
-		fontWeight: 'bold',
-	},
-	separator: {
-		marginVertical: 30,
-		width: '80%',
-		borderBottomWidth: StyleSheet.hairlineWidth,
-	},
-});
