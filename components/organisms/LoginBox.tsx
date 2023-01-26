@@ -5,6 +5,7 @@ import PasswordInputField from "../atoms/PasswordInputField";
 import WelcomeToItcard from "../atoms/WelcomeToItcard";
 import { LoginInputFieldProps } from "../atoms/LoginInputField";
 import { PasswordInputFieldProps } from "../atoms/PasswordInputField";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 export interface LoginBoxProps
   extends LoginInputFieldProps,
@@ -15,41 +16,50 @@ export default function LoginBox(props: LoginBoxProps) {
   const t = props.t;
   return (
     <>
-      <View style={styles.welcomeView}>
+      <Animated.View
+        entering={FadeInDown.delay(100)}
+        style={styles.welcomeView}
+      >
         <WelcomeToItcard />
-      </View>
+      </Animated.View>
       <LinearGradient
         style={styles.boxGrad}
         colors={[t.bgSecondary, t.bgTertiary]}
       >
-        <Text style={[styles.mainText, { color: t.labelTertiary }]}>
+        <Animated.Text
+          entering={FadeInDown.delay(220)}
+          style={[styles.mainText, { color: t.labelTertiary }]}
+        >
           Logowanie
-        </Text>
+        </Animated.Text>
         <View
           style={[styles.separator, { borderBottomColor: t.separator }]}
         ></View>
-
-        <LoginInputField
-          onLoginFocus={props.onLoginFocus}
-          loginLogoColor={props.loginLogoColor}
-          onLoginBlur={props.onLoginBlur}
-          t={t}
-          loginErrorMessage={props.loginErrorMessage}
-          onLoginChangeText={props.onLoginChangeText}
-          loginText={props.loginText}
-        />
-        <PasswordInputField
-          onPasswordFocus={props.onPasswordFocus}
-          onPasswordBlur={props.onPasswordBlur}
-          passwordLogoColor={props.passwordLogoColor}
-          onLockPress={props.onLockPress}
-          isPasswordHidden={props.isPasswordHidden}
-          t={t}
-          passwordErrorMessage={props.passwordErrorMessage}
-          onPasswordChangeText={props.onPasswordChangeText}
-          passwordText={props.passwordText}
-        />
-        <View>
+        <Animated.View entering={FadeInDown.delay(320)}>
+          <LoginInputField
+            onLoginFocus={props.onLoginFocus}
+            loginLogoColor={props.loginLogoColor}
+            onLoginBlur={props.onLoginBlur}
+            t={t}
+            loginErrorMessage={props.loginErrorMessage}
+            onLoginChangeText={props.onLoginChangeText}
+            loginText={props.loginText}
+          />
+        </Animated.View>
+        <Animated.View entering={FadeInDown.delay(420)}>
+          <PasswordInputField
+            onPasswordFocus={props.onPasswordFocus}
+            onPasswordBlur={props.onPasswordBlur}
+            passwordLogoColor={props.passwordLogoColor}
+            onLockPress={props.onLockPress}
+            isPasswordHidden={props.isPasswordHidden}
+            t={t}
+            passwordErrorMessage={props.passwordErrorMessage}
+            onPasswordChangeText={props.onPasswordChangeText}
+            passwordText={props.passwordText}
+          />
+        </Animated.View>
+        <Animated.View entering={FadeInDown.delay(520)}>
           <TouchableOpacity onPress={props.submitAction}>
             <LinearGradient
               colors={["rgb(121, 150, 174)", "rgb(99, 116, 169)"]}
@@ -60,7 +70,7 @@ export default function LoginBox(props: LoginBoxProps) {
               </Text>
             </LinearGradient>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
       </LinearGradient>
     </>
   );
