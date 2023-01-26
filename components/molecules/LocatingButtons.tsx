@@ -51,10 +51,6 @@ const styles = StyleSheet.create({
     right: 10,
     top: 10,
   },
-  pickOnMapText: {},
-  pickOnMapButton: {},
-  locateMeText: {},
-  locateMeButton: {},
   container: {
     height: 220,
     justifyContent: "center",

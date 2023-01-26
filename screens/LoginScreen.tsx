@@ -1,16 +1,13 @@
-import { RootStackScreenProps } from "../types";
 import LoginScreenTemplate from "../components/templates/LoginScreenTemplate";
 import { useState } from "react";
 import useCustomColors from "../hooks/useCustomColors";
-import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
+import { useAppDispatch } from "../hooks/reduxHooks";
 import { logIn } from "../store/slices/userInfo";
 import { logInAsync } from "../util/auth";
 import TestSplashElement from "../components/molecules/TestSplashElement";
 import { Keyboard } from "react-native";
 
-export default function LoginScreen({
-  navigation,
-}: RootStackScreenProps<"LoginScreen">) {
+export default function LoginScreen() {
   const t = useCustomColors();
   const [loginText, setLoginText] = useState("");
   const [passwordText, setPasswordText] = useState("");
@@ -80,7 +77,7 @@ export default function LoginScreen({
         loginLogoColor={loginLogoColor}
         onPasswordFocus={() => setPasswLogoColor(logoFocusedColor)}
         onPasswordBlur={() => setPasswLogoColor(logoUnfocusedColor)}
-        passwLogoColor={passwLogoColor}
+        passwordLogoColor={passwLogoColor}
         onLockPress={() => setIsPasswordHidden((prev) => !prev)}
         isPasswordHidden={isPasswordHidden}
         t={t}

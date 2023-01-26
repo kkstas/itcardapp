@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TicketDataType } from "../../hooks/asyncStorage";
 
 export type TPriority = "normal" | "high" | "critical";
 

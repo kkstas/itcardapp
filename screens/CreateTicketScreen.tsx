@@ -20,10 +20,9 @@ export default function CreateTicketScreen({
   const maxTitleInputLength = 100;
   const maxContentInputLength = 800;
   const { email, firstName, lastName, jobTitle } = useAppSelector(
-    (state) => state.userInfo
+    (s) => s.userInfo
   );
 
-  /// new redux
   const {
     title,
     content,
@@ -32,14 +31,11 @@ export default function CreateTicketScreen({
     locationUri,
     thumbnailUri,
     media,
-  } = useAppSelector((state) => state.ticketData);
+  } = useAppSelector((s) => s.ticketData);
 
   const dispatch = useAppDispatch();
 
-  // sends data to AsyncStorage (addNewTicket function)
-  // AND sends POST request to database (postTicketData function)
-  function submitTicketToAsyncStorage() {
-    // if title and content of the form is not empty
+  function submitTicket() {
     if (title && content) {
       const data: TicketDataType = {
         id: Date.now(),
@@ -51,10 +47,7 @@ export default function CreateTicketScreen({
         locationUri: locationUri,
         address: address,
       };
-      // add to AsyncStorage
       addNewTicket(data);
-      // clear media and thumbnail data from redux
-      // send POST request to database
       postTicketData({
         ...data,
         email: email,
@@ -62,7 +55,6 @@ export default function CreateTicketScreen({
         lastName: lastName,
         jobTitle: jobTitle,
       });
-
       dispatch(clearInputs());
       navigation.goBack();
     } else if (!title && content) {
@@ -92,7 +84,7 @@ export default function CreateTicketScreen({
           maxContentInputLength: maxContentInputLength,
           errMessage: contentErrMessage,
         }}
-        submitTicket={submitTicketToAsyncStorage}
+        submitTicket={submitTicket}
         goToMapScreen={goToMapScreen}
       />
     </View>
@@ -102,33 +94,5 @@ export default function CreateTicketScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  errorView: {
-    flexDirection: "row",
-    paddingLeft: 10,
-    alignItems: "center",
-    paddingTop: 3,
-  },
-  errorMessage: {
-    fontSize: 11,
-    paddingLeft: 3,
-  },
-  logo: {
-    position: "absolute",
-    left: 5,
-    padding: 5,
-  },
-  inputLabel: {
-    marginTop: 10,
-    paddingLeft: 8,
-    paddingBottom: 2,
-    fontWeight: "300",
-  },
-  loginInput: {
-    paddingVertical: 7,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    fontSize: 16,
-    paddingLeft: 34,
   },
 });
