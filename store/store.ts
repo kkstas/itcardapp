@@ -1,14 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './slices/userInfo';
-import ticketMediaReducer from './slices/ticketMedia';
-import userPreferencesReducer from './slices/userPreferences';
+import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "./slices/userInfo";
+import userPreferencesReducer from "./slices/userPreferences";
+import ticketDataReducer from "./slices/ticketData";
 
 export const store = configureStore({
-	reducer: {
-		userInfo: userReducer,
-		ticketMedia: ticketMediaReducer,
-		userPreferences: userPreferencesReducer,
-	},
+  reducer: {
+    userInfo: userReducer,
+    userPreferences: userPreferencesReducer,
+    ticketData: ticketDataReducer,
+  },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

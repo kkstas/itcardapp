@@ -12,22 +12,17 @@ import TicketTitleInput, {
 import TicketContentInput, {
   TicketContentInputProps,
 } from "../atoms/TicketContentInput";
-import PriorityPicker, { PriorityPickerProps } from "../atoms/PriorityPicker";
+import PriorityPicker from "../atoms/PriorityPicker";
 import useCustomColors from "../../hooks/useCustomColors";
 import ImageBox from "./ImageBox";
 import LocationButtons from "../molecules/LocatingButtons";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { SubmitButton } from "../atoms/SubmitButton";
 
 interface TicketFormProps {
   titleInputProps: TicketTitleInputProps;
   contentInputProps: TicketContentInputProps;
-  priorityPickerProps: PriorityPickerProps;
   submitTicket: () => void;
   goToMapScreen: (lat: number, lng: number) => void;
-  pickedLocationParams: { lat: number; lng: number } | null;
-  setLocationUri: React.Dispatch<React.SetStateAction<string | null>>;
-  setAddress: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export default function TicketForm(props: TicketFormProps) {
@@ -38,16 +33,12 @@ export default function TicketForm(props: TicketFormProps) {
         <View style={styles.container}>
           <View style={styles.ticketTitleView}>
             <TicketTitleInput
-              value={props.titleInputProps.value}
-              setValue={props.titleInputProps.setValue}
               maxTitleInputLength={props.titleInputProps.maxTitleInputLength}
               errMessage={props.titleInputProps.errMessage}
             />
           </View>
           <View style={styles.ticketContentView}>
             <TicketContentInput
-              value={props.contentInputProps.value}
-              setValue={props.contentInputProps.setValue}
               maxContentInputLength={
                 props.contentInputProps.maxContentInputLength
               }
@@ -55,14 +46,7 @@ export default function TicketForm(props: TicketFormProps) {
             />
           </View>
           <View style={styles.priorityPickerView}>
-            <PriorityPicker
-              pickedState={props.priorityPickerProps.pickedState}
-              setNormalPriority={props.priorityPickerProps.setNormalPriority}
-              setHighPriority={props.priorityPickerProps.setHighPriority}
-              setCriticalPriority={
-                props.priorityPickerProps.setCriticalPriority
-              }
-            />
+            <PriorityPicker />
           </View>
           <View style={styles.addMedia}>
             <Text style={[styles.inputLabel, { color: t.labelSecondary }]}>
@@ -74,12 +58,7 @@ export default function TicketForm(props: TicketFormProps) {
             <Text style={[styles.inputLabel, { color: t.labelSecondary }]}>
               Dołącz lokalizację
             </Text>
-            <LocationButtons
-              goToMapScreen={props.goToMapScreen}
-              pickedLocationParams={props.pickedLocationParams}
-              setLocationUri={props.setLocationUri}
-              setAddress={props.setAddress}
-            />
+            <LocationButtons goToMapScreen={props.goToMapScreen} />
           </View>
           <SubmitButton
             submitText="Wyślij zgłoszenie"
