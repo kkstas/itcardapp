@@ -5,6 +5,7 @@ import { BarCodeScanner, BarCodeScannerResult } from "expo-barcode-scanner";
 import { useNavigation } from "@react-navigation/native";
 import ScanButton from "../components/atoms/ScanButton";
 import NotScannedContent from "../components/atoms/NotScannedContent";
+import ScanAnim from "../components/atoms/ScanAnim";
 
 export default function ScanReceiptScreen() {
   const navigation = useNavigation();
@@ -66,6 +67,7 @@ export default function ScanReceiptScreen() {
         ) : (
           <View style={[styles.barcode, { backgroundColor: t.bgSecondary }]} />
         )}
+        <ScanAnim scanned={scanned} />
         {scanned ? (
           <ScanButton onPress={() => setScanned(false)} />
         ) : (

@@ -17,6 +17,7 @@ import useCustomColors from "../../hooks/useCustomColors";
 import ImageBox from "./ImageBox";
 import LocationButtons from "../molecules/LocatingButtons";
 import { SubmitButton } from "../atoms/SubmitButton";
+import Animated, { FadeInRight } from "react-native-reanimated";
 
 interface TicketFormProps {
   titleInputProps: TicketTitleInputProps;
@@ -31,35 +32,50 @@ export default function TicketForm(props: TicketFormProps) {
     <ScrollView>
       <Pressable onPress={() => Keyboard.dismiss()}>
         <View style={styles.container}>
-          <View style={styles.ticketTitleView}>
+          <Animated.View
+            entering={FadeInRight.delay(150)}
+            style={styles.ticketTitleView}
+          >
             <TicketTitleInput
               maxTitleInputLength={props.titleInputProps.maxTitleInputLength}
               errMessage={props.titleInputProps.errMessage}
             />
-          </View>
-          <View style={styles.ticketContentView}>
+          </Animated.View>
+          <Animated.View
+            entering={FadeInRight.delay(270)}
+            style={styles.ticketContentView}
+          >
             <TicketContentInput
               maxContentInputLength={
                 props.contentInputProps.maxContentInputLength
               }
               errMessage={props.contentInputProps.errMessage}
             />
-          </View>
-          <View style={styles.priorityPickerView}>
+          </Animated.View>
+          <Animated.View
+            entering={FadeInRight.delay(390)}
+            style={styles.priorityPickerView}
+          >
             <PriorityPicker />
-          </View>
-          <View style={styles.addMedia}>
+          </Animated.View>
+          <Animated.View
+            entering={FadeInRight.delay(520)}
+            style={styles.addMedia}
+          >
             <Text style={[styles.inputLabel, { color: t.labelSecondary }]}>
               Dołącz media
             </Text>
             <ImageBox />
-          </View>
-          <View style={styles.addLocation}>
+          </Animated.View>
+          <Animated.View
+            entering={FadeInRight.delay(650)}
+            style={styles.addLocation}
+          >
             <Text style={[styles.inputLabel, { color: t.labelSecondary }]}>
               Dołącz lokalizację
             </Text>
             <LocationButtons goToMapScreen={props.goToMapScreen} />
-          </View>
+          </Animated.View>
           <SubmitButton
             submitText="Wyślij zgłoszenie"
             onPress={props.submitTicket}
