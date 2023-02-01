@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
-import { data } from "../../constants/receiptsDummyData";
-import UserDataListItem from "../molecules/UserDataListItem";
-import UserDataListHeader from "../molecules/UserDataListHeader";
-import { useSharedValue, withTiming } from "react-native-reanimated";
-import useCustomColors from "../../hooks/useCustomColors";
-import TicketDataListItem from "../molecules/TicketDataListItem";
-import { getAllTickets } from "../../hooks/asyncStorage";
-import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import { data } from '../../constants/receiptsDummyData';
+import UserDataListItem from '../molecules/UserDataListItem';
+import UserDataListHeader from '../molecules/UserDataListHeader';
+import { useSharedValue, withTiming } from 'react-native-reanimated';
+import useCustomColors from '../../hooks/useCustomColors';
+import TicketDataListItem from '../molecules/TicketDataListItem';
+import { getAllReceipts, getAllTickets } from '../../hooks/asyncStorage';
+import { useNavigation } from '@react-navigation/native';
 
 export default function UserDataList() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    navigation.addListener("focus", () => pressTicketsHandler());
+    navigation.addListener('focus', () => pressTicketsHandler());
   }, []);
   const t = useCustomColors();
 
@@ -33,8 +33,14 @@ export default function UserDataList() {
     leftColorOffset.value = withTiming(t.tint);
     rightColorOffset.value = withTiming(t.gray2);
   };
-  const pressReceiptsHandler = () => {
-    setDataState(data);
+  const pressReceiptsHandler = async () => {
+    const recdata = await getAllReceipts();
+    if (recdata) {
+      for (const y of recdata) {
+        console.log(`ID: ${y.id}, deviceName: ${y.deviceName}`);
+      }
+    }
+    setDataState(recdata);
     setFromLeft(false);
     sliderOffset.value = withTiming(1);
     leftColorOffset.value = withTiming(t.gray2);
@@ -57,6 +63,7 @@ export default function UserDataList() {
     }
   };
 
+  console.log('UserDataList (organism) rendered');
   return (
     <View style={styles.container}>
       <FlatList
@@ -82,6 +89,6 @@ export default function UserDataList() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
+    width: '100%',
   },
 });
