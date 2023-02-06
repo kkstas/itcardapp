@@ -45,7 +45,8 @@ export default function ListItemContent({ item }: { item: IReceiptState }) {
           {trxType} {item.amount}
         </Text>
         <Text style={[s.datetime, { color: t.labelSecondary }]}>
-          {item.localizationName}, {item.localizationStreet}
+          {item.localizationName}, {item.localizationStreet},{' '}
+          {item.localizationCity}
         </Text>
       </View>
       <TouchableOpacity

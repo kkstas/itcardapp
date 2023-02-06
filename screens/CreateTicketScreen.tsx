@@ -1,17 +1,17 @@
-import useCustomColors from "../hooks/useCustomColors";
-import { View, StyleSheet } from "react-native";
-import { useState } from "react";
-import TicketForm from "../components/organisms/TicketForm";
-import { useAppSelector } from "../hooks/reduxHooks";
-import { TicketDataType, addNewTicket } from "../hooks/asyncStorage";
-import { useAppDispatch } from "../hooks/reduxHooks";
-import { postTicketData } from "../util/ticketData";
-import { TabTwoMainStackScreenProps } from "../types";
-import { clearInputs } from "../store/slices/ticketData";
+import useCustomColors from '../hooks/useCustomColors';
+import { View, StyleSheet } from 'react-native';
+import { useState, memo } from 'react';
+import TicketForm from '../components/organisms/TicketForm';
+import { useAppSelector } from '../hooks/reduxHooks';
+import { TicketDataType, addNewTicket } from '../hooks/asyncStorage';
+import { useAppDispatch } from '../hooks/reduxHooks';
+import { postTicketData } from '../util/ticketData';
+import { TabTwoMainStackScreenProps } from '../types';
+import { clearInputs } from '../store/slices/ticketData';
 
-export default function CreateTicketScreen({
+function CreateTicketScreen({
   navigation,
-}: TabTwoMainStackScreenProps<"CreateTicketScreen">) {
+}: TabTwoMainStackScreenProps<'CreateTicketScreen'>) {
   const t = useCustomColors();
   const [errMessage, setErrMessage] = useState<string | null>(null);
   const [contentErrMessage, setContentErrMessage] = useState<string | null>(
@@ -58,19 +58,19 @@ export default function CreateTicketScreen({
       dispatch(clearInputs());
       navigation.goBack();
     } else if (!title && content) {
-      setErrMessage("Uzupełnij tytuł zgłoszenia");
-      setContentErrMessage("");
+      setErrMessage('Uzupełnij tytuł zgłoszenia');
+      setContentErrMessage('');
     } else if (title && !content) {
-      setErrMessage("");
-      setContentErrMessage("Uzupełnij treść zgłoszenia");
+      setErrMessage('');
+      setContentErrMessage('Uzupełnij treść zgłoszenia');
     } else {
-      setErrMessage("Uzupełnij tytuł zgłoszenia");
-      setContentErrMessage("Uzupełnij treść zgłoszenia");
+      setErrMessage('Uzupełnij tytuł zgłoszenia');
+      setContentErrMessage('Uzupełnij treść zgłoszenia');
     }
   }
 
   const goToMapScreen = (lat: number, lng: number) => {
-    navigation.navigate("MapScreen", { lat: lat, lng: lng });
+    navigation.navigate('MapScreen', { lat: lat, lng: lng });
   };
 
   return (
@@ -90,6 +90,8 @@ export default function CreateTicketScreen({
     </View>
   );
 }
+
+export default memo(CreateTicketScreen);
 
 const styles = StyleSheet.create({
   container: {

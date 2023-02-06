@@ -4,22 +4,23 @@ import {
   Text,
   StyleSheet,
   Alert,
-} from "react-native";
+} from 'react-native';
 import {
   PermissionStatus,
   useMediaLibraryPermissions,
   launchImageLibraryAsync,
   MediaTypeOptions,
-} from "expo-image-picker";
-import * as VideoThumbnails from "expo-video-thumbnails";
-import { useAppDispatch } from "../../hooks/reduxHooks";
-import useCustomColors from "../../hooks/useCustomColors";
-import { Ionicons } from "@expo/vector-icons";
-import { setThumbnailUri, setMedia } from "../../store/slices/ticketData";
+} from 'expo-image-picker';
+import * as VideoThumbnails from 'expo-video-thumbnails';
+import { useAppDispatch } from '../../hooks/reduxHooks';
+import useCustomColors from '../../hooks/useCustomColors';
+import { Ionicons } from '@expo/vector-icons';
+import { setThumbnailUri, setMedia } from '../../store/slices/ticketData';
+import { memo } from 'react';
 
 LogBox.ignoreAllLogs();
 
-export default function MediaBtn() {
+function MediaBtn() {
   const t = useCustomColors();
   const dispatch = useAppDispatch();
 
@@ -36,8 +37,8 @@ export default function MediaBtn() {
     }
     if (mediaLibraryPermissionInformation?.status === PermissionStatus.DENIED) {
       Alert.alert(
-        "Nie wyrażono zgody na dostęp do biblioteki zdjęć",
-        "Poprzednie zapytanie o udzielenie zgód zostało odrzucone. Aby aplikacja poprawnie działa, musisz wyrazić zgodę w ustawieniach Twojego urządzenia."
+        'Nie wyrażono zgody na dostęp do biblioteki zdjęć',
+        'Poprzednie zapytanie o udzielenie zgód zostało odrzucone. Aby aplikacja poprawnie działa, musisz wyrazić zgodę w ustawieniach Twojego urządzenia.'
       );
       return false;
     }
@@ -56,7 +57,7 @@ export default function MediaBtn() {
       quality: 0.5,
     });
     if (!image.canceled && image.assets) {
-      if (image.assets[0].type === "video" && image.assets[0].uri) {
+      if (image.assets[0].type === 'video' && image.assets[0].uri) {
         const thumbnailImage = await VideoThumbnails.getThumbnailAsync(
           image.assets[0].uri,
           {
@@ -75,27 +76,28 @@ export default function MediaBtn() {
   return (
     <TouchableOpacity
       onPress={pickMediaHandler}
-      style={[styles.container, { backgroundColor: t.bgTertiaryGrouped }]}
-    >
+      style={[styles.container, { backgroundColor: t.bgTertiaryGrouped }]}>
       <Ionicons name="image-outline" color={t.tint} size={32} />
       <Text style={[styles.text, { color: t.tint }]}>Wybierz z galerii</Text>
     </TouchableOpacity>
   );
 }
 
+export default memo(MediaBtn);
+
 const styles = StyleSheet.create({
   text: {
     marginTop: 10,
     fontSize: 12,
-    textAlign: "center",
-    fontWeight: "500",
+    textAlign: 'center',
+    fontWeight: '500',
   },
   container: {
     marginHorizontal: 5,
     borderRadius: 8,
     paddingVertical: 12,
-    alignItems: "center",
-    justifyContent: "space-between",
+    alignItems: 'center',
+    justifyContent: 'space-between',
     width: 110,
     height: 80,
   },

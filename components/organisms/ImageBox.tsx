@@ -1,12 +1,13 @@
-import { Text, View, Image, StyleSheet } from "react-native";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { clearMediaInputs } from "../../store/slices/ticketData";
-import useCustomColors from "../../hooks/useCustomColors";
-import ImageBtn from "../molecules/ImageBtn";
-import MediaBtn from "../molecules/MediaBtn";
-import ImageDeleteButton from "../atoms/ImageDeleteButton";
+import { Text, View, Image, StyleSheet } from 'react-native';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { clearMediaInputs } from '../../store/slices/ticketData';
+import useCustomColors from '../../hooks/useCustomColors';
+import ImageBtn from '../molecules/ImageBtn';
+import MediaBtn from '../molecules/MediaBtn';
+import ImageDeleteButton from '../atoms/ImageDeleteButton';
+import { memo } from 'react';
 
-export default function ImageBox() {
+const ImageBox = memo(() => {
   const t = useCustomColors();
   const { thumbnailUri } = useAppSelector((state) => state.ticketData);
   const dispatch = useAppDispatch();
@@ -37,32 +38,34 @@ export default function ImageBox() {
       </View>
     </View>
   );
-}
+});
+
+export default ImageBox;
 
 const styles = StyleSheet.create({
   imagePreview: {
-    width: "100%",
+    width: '100%',
     height: 250,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 10,
-    position: "relative",
+    position: 'relative',
   },
   image: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
     borderRadius: 10,
   },
   mainView: {
     flex: 1,
-    width: "100%",
-    height: "100%",
-    alignItems: "center",
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
   },
   buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingBottom: 12,
   },
 });

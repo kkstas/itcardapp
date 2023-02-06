@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { data } from '../../constants/receiptsDummyData';
@@ -10,7 +10,7 @@ import TicketDataListItem from '../molecules/TicketDataListItem';
 import { getAllReceipts, getAllTickets } from '../../hooks/asyncStorage';
 import { useNavigation } from '@react-navigation/native';
 
-export default function UserDataList() {
+function UserDataList() {
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -67,14 +67,17 @@ export default function UserDataList() {
   return (
     <View style={styles.container}>
       <FlatList
-        ListHeaderComponent={() => (
-          <UserDataListHeader
-            pressTicketsHandler={pressTicketsHandler}
-            pressReceiptsHandler={pressReceiptsHandler}
-            sliderOffset={sliderOffset}
-            leftColorOffset={leftColorOffset}
-            rightColorOffset={rightColorOffset}
-          />
+        ListHeaderComponent={useMemo(
+          () => (
+            <UserDataListHeader
+              pressTicketsHandler={pressTicketsHandler}
+              pressReceiptsHandler={pressReceiptsHandler}
+              sliderOffset={sliderOffset}
+              leftColorOffset={leftColorOffset}
+              rightColorOffset={rightColorOffset}
+            />
+          ),
+          [sliderOffset, leftColorOffset, rightColorOffset]
         )}
         data={dataState}
         renderItem={({ item, index }) => (
@@ -85,6 +88,7 @@ export default function UserDataList() {
     </View>
   );
 }
+export default memo(UserDataList);
 
 const styles = StyleSheet.create({
   container: {

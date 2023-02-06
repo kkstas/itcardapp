@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import useCustomColors from "../../hooks/useCustomColors";
 import Animated, {
@@ -9,7 +9,7 @@ import Animated, {
   withSequence,
 } from "react-native-reanimated";
 
-export default function ScanAnim({ scanned }: { scanned: boolean }) {
+export default function ScanAnim({ scanned, onPress }: { scanned: boolean, onPress: () => void }) {
   const t = useCustomColors();
   const offset = useSharedValue(0);
   const anim = useAnimatedStyle(() => {
@@ -31,9 +31,11 @@ export default function ScanAnim({ scanned }: { scanned: boolean }) {
   );
 
   return (
-    <Animated.View style={[styles.container, anim]}>
-      <Ionicons name="scan" size={36} color={t.tint} />
-    </Animated.View>
+    <TouchableOpacity onPress={onPress}>
+      <Animated.View style={[styles.container, anim]}>
+        <Ionicons name="scan" size={36} color={t.tint} />
+      </Animated.View>
+    </TouchableOpacity>
   );
 }
 

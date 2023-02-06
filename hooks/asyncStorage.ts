@@ -21,6 +21,7 @@ export interface IReceiptState {
   transactionID: string;
   localizationName: string;
   localizationStreet: string;
+  localizationCity: string;
   trempcardNumberFormatted: string;
   amount: string;
 }

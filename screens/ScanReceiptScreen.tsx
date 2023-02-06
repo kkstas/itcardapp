@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import ScanButton from '../components/atoms/ScanButton';
 import NotScannedContent from '../components/atoms/NotScannedContent';
 import ScanAnim from '../components/atoms/ScanAnim';
+import transformReceiptUrl from '../util/transformReceiptUrl';
+import { addNewReceipt } from '../hooks/asyncStorage';
 
 export default function ScanReceiptScreen() {
   const navigation = useNavigation();
@@ -35,10 +37,19 @@ export default function ScanReceiptScreen() {
   const handleBarCodeScanned = ({ type, data }: BarCodeScannerResult) => {
     setScanned(true);
     console.log(data);
-    Alert.alert(
-      'Kod jest nieprawidłowy!',
-      `Zeskanowany kod o typie: ${type} i danych: ${data} nie został zidentyfikowany jako kod potwierdzenia dokonania transakcji. Zeskanuj prawidłowy kod QR.`
-    );
+    const transformedUri = transformReceiptUrl(data);
+    if (transformedUri) {
+      addNewReceipt(transformedUri);
+      Alert.alert(
+        'Skanowane zakończone sukcesem.',
+        'Zeskanowane potwierdzenia są dostępne w zakładce Dokumenty.'
+      );
+    } else {
+      Alert.alert(
+        'Błąd skanowania kodu!',
+        `Zeskanowany kod nie został zidentyfikowany jako kod potwierdzenia dokonania transakcji. Zeskanuj prawidłowy kod QR.`
+      );
+    }
   };
 
   if (hasPermission === null) {
@@ -67,7 +78,8 @@ export default function ScanReceiptScreen() {
         ) : (
           <View style={[styles.barcode, { backgroundColor: t.bgSecondary }]} />
         )}
-        <ScanAnim scanned={scanned} />
+
+        <ScanAnim onPress={() => setScanned(prevScanned => !prevScanned)} scanned={scanned} />
         {scanned ? (
           <ScanButton onPress={() => setScanned(false)} />
         ) : (

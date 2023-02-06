@@ -1,16 +1,16 @@
-import useCustomColors from "../../hooks/useCustomColors";
-import { View, TextInput, Text, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { setContent } from "../../store/slices/ticketData";
+import useCustomColors from '../../hooks/useCustomColors';
+import { View, TextInput, Text, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useState, memo } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { setContent } from '../../store/slices/ticketData';
 
 export interface TicketContentInputProps {
   maxContentInputLength: number;
   errMessage: string | null;
 }
 
-export default function TicketContentInput({
+function TicketContentInput({
   errMessage,
   maxContentInputLength,
 }: TicketContentInputProps) {
@@ -32,8 +32,7 @@ export default function TicketContentInput({
         style={[
           styles.inputLabel,
           { color: isFocused ? t.tint : t.labelSecondary },
-        ]}
-      >
+        ]}>
         Opis zgłoszenia
       </Text>
       <View style={styles.contentView}>
@@ -66,14 +65,16 @@ export default function TicketContentInput({
   );
 }
 
+export default memo(TicketContentInput);
+
 const styles = StyleSheet.create({
   contentView: {
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
   },
   errorView: {
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingLeft: 10,
-    alignItems: "center",
+    alignItems: 'center',
     paddingTop: 3,
   },
   errorMessage: {
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
   inputLabel: {
     paddingLeft: 8,
     paddingBottom: 2,
-    fontWeight: "400",
+    fontWeight: '400',
     fontSize: 18,
   },
   contentInput: {
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 8,
     fontSize: 16,
-    textAlignVertical: "top",
+    textAlignVertical: 'top',
     minHeight: 100,
   },
 });

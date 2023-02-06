@@ -1,15 +1,16 @@
-import useCustomColors from "../../hooks/useCustomColors";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import useCustomColors from '../../hooks/useCustomColors';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
-} from "react-native-reanimated";
-import Layout from "../../constants/Layout";
-import { useAppDispatch } from "../../hooks/reduxHooks";
-import { setPriority } from "../../store/slices/ticketData";
+} from 'react-native-reanimated';
+import Layout from '../../constants/Layout';
+import { useAppDispatch } from '../../hooks/reduxHooks';
+import { setPriority } from '../../store/slices/ticketData';
+import { memo } from 'react';
 
-export default function PriorityPicker() {
+function PriorityPicker() {
   const t = useCustomColors();
   const dispatch = useAppDispatch();
 
@@ -30,21 +31,21 @@ export default function PriorityPicker() {
     leftColorOffset.value = withTiming(t.tint);
     midColorOffset.value = withTiming(t.labelSecondary);
     rightColorOffset.value = withTiming(t.labelSecondary);
-    dispatch(setPriority({ priority: "normal" }));
+    dispatch(setPriority({ priority: 'normal' }));
   };
   const midPressHandler = () => {
     offset.value = withTiming(0);
     leftColorOffset.value = withTiming(t.labelSecondary);
     midColorOffset.value = withTiming(t.tint);
     rightColorOffset.value = withTiming(t.labelSecondary);
-    dispatch(setPriority({ priority: "high" }));
+    dispatch(setPriority({ priority: 'high' }));
   };
   const rightPressHandler = () => {
     offset.value = withTiming(windowWidth / 3.4);
     leftColorOffset.value = withTiming(t.labelSecondary);
     midColorOffset.value = withTiming(t.labelSecondary);
     rightColorOffset.value = withTiming(t.pink);
-    dispatch(setPriority({ priority: "critical" }));
+    dispatch(setPriority({ priority: 'critical' }));
   };
 
   const leftTextStyle = useAnimatedStyle(() => {
@@ -78,11 +79,9 @@ export default function PriorityPicker() {
         />
         <Pressable
           onPress={leftPressHandler}
-          style={[styles.PView, { left: 0, width: windowWidth / 2.8 }]}
-        >
+          style={[styles.PView, { left: 0, width: windowWidth / 2.8 }]}>
           <Animated.Text
-            style={[styles.normalP, { color: t.text }, leftTextStyle]}
-          >
+            style={[styles.normalP, { color: t.text }, leftTextStyle]}>
             Normalny
           </Animated.Text>
         </Pressable>
@@ -94,11 +93,9 @@ export default function PriorityPicker() {
         />
         <Pressable
           onPress={midPressHandler}
-          style={[styles.PView, { width: windowWidth / 3.4 }]}
-        >
+          style={[styles.PView, { width: windowWidth / 3.4 }]}>
           <Animated.Text
-            style={[styles.highP, { color: t.text }, midTextStyle]}
-          >
+            style={[styles.highP, { color: t.text }, midTextStyle]}>
             Wysoki
           </Animated.Text>
         </Pressable>
@@ -110,11 +107,9 @@ export default function PriorityPicker() {
         />
         <Pressable
           onPress={rightPressHandler}
-          style={[styles.PView, { right: 0, width: windowWidth / 2.9 }]}
-        >
+          style={[styles.PView, { right: 0, width: windowWidth / 2.9 }]}>
           <Animated.Text
-            style={[styles.criticalP, { color: t.text }, rightTextStyle]}
-          >
+            style={[styles.criticalP, { color: t.text }, rightTextStyle]}>
             Krytyczny
           </Animated.Text>
         </Pressable>
@@ -123,13 +118,15 @@ export default function PriorityPicker() {
   );
 }
 
+export default memo(PriorityPicker);
+
 const styles = StyleSheet.create({
   slidingBox: {
-    position: "absolute",
-    height: "80%",
+    position: 'absolute',
+    height: '80%',
     borderRadius: 7,
     zIndex: 1,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -140,7 +137,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   divider: {
-    height: "55%",
+    height: '55%',
     width: 0.5,
     opacity: 0.5,
     zIndex: 0,
@@ -149,11 +146,11 @@ const styles = StyleSheet.create({
     zIndex: 4,
   },
   PView: {
-    height: "100%",
+    height: '100%',
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
     zIndex: 4,
   },
   highP: {
@@ -165,13 +162,13 @@ const styles = StyleSheet.create({
   inputLabel: {
     paddingLeft: 8,
     paddingBottom: 2,
-    fontWeight: "400",
+    fontWeight: '400',
     fontSize: 18,
   },
   container: {
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
     height: 34,
     borderRadius: 8,
     paddingHorizontal: 10,
