@@ -4,6 +4,8 @@ import SmallButtonWithIcon from '../atoms/SmallButtonWithIcon';
 import useCustomColors from '../../hooks/useCustomColors';
 import { IReceiptState } from '../../hooks/asyncStorage';
 import { Ionicons } from '@expo/vector-icons';
+import ReceiptDetailsModalList from '../molecules/ReceiptDetailsModalList';
+
 
 interface ReceiptModalContentProps {
   data: IReceiptState;
@@ -18,33 +20,14 @@ export default function ReceiptModalContent({
 
   const receiptDate = new Date(data.id).toLocaleString();
 
+  const trxTypeText = data.trxType === "co" || data.trxType === "bo" ? "Wypłata" : "Wpłata"
+
   return (
     <View style={[styles.container, { backgroundColor: t.bgPrimary }]}>
       <View style={styles.textContainer}>
-        <View style={{ flexDirection: 'row' }}>
-          <Ionicons
-            name='time-outline'
-            size={12}
-            color={t.labelSecondary}
-          />
-          <Text style={[styles.appDate, { color: t.labelSecondary }]}>{receiptDate}</Text>
-        </View>
-        <View style={{ flexDirection: 'row', paddingVertical: 2 }}>
-          <Ionicons
-            name='navigate-circle-outline'
-            size={12}
-            color={t.labelSecondary}
-          />
-          <Text style={[styles.appDate, { color: t.labelSecondary }]}>
-            {data.localizationName}, {data.localizationCity}, {data.localizationStreet}
-          </Text>
-        </View>
-        <Text style={[styles.appTitle, { color: t.text }]}>{data.trxType} {data.amount}</Text>
-
-        <Text style={[styles.appDescription, { color: t.labelPrimary }]}>
-          {data.trempcardNumberFormatted}, {data.deviceName}, {data.transactionStartDateTime}
-        </Text>
+        <ReceiptDetailsModalList data={data} />
       </View>
+      <SmallButtonWithIcon text="Pobierz / Udostępnij" style={{ backgroundColor: t.indigo, marginBottom: 10 }} textStyle={{ color: "white" }} />
       <SmallButtonWithIcon
         text='Powrót'
         onPress={closeModal}
@@ -54,25 +37,15 @@ export default function ReceiptModalContent({
 }
 
 const styles = StyleSheet.create({
-  appPriority: {
-    fontSize: 8,
-    paddingBottom: 4,
-  },
-  appDate: {
-    fontSize: 12,
-    marginLeft: 2,
-  },
-  locationImg: {
-    width: '100%',
-    aspectRatio: 2,
-    marginTop: 15,
-    borderRadius: 8,
-  },
   img: {
-    marginTop: 15,
-    width: '100%',
-    aspectRatio: 1.5,
-    borderRadius: 8,
+    width: 50,
+    height: 50,
+    color: "white",
+
+
+  },
+  downloadBtn: {
+    marginBottom: 10,
   },
   separator: {
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -80,7 +53,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   textContainer: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     marginBottom: 25,
   },
   appTitle: {

@@ -2,15 +2,14 @@ import useCustomColors from '../hooks/useCustomColors';
 import React, { useState, useEffect } from 'react';
 import { Text, View, Alert, StyleSheet } from 'react-native';
 import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner';
-import { useNavigation } from '@react-navigation/native';
 import ScanButton from '../components/atoms/ScanButton';
 import NotScannedContent from '../components/atoms/NotScannedContent';
 import ScanAnim from '../components/atoms/ScanAnim';
 import transformReceiptUrl from '../util/transformReceiptUrl';
 import { addNewReceipt } from '../hooks/asyncStorage';
+import { RootStackScreenProps } from '../types';
 
-export default function ScanReceiptScreen() {
-  const navigation = useNavigation();
+export default function ScanReceiptScreen({ navigation }: RootStackScreenProps<'ReceiptModal'>) {
   const t = useCustomColors();
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(true);
@@ -42,7 +41,7 @@ export default function ScanReceiptScreen() {
       addNewReceipt(transformedUri);
       Alert.alert(
         'Skanowane zakończone sukcesem.',
-        'Zeskanowane potwierdzenia są dostępne w zakładce Dokumenty.'
+        'Zeskanowane potwierdzenia są dostępne w zakładce Dokumenty.', [{ text: "Powrót", onPress: () => navigation.push("Root") }]
       );
     } else {
       Alert.alert(
