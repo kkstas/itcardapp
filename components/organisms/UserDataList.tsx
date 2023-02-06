@@ -13,12 +13,14 @@ import { useNavigation } from '@react-navigation/native';
 function UserDataList() {
   const navigation = useNavigation();
 
+  const [dataState, setDataState] = useState(data);
+
   useEffect(() => {
-    navigation.addListener('focus', () => pressTicketsHandler());
-  }, []);
+    pressTicketsHandler()
+  }, [])
+
   const t = useCustomColors();
 
-  const [dataState, setDataState] = useState(data);
   const [fromLeft, setFromLeft] = useState(true);
 
   const sliderOffset = useSharedValue(0);
