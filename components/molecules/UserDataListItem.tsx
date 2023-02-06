@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Alert } from 'react-native';
+import { StyleSheet, Dimensions, Alert } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedGestureHandler,
@@ -21,13 +21,12 @@ import {
 } from '../animations/UserDataListAnimationConfig';
 
 import DeleteListButton from '../atoms/DeleteListButton';
-import ListItemContent, { Data } from '../atoms/ListItemContent';
+import ListItemContent from '../atoms/ListItemContent';
 import useCustomColors from '../../hooks/useCustomColors';
+import { useNavigation } from '@react-navigation/native';
 
 import {
-  getAllReceipts,
   removeSingleReceipt,
-  addNewReceipt,
   IReceiptState,
 } from '../../hooks/asyncStorage';
 
@@ -48,6 +47,8 @@ export default function UserDataListItem({
   const isRemoving = useSharedValue(false);
   const translateX = useSharedValue(0);
   const t = useCustomColors();
+
+  const navigation = useNavigation()
 
   type AnimatedGHContext = {
     startX: number;
@@ -136,6 +137,14 @@ export default function UserDataListItem({
     };
   });
 
+
+
+  const goToReceiptModal = () => {
+    if (translateX.value === 0) {
+      navigation.navigate('ReceiptModal', { data: item });
+    }
+  };
+
   return (
     <Animated.View
       style={styles.item}
@@ -143,7 +152,7 @@ export default function UserDataListItem({
       exiting={(fromLeft ? SlideOutLeft : SlideOutRight).delay(index * 50)}>
       <PanGestureHandler activeOffsetX={[-10, 10]} onGestureEvent={handler}>
         <Animated.View style={stylesAnimation}>
-          <ListItemContent item={item} />
+          <ListItemContent goToReceiptModal={goToReceiptModal} item={item} />
 
           <Animated.View style={[styles.buttonsContainer, removeButtonColor]}>
             <DeleteListButton item={removeButton} />

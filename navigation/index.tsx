@@ -33,6 +33,7 @@ import { StatusBar } from "expo-status-bar";
 import TicketModalScreen from "../screens/TicketModalScreen";
 import MapScreen from "../screens/MapScreen";
 import { HeaderBackgroundBlur } from "./HeaderBackgroundBlur";
+import ReceiptModalScreen from "../screens/ReceiptModalScreen";
 
 const CLTheme = {
   ...DefaultTheme,
@@ -114,6 +115,14 @@ function RootNavigator() {
             <Stack.Screen
               name="TicketModal"
               component={TicketModalScreen}
+              options={{
+                headerShown: false,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="ReceiptModal"
+              component={ReceiptModalScreen}
               options={{
                 headerShown: false,
                 presentation: "modal",

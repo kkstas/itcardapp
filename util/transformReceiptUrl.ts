@@ -2,16 +2,6 @@ import * as Linking from 'expo-linking';
 
 import { IReceiptState } from '../hooks/asyncStorage';
 
-interface IurlParams {
-  a: string;
-  b: string;
-  c: string;
-  d: string;
-  e: string;
-  f: string;
-  g: string;
-  h: string;
-}
 
 export default function transformReceiptUrl(url: string) {
 
@@ -25,7 +15,27 @@ export default function transformReceiptUrl(url: string) {
   console.log(urlParams)
   console.log('-------------------------------')
 
-  if (!urlParams || !urlParams.a || !urlParams.b || !urlParams.c || !urlParams.d || !urlParams.e || !urlParams.f || !urlParams.g || !urlParams.h) {
+  if (!urlParams || !urlParams.h) {
+    return null
+  }
+
+  const amountVal = String(urlParams.h).slice(2) || null
+  const trxTypeVal = String(urlParams.h).slice(0, 2) || null
+  if (trxTypeVal !== "ci" && trxTypeVal !== "co" && trxTypeVal !== "bi" && trxTypeVal !== "bo") {
+    return null
+  }
+
+  if (!urlParams
+    || !urlParams.a
+    || !urlParams.b
+    || !urlParams.c
+    || !urlParams.d
+    || !urlParams.e
+    || !urlParams.f
+    || !urlParams.g
+    || !urlParams.h
+    || !amountVal
+    || !trxTypeVal) {
     return null
   }
 
@@ -38,7 +48,8 @@ export default function transformReceiptUrl(url: string) {
     localizationStreet: `${urlParams.e}`,
     localizationCity: `${urlParams.f}`,
     trempcardNumberFormatted: `${urlParams.g}`,
-    amount: `${urlParams.h}`,
+    amount: `${amountVal}`,
+    trxType: `${trxTypeVal}`
   };
   console.log(`--transformedData-------------------`)
   console.log(transformedData)

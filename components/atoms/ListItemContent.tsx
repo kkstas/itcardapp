@@ -4,32 +4,16 @@ import useCustomColors from '../../hooks/useCustomColors';
 import { Ionicons } from '@expo/vector-icons';
 import { IReceiptState } from '../../hooks/asyncStorage';
 
-export type Data = {
-  id: string;
-  datetime: string;
-  location: string;
-  trxType: string;
-  trxAmount: string;
-};
 
-// id: number;
-// transactionStartDateTime: string;
-// deviceName: string;
-// transactionID: string;
-// localizationName: string;
-// localizationStreet: string;
-// trempcardNumberFormatted: string;
-// amount: string;
-
-export default function ListItemContent({ item }: { item: IReceiptState }) {
+export default function ListItemContent({ item, goToReceiptModal }: { item: IReceiptState, goToReceiptModal: () => void }) {
   const t = useCustomColors();
 
-  const trxType = 'Wpłata';
+  const trxType = (item.trxType === "ci" || item.trxType === "bi") ? 'Wpłata' : "Wypłata";
 
   const iconsColor = trxType === 'Wpłata' ? t.tint : t.green2;
 
   return (
-    <View style={[s.itemContainer, { borderBottomColor: t.separator }]}>
+    <TouchableOpacity onPress={goToReceiptModal} style={[s.itemContainer, { borderBottomColor: t.separator }]}>
       <View style={[s.avatarContainer, { backgroundColor: t.fillSecondary }]}>
         <Ionicons
           name={trxType === 'Wpłata' ? 'card-outline' : 'wallet-outline'}
@@ -45,21 +29,22 @@ export default function ListItemContent({ item }: { item: IReceiptState }) {
           {trxType} {item.amount}
         </Text>
         <Text style={[s.datetime, { color: t.labelSecondary }]}>
-          {item.localizationName}, {item.localizationStreet},{' '}
-          {item.localizationCity}
+          {item.localizationName}
         </Text>
+        <Text style={[s.datetime, { color: t.labelSecondary }]}>
+          {item.localizationStreet}, {item.localizationCity}</Text>
       </View>
       <TouchableOpacity
-        onPress={() =>
-          Alert.alert(
-            'Pobranie potwierdzenia nie powiodło się!',
-            'Nie można pobrać potwierdzenia testowej transakcji. Moduł jest w trakcie budowy.'
-          )
-        }
+        // onPress={() =>
+        //   Alert.alert(
+        //     'Pobranie potwierdzenia nie powiodło się!',
+        //     'Nie można pobrać potwierdzenia testowej transakcji. Moduł jest w trakcie budowy.'
+        //   )
+        // }
         style={s.downloadBtn}>
         <Ionicons name="download-outline" size={22} color={iconsColor} />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 }
 

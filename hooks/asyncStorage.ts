@@ -24,6 +24,11 @@ export interface IReceiptState {
   localizationCity: string;
   trempcardNumberFormatted: string;
   amount: string;
+  trxType: "ci" | "co" | "bi" | "bo";
+  // ci: cashIn
+  // co: cashOut
+  // bi: blikCashIn
+  // bo: blikCashOut
 }
 
 export const removeSingleItem = async (deleteId: number) => {

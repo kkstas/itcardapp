@@ -1,6 +1,5 @@
-import { Data } from "../components/atoms/ListItemContent";
 
-export const data: Data[] = [
+export const data = [
   {
     id: "1",
     datetime: "07:44, 12.01.2023",
