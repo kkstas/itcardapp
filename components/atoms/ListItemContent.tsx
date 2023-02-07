@@ -3,6 +3,7 @@ import { TouchableOpacity, Alert, StyleSheet, View, Text } from 'react-native';
 import useCustomColors from '../../hooks/useCustomColors';
 import { Ionicons } from '@expo/vector-icons';
 import { IReceiptState } from '../../hooks/asyncStorage';
+import { ShareReceiptMiniButton } from '../../features/ShareReceipt/ShareReceiptButton';
 
 
 export default function ListItemContent({ item, goToReceiptModal }: { item: IReceiptState, goToReceiptModal: () => void }) {
@@ -34,16 +35,7 @@ export default function ListItemContent({ item, goToReceiptModal }: { item: IRec
         <Text style={[s.datetime, { color: t.labelSecondary }]}>
           {item.localizationStreet}, {item.localizationCity}</Text>
       </View>
-      <TouchableOpacity
-        // onPress={() =>
-        //   Alert.alert(
-        //     'Pobranie potwierdzenia nie powiodło się!',
-        //     'Nie można pobrać potwierdzenia testowej transakcji. Moduł jest w trakcie budowy.'
-        //   )
-        // }
-        style={s.downloadBtn}>
-        <Ionicons name="download-outline" size={22} color={iconsColor} />
-      </TouchableOpacity>
+      <ShareReceiptMiniButton data={item} iconsColor={iconsColor} />
     </TouchableOpacity>
   );
 }

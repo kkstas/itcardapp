@@ -5,6 +5,7 @@ import useCustomColors from '../../hooks/useCustomColors';
 import { IReceiptState } from '../../hooks/asyncStorage';
 import { Ionicons } from '@expo/vector-icons';
 import ReceiptDetailsModalList from '../molecules/ReceiptDetailsModalList';
+import ShareReceiptButton from '../../features/ShareReceipt/ShareReceiptButton';
 
 
 interface ReceiptModalContentProps {
@@ -25,9 +26,10 @@ export default function ReceiptModalContent({
   return (
     <View style={[styles.container, { backgroundColor: t.bgPrimary }]}>
       <View style={styles.textContainer}>
+        <Image source={require("../../assets/images/planetCashLogoPrint.png")} style={styles.img} />
         <ReceiptDetailsModalList data={data} />
       </View>
-      <SmallButtonWithIcon text="Pobierz / Udostępnij" style={{ backgroundColor: t.indigo, marginBottom: 10 }} textStyle={{ color: "white" }} />
+      <ShareReceiptButton data={data} />
       <SmallButtonWithIcon
         text='Powrót'
         onPress={closeModal}
@@ -38,9 +40,10 @@ export default function ReceiptModalContent({
 
 const styles = StyleSheet.create({
   img: {
-    width: 50,
-    height: 50,
-    color: "white",
+    width: 215.68,
+    height: 100,
+    marginBottom: 30,
+    // color: "white",
 
 
   },
