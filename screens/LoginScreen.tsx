@@ -40,15 +40,15 @@ export default function LoginScreen() {
         setLoginError(null);
       }
       setIsFetching(false);
-    } else if (loginText.length === 0 && passwordText.length === 0) {
-      dispatch(
-        logIn({
-          email: 'j.testowy@itcard.pl',
-          jobTitle: 'Starszy Tester Wirtualny ds. Siedzenia w Aplikacji',
-          firstName: 'Jan',
-          lastName: 'Testowy',
-        })
-      );
+      // } else if (loginText.length === 0 && passwordText.length === 0) {
+      //   dispatch(
+      //     logIn({
+      //       email: 'j.testowy@itcard.pl',
+      //       jobTitle: 'Starszy Tester Wirtualny ds. Siedzenia w Aplikacji',
+      //       firstName: 'Jan',
+      //       lastName: 'Testowy',
+      //     })
+      //   );
     } else if (loginText.length < 6 && passwordText.length > 6) {
       setPasswordError(null);
       setLoginError('Adres e-mail jest za krótki!');
