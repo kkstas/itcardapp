@@ -23,10 +23,14 @@ export default function ReceiptModalContent({
 
   const trxTypeText = data.trxType === "co" || data.trxType === "bo" ? "Wypłata" : "Wpłata"
 
+
   return (
     <View style={[styles.container, { backgroundColor: t.bgPrimary }]}>
       <View style={styles.textContainer}>
-        <Image source={require("../../assets/images/planetCashLogoPrint.png")} style={styles.img} />
+        {t.theme === "dark"
+          ? (<Image source={require("../../assets/images/planetCashLogoPrintWhite.png")} style={styles.img} />)
+          : (<Image source={require("../../assets/images/planetCashLogoPrint.png")} style={styles.img} />)
+        }
         <ReceiptDetailsModalList data={data} />
       </View>
       <ShareReceiptButton data={data} />
@@ -41,11 +45,8 @@ export default function ReceiptModalContent({
 const styles = StyleSheet.create({
   img: {
     width: 215.68,
-    height: 100,
+    height: 102,
     marginBottom: 30,
-    // color: "white",
-
-
   },
   downloadBtn: {
     marginBottom: 10,

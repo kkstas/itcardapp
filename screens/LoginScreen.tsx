@@ -1,11 +1,12 @@
 import LoginScreenTemplate from '../components/templates/LoginScreenTemplate';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useCustomColors from '../hooks/useCustomColors';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { logIn } from '../store/slices/userInfo';
 import { logInAsync } from '../util/auth';
 import TestSplashElement from '../components/molecules/TestSplashElement';
 import { Keyboard } from 'react-native';
+import { rememberUserData, readUserData } from '../util/rememberMe';
 
 export default function LoginScreen() {
   const t = useCustomColors();
@@ -19,16 +20,37 @@ export default function LoginScreen() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [isFetching, setIsFetching] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   const dispatch = useAppDispatch();
 
+  const checkIfRemembered = async () => {
+    setIsFetching(true);
+    const result = await readUserData();
+    if (
+      result &&
+      result.email &&
+      result.jobTitle &&
+      result.lastName &&
+      result.firstName
+    ) {
+      dispatch(logIn(result));
+    }
+    setIsFetching(false);
+  };
+
+  useEffect(() => {
+    checkIfRemembered();
+  }, []);
+
   async function submitHandler() {
-    Keyboard.dismiss();
+    // Keyboard.dismiss();
     if (loginText.length >= 6 && passwordText.length >= 6) {
       setIsFetching(true);
       try {
         const userData = await logInAsync(loginText, passwordText);
         if (userData && userData.firstName && userData.lastName) {
+          rememberUserData(userData);
           dispatch(logIn(userData));
         } else {
           setPasswordError(
@@ -83,6 +105,8 @@ export default function LoginScreen() {
         t={t}
         loginErrorMessage={loginError}
         passwordErrorMessage={passwordError}
+        checked={checked}
+        setChecked={setChecked}
       />
     </>
   );

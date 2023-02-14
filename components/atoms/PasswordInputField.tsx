@@ -4,10 +4,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { maxPasswordFieldLength } from "../../constants/Validation";
-import { CustomTheme } from "../../constants/Colors";
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { maxPasswordFieldLength } from '../../constants/Validation';
 
 export interface PasswordInputFieldProps {
   onPasswordChangeText: (text: string) => void;
@@ -17,7 +16,7 @@ export interface PasswordInputFieldProps {
   passwordLogoColor: string;
   isPasswordHidden: boolean;
   passwordErrorMessage: string | null;
-  t: CustomTheme;
+  t: any;
   passwordText: string;
 }
 
@@ -29,13 +28,13 @@ export default function PasswordInputField(props: PasswordInputFieldProps) {
       <Text style={[styles.inputLabel, { color: t.labelSecondary }]}>
         Hasło
       </Text>
-      <View style={{ justifyContent: "center" }}>
+      <View style={{ justifyContent: 'center' }}>
         <TouchableOpacity onPress={props.onLockPress} style={styles.logo}>
           <Ionicons
             name={
               props.isPasswordHidden
-                ? "lock-closed-outline"
-                : "lock-open-outline"
+                ? 'lock-closed-outline'
+                : 'lock-open-outline'
             }
             size={18}
             color={props.passwordLogoColor}
@@ -43,7 +42,7 @@ export default function PasswordInputField(props: PasswordInputFieldProps) {
         </TouchableOpacity>
         <TouchableOpacity onPress={props.onLockPress} style={styles.eyeButton}>
           <Ionicons
-            name={props.isPasswordHidden ? "eye-off" : "eye"}
+            name={props.isPasswordHidden ? 'eye-off' : 'eye'}
             size={18}
             color={props.isPasswordHidden ? t.gray2 : t.tint}
           />
@@ -80,15 +79,15 @@ export default function PasswordInputField(props: PasswordInputFieldProps) {
 
 const styles = StyleSheet.create({
   eyeButton: {
-    position: "absolute",
+    position: 'absolute',
     right: 5,
     zIndex: 10,
     padding: 5,
   },
   errorView: {
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingLeft: 10,
-    alignItems: "center",
+    alignItems: 'center',
     paddingTop: 3,
   },
   errorMessage: {
@@ -96,7 +95,7 @@ const styles = StyleSheet.create({
     paddingLeft: 3,
   },
   logo: {
-    position: "absolute",
+    position: 'absolute',
     left: 5,
     zIndex: 10,
     padding: 5,
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingLeft: 8,
     paddingBottom: 2,
-    fontWeight: "300",
+    fontWeight: '300',
   },
   loginInput: {
     paddingVertical: 7,

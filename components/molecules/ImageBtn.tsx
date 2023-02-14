@@ -1,17 +1,17 @@
-import { LogBox, Text, StyleSheet, Alert } from 'react-native';
+import { LogBox, Text, StyleSheet, Alert } from "react-native";
 import {
   PermissionStatus,
   MediaTypeOptions,
   launchCameraAsync,
   useCameraPermissions,
-} from 'expo-image-picker';
-import { useAppDispatch } from '../../hooks/reduxHooks';
-import { setMedia, setThumbnailUri } from '../../store/slices/ticketData';
-import * as VideoThumbnails from 'expo-video-thumbnails';
-import useCustomColors from '../../hooks/useCustomColors';
-import { Ionicons } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { memo } from 'react';
+} from "expo-image-picker";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { setMedia, setThumbnailUri } from "../../store/slices/ticketData";
+import * as VideoThumbnails from "expo-video-thumbnails";
+import useCustomColors from "../../hooks/useCustomColors";
+import { Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { memo } from "react";
 
 LogBox.ignoreAllLogs();
 
@@ -19,8 +19,7 @@ function ImageBtn() {
   const t = useCustomColors();
   const dispatch = useAppDispatch();
 
-  const [cameraPermissionInformation, requestPermission] =
-    useCameraPermissions();
+  const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
 
   async function verifyPermissions() {
     if (cameraPermissionInformation?.status === PermissionStatus.UNDETERMINED) {
@@ -29,8 +28,8 @@ function ImageBtn() {
     }
     if (cameraPermissionInformation?.status === PermissionStatus.DENIED) {
       Alert.alert(
-        'Nie wyrażono zgody na dostęp do Aparatu.',
-        'Poprzednie zapytanie o zgodę na dostęp zostało odrzucone. Aby aplikacja poprawnie działa, musisz wyrazić zgodę na dostęp w ustawieniach Twojego urządzenia.'
+        "Nie wyrażono zgody na dostęp do Aparatu.",
+        "Poprzednie zapytanie o zgodę na dostęp zostało odrzucone. Aby aplikacja poprawnie działa, musisz wyrazić zgodę na dostęp w ustawieniach Twojego urządzenia."
       );
       return false;
     }
@@ -49,13 +48,10 @@ function ImageBtn() {
       quality: 0.5,
     });
     if (!image.canceled && image.assets) {
-      if (image.assets[0].type === 'video' && image.assets[0].uri) {
-        const thumbnailImage = await VideoThumbnails.getThumbnailAsync(
-          image.assets[0].uri,
-          {
-            time: 1000,
-          }
-        );
+      if (image.assets[0].type === "video" && image.assets[0].uri) {
+        const thumbnailImage = await VideoThumbnails.getThumbnailAsync(image.assets[0].uri, {
+          time: 1000,
+        });
         dispatch(setMedia(image.assets[0].uri));
         dispatch(setThumbnailUri(thumbnailImage.uri));
       } else {
@@ -68,7 +64,8 @@ function ImageBtn() {
   return (
     <TouchableOpacity
       onPress={takeImageHandler}
-      style={[styles.container, { backgroundColor: t.bgTertiaryGrouped }]}>
+      style={[styles.container, { backgroundColor: t.bgTertiaryGrouped }]}
+    >
       <Ionicons name="camera-outline" color={t.tint} size={32} />
       <Text style={[styles.text, { color: t.tint }]}>Zrób zdjęcie</Text>
     </TouchableOpacity>
@@ -81,13 +78,13 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 10,
     fontSize: 12,
-    textAlign: 'center',
-    fontWeight: '500',
+    textAlign: "center",
+    fontWeight: "500",
   },
   container: {
     marginHorizontal: 5,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    alignItems: "center",
+    justifyContent: "space-between",
     borderRadius: 8,
     paddingVertical: 12,
     width: 110,

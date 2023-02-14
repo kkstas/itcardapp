@@ -34,6 +34,7 @@ import TicketModalScreen from "../screens/TicketModalScreen";
 import MapScreen from "../screens/MapScreen";
 import { HeaderBackgroundBlur } from "./HeaderBackgroundBlur";
 import ReceiptModalScreen from "../screens/ReceiptModalScreen";
+import { clearUserData } from "../util/rememberMe";
 
 const CLTheme = {
   ...DefaultTheme,
@@ -141,7 +142,9 @@ function BottomTabNavigator() {
   const t = useCustomColors();
 
   const dispatch = useAppDispatch();
-  function logOutHandler() {
+
+  async function logOutHandler() {
+    await clearUserData();
     dispatch(logOut());
   }
 
