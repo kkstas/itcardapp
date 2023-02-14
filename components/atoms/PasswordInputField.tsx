@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { maxPasswordFieldLength } from '../../constants/Validation';
+import { CustomTheme } from '../../constants/Colors';
 
 export interface PasswordInputFieldProps {
   onPasswordChangeText: (text: string) => void;
@@ -16,7 +17,7 @@ export interface PasswordInputFieldProps {
   passwordLogoColor: string;
   isPasswordHidden: boolean;
   passwordErrorMessage: string | null;
-  t: any;
+  t: CustomTheme;
   passwordText: string;
 }
 
