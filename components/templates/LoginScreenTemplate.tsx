@@ -24,7 +24,9 @@ export default function LoginScreenTemplate(props: LoginBoxProps) {
   const bottomGradientColors =
     t.theme === "dark"
       ? [t.bgPrimary, t.bgSecondary]
-      : [t.fillPrimary, t.labelQuaternary];
+      : // : [t.fillPrimary, t.labelQuaternary];
+
+        [t.fillPrimary, t.labelQuaternary];
 
   return (
     <KeyboardAvoidingView
