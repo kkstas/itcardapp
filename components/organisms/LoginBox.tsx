@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Pressable,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import LoginInputField from "../atoms/LoginInputField";
 import PasswordInputField from "../atoms/PasswordInputField";
@@ -79,7 +73,7 @@ export default function LoginBox(props: LoginBoxProps) {
             />
           </Animated.View>
           <Animated.View entering={FadeInDown.delay(520)}>
-            <Pressable onPressIn={props.submitAction}>
+            <TouchableOpacity onPressIn={props.submitAction}>
               <LinearGradient
                 colors={[t.itcGranatSecondary, t.itcGranatSecondary]}
                 // colors={['rgb(121, 150, 174)', 'rgb(99, 116, 169)']}
@@ -89,7 +83,7 @@ export default function LoginBox(props: LoginBoxProps) {
                   Zaloguj
                 </Text>
               </LinearGradient>
-            </Pressable>
+            </TouchableOpacity>
           </Animated.View>
         </LinearGradient>
       </View>

@@ -18,9 +18,7 @@ export const rememberUserData = async (data: IUserData) => {
 
 export const clearUserData = async () => {
   try {
-    console.log("start clearing user data");
     await AsyncStorage.setItem("ccusr", "");
-    console.log("user data cleared");
   } catch (error) {
     // log
   }
@@ -29,8 +27,6 @@ export const clearUserData = async () => {
 export const readUserData = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem("ccusr");
-    console.log("READ USER DATA:");
-    console.log(jsonValue);
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (error) {
     // err

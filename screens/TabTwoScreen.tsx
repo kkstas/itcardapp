@@ -3,18 +3,27 @@ import MainScreenTemplate from "../components/templates/MainScreenTemplate";
 
 import { Alert } from "react-native";
 import { useState } from "react";
-import { PermissionStatus, getCurrentPositionAsync, useForegroundPermissions } from "expo-location";
+import {
+  PermissionStatus,
+  getCurrentPositionAsync,
+  useForegroundPermissions,
+} from "expo-location";
 
-export default function TabTwoScreen({ navigation }: TabTwoMainStackScreenProps<"TabTwoScreen">) {
+export default function TabTwoScreen({
+  navigation,
+}: TabTwoMainStackScreenProps<"TabTwoScreen">) {
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
-  const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
+  const [locationPermissionInformation, requestPermission] =
+    useForegroundPermissions();
 
   function navigateToProfile() {
     navigation.navigate("Root", { screen: "TabThree" });
   }
 
   async function verifyPermissions() {
-    if (locationPermissionInformation?.status === PermissionStatus.UNDETERMINED) {
+    if (
+      locationPermissionInformation?.status === PermissionStatus.UNDETERMINED
+    ) {
       const permissionResponse = await requestPermission();
       return permissionResponse.granted;
     }
@@ -28,7 +37,11 @@ export default function TabTwoScreen({ navigation }: TabTwoMainStackScreenProps<
     return true;
   }
 
-  function navigateToInfo(appTitle: string, appDescription: string, bottomInfo: string) {
+  function navigateToInfo(
+    appTitle: string,
+    appDescription: string,
+    bottomInfo: string
+  ) {
     navigation.navigate("InfoModal", {
       appTitle: appTitle,
       appDescription: appDescription,

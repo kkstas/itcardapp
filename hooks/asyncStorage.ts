@@ -1,7 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export type ThemePreference = 'default' | 'dark' | 'light';
-export type HapticsPreference = 'default' | 'disabled';
+export type ThemePreference = "default" | "dark" | "light";
+export type HapticsPreference = "default" | "disabled";
 
 export interface TicketDataType {
   id: number;
@@ -33,12 +33,12 @@ export interface IReceiptState {
 
 export const removeSingleItem = async (deleteId: number) => {
   try {
-    const ticketData = await AsyncStorage.getItem('ticketData');
+    const ticketData = await AsyncStorage.getItem("ticketData");
     if (ticketData) {
       const parsedData: TicketDataType[] = JSON.parse(ticketData);
       if (Array.isArray(parsedData)) {
         const filteredData = parsedData.filter((t) => t.id != deleteId);
-        await AsyncStorage.setItem('ticketData', JSON.stringify(filteredData));
+        await AsyncStorage.setItem("ticketData", JSON.stringify(filteredData));
       }
     }
   } catch (e) {
@@ -48,12 +48,12 @@ export const removeSingleItem = async (deleteId: number) => {
 
 export const removeSingleReceipt = async (deleteId: number) => {
   try {
-    const receiptData = await AsyncStorage.getItem('receiptData');
+    const receiptData = await AsyncStorage.getItem("receiptData");
     if (receiptData) {
       const parsedData: IReceiptState[] = JSON.parse(receiptData);
       if (Array.isArray(parsedData)) {
         const filteredData = parsedData.filter((t) => t.id != deleteId);
-        await AsyncStorage.setItem('receiptData', JSON.stringify(filteredData));
+        await AsyncStorage.setItem("receiptData", JSON.stringify(filteredData));
       }
     }
   } catch (e) {
@@ -63,28 +63,28 @@ export const removeSingleReceipt = async (deleteId: number) => {
 
 export const getAllReceipts = async () => {
   try {
-    console.log('Fetching receipts from AsyncStorage (receiptData):');
-    const jsonValue = await AsyncStorage.getItem('receiptData');
+    console.log("Fetching receipts from AsyncStorage (receiptData):");
+    const jsonValue = await AsyncStorage.getItem("receiptData");
     const parsedValue = jsonValue != null ? JSON.parse(jsonValue) : null;
     console.log(parsedValue);
     return parsedValue;
   } catch (e) {
-    console.log('Fetching receipts from AsyncStorage failed');
+    console.log("Fetching receipts from AsyncStorage failed");
     console.log(e);
   }
 };
 
 export const addNewReceipt = async (data: IReceiptState) => {
   try {
-    const receiptData = await AsyncStorage.getItem('receiptData');
+    const receiptData = await AsyncStorage.getItem("receiptData");
 
     if (!receiptData) {
       const newData = JSON.stringify([data]);
-      await AsyncStorage.setItem('receiptData', newData);
+      await AsyncStorage.setItem("receiptData", newData);
     } else {
       const resData = JSON.parse(receiptData);
       const readyData = JSON.stringify([...resData, data]);
-      await AsyncStorage.setItem('receiptData', readyData);
+      await AsyncStorage.setItem("receiptData", readyData);
     }
   } catch (e) {
     console.log(e);
@@ -93,30 +93,30 @@ export const addNewReceipt = async (data: IReceiptState) => {
 
 export const getAllTickets = async () => {
   try {
-    console.log('Fetching tickets from AsyncStorage (ticketData):');
-    const jsonValue = await AsyncStorage.getItem('ticketData');
+    console.log("Fetching tickets from AsyncStorage (ticketData):");
+    const jsonValue = await AsyncStorage.getItem("ticketData");
     const parsedValue = jsonValue != null ? JSON.parse(jsonValue) : null;
     for (const e of parsedValue) {
       console.log(`id: ${e.id}, title: ${e.title}`);
     }
     return parsedValue;
   } catch (e) {
-    console.log('Fetching tickets from AsyncStorage failed');
+    console.log("Fetching tickets from AsyncStorage failed");
     console.log(e);
   }
 };
 
 export const addNewTicket = async (data: TicketDataType) => {
   try {
-    const ticketData = await AsyncStorage.getItem('ticketData');
+    const ticketData = await AsyncStorage.getItem("ticketData");
 
     if (!ticketData) {
       const newData = JSON.stringify([data]);
-      await AsyncStorage.setItem('ticketData', newData);
+      await AsyncStorage.setItem("ticketData", newData);
     } else {
       const resData = JSON.parse(ticketData);
       const readyData = JSON.stringify([...resData, data]);
-      await AsyncStorage.setItem('ticketData', readyData);
+      await AsyncStorage.setItem("ticketData", readyData);
     }
   } catch (e) {
     console.log(e);
@@ -125,7 +125,7 @@ export const addNewTicket = async (data: TicketDataType) => {
 
 export const setThemePreference = async (pref: ThemePreference) => {
   try {
-    await AsyncStorage.setItem('preferredTheme', pref);
+    await AsyncStorage.setItem("preferredTheme", pref);
   } catch (e) {
     // saving error
     console.log(e);
@@ -134,7 +134,7 @@ export const setThemePreference = async (pref: ThemePreference) => {
 
 export const setHapticsPreference = async (pref: HapticsPreference) => {
   try {
-    await AsyncStorage.setItem('preferredHaptics', pref);
+    await AsyncStorage.setItem("preferredHaptics", pref);
   } catch (e) {
     // saving error
     console.log(e);
@@ -144,7 +144,7 @@ export const setHapticsPreference = async (pref: HapticsPreference) => {
 // read object data
 export const getThemePreference = async () => {
   try {
-    const value = await AsyncStorage.getItem('preferredTheme');
+    const value = await AsyncStorage.getItem("preferredTheme");
     return value != null ? value : null;
   } catch (e) {
     // error reading value
@@ -154,7 +154,7 @@ export const getThemePreference = async () => {
 
 export const getHapticsPreference = async () => {
   try {
-    const value = await AsyncStorage.getItem('preferredHaptics');
+    const value = await AsyncStorage.getItem("preferredHaptics");
     return value != null ? value : null;
   } catch (e) {
     // error reading value
