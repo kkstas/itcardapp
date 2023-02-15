@@ -5,7 +5,6 @@ import { useAppDispatch } from '../hooks/reduxHooks';
 import { logIn } from '../store/slices/userInfo';
 import { logInAsync } from '../util/auth';
 import TestSplashElement from '../components/molecules/TestSplashElement';
-import { Keyboard } from 'react-native';
 import { rememberUserData, readUserData } from '../util/rememberMe';
 
 export default function LoginScreen() {

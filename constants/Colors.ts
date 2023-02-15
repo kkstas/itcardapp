@@ -52,10 +52,12 @@ const pcashColors: IpcashColors = {
 };
 
 export const blueGradientColors = [
-  'rgb(114, 172, 211)',
-  'rgb(114, 172, 211)',
-  'rgb(106, 175, 181)',
-  'rgb(78, 89, 122)',
+  itcardColors.itcMagentaSecondary,
+  itcardColors.itcGranatSecondary,
+  // 'rgb(114, 172, 211)',
+  // 'rgb(114, 172, 211)',
+  // 'rgb(106, 175, 181)',
+  // 'rgb(78, 89, 122)',
 ];
 
 export const CustomDarkTheme = {

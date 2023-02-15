@@ -25,62 +25,86 @@ export default function LoginBox(props: LoginBoxProps) {
         style={styles.welcomeView}>
         <WelcomeToItcard />
       </Animated.View>
-      <LinearGradient
-        style={styles.boxGrad}
-        colors={[t.bgSecondary, t.bgTertiary]}>
-        <Animated.Text
-          entering={FadeInDown.delay(220)}
-          style={[styles.mainText, { color: t.labelTertiary }]}>
-          Logowanie
-        </Animated.Text>
-        <View
-          style={[styles.separator, { borderBottomColor: t.separator }]}></View>
-        <Animated.View entering={FadeInDown.delay(320)}>
-          <LoginInputField
-            onLoginFocus={props.onLoginFocus}
-            loginLogoColor={props.loginLogoColor}
-            onLoginBlur={props.onLoginBlur}
-            t={t}
-            loginErrorMessage={props.loginErrorMessage}
-            onLoginChangeText={props.onLoginChangeText}
-            loginText={props.loginText}
-          />
-        </Animated.View>
-        <Animated.View entering={FadeInDown.delay(420)}>
-          <PasswordInputField
-            onPasswordFocus={props.onPasswordFocus}
-            onPasswordBlur={props.onPasswordBlur}
-            passwordLogoColor={props.passwordLogoColor}
-            onLockPress={props.onLockPress}
-            isPasswordHidden={props.isPasswordHidden}
-            t={t}
-            passwordErrorMessage={props.passwordErrorMessage}
-            onPasswordChangeText={props.onPasswordChangeText}
-            passwordText={props.passwordText}
-          />
-          <RememberMeToggler
-            checked={props.checked}
-            setChecked={props.setChecked}
-          />
-        </Animated.View>
-        <Animated.View entering={FadeInDown.delay(520)}>
-          <TouchableOpacity onPress={props.submitAction}>
-            <LinearGradient
-              // colors={[t.itcMagenta, t.itcMagenta]}
-              colors={['rgb(121, 150, 174)', 'rgb(99, 116, 169)']}
-              style={styles.loginButton}>
-              <Text style={[styles.loginBtnText, { color: 'white' }]}>
-                Zaloguj
-              </Text>
-            </LinearGradient>
-          </TouchableOpacity>
-        </Animated.View>
-      </LinearGradient>
+      <View style={styles.wrapper}>
+        <LinearGradient
+          style={styles.boxGrad}
+          colors={
+            t.theme === 'light'
+              ? [t.bgPrimary, t.bgTertiaryGrouped]
+              : [t.bgTertiary, t.bgPrimary]
+          }>
+          <Animated.Text
+            entering={FadeInDown.delay(220)}
+            style={[styles.mainText, { color: t.labelTertiary }]}>
+            Logowanie
+          </Animated.Text>
+          <View
+            style={[
+              styles.separator,
+              { borderBottomColor: t.separator },
+            ]}></View>
+          <Animated.View entering={FadeInDown.delay(320)}>
+            <LoginInputField
+              onLoginFocus={props.onLoginFocus}
+              loginLogoColor={props.loginLogoColor}
+              onLoginBlur={props.onLoginBlur}
+              t={t}
+              loginErrorMessage={props.loginErrorMessage}
+              onLoginChangeText={props.onLoginChangeText}
+              loginText={props.loginText}
+            />
+          </Animated.View>
+          <Animated.View entering={FadeInDown.delay(420)}>
+            <PasswordInputField
+              onPasswordFocus={props.onPasswordFocus}
+              onPasswordBlur={props.onPasswordBlur}
+              passwordLogoColor={props.passwordLogoColor}
+              onLockPress={props.onLockPress}
+              isPasswordHidden={props.isPasswordHidden}
+              t={t}
+              passwordErrorMessage={props.passwordErrorMessage}
+              onPasswordChangeText={props.onPasswordChangeText}
+              passwordText={props.passwordText}
+            />
+            <RememberMeToggler
+              checked={props.checked}
+              setChecked={props.setChecked}
+            />
+          </Animated.View>
+          <Animated.View entering={FadeInDown.delay(520)}>
+            <TouchableOpacity onPress={props.submitAction}>
+              <LinearGradient
+                colors={[t.itcGranatSecondary, t.itcGranatSecondary]}
+                // colors={['rgb(121, 150, 174)', 'rgb(99, 116, 169)']}
+                style={styles.loginButton}>
+                <Text style={[styles.loginBtnText, { color: 'white' }]}>
+                  Zaloguj
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </Animated.View>
+        </LinearGradient>
+      </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: 'rgba(0,0,0,0.5)',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+  },
   welcomeView: {
     width: '90%',
     paddingLeft: 30,

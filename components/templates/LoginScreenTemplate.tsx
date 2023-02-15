@@ -4,40 +4,53 @@ import {
   KeyboardAvoidingView,
   View,
   Platform,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import Layout from '../../constants/Layout';
-import { blueGradientColors } from '../../constants/Colors';
-import LoginBox, { LoginBoxProps } from '../organisms/LoginBox';
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import Layout from "../../constants/Layout";
+import { blueGradientColors } from "../../constants/Colors";
+import LoginBox, { LoginBoxProps } from "../organisms/LoginBox";
 
 export default function LoginScreenTemplate(props: LoginBoxProps) {
   const windowHeight = Layout.window.height;
   const t = props.t;
+  // const bottomGradientColors =
+  //   t.theme === 'dark'
+  //     ? [t.bgPrimaryGrouped, t.bgSecondaryGrouped]
+  //     : [t.fillSecondary, t.fillQuaternary];
+
   const bottomGradientColors =
-    t.theme === 'dark'
-      ? [t.bgPrimaryGrouped, t.bgSecondaryGrouped]
-      : [t.fillSecondary, t.fillQuaternary];
+    t.theme === "dark"
+      ? [t.bgPrimary, t.bgSecondary]
+      : [t.fillPrimary, t.fillPrimary];
 
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={-200}
-      behavior={Platform.OS === 'ios' ? 'position' : 'height'}>
+      behavior={Platform.OS === "ios" ? "position" : "height"}
+    >
       <ScrollView
-        style={{ height: windowHeight, paddingTop: windowHeight / 2.5 }}
-        showsVerticalScrollIndicator={false}>
+        style={{
+          height: windowHeight,
+          paddingTop: windowHeight / 2.5,
+        }}
+        showsVerticalScrollIndicator={false}
+      >
         <LinearGradient
           style={[styles.grad, { height: windowHeight, top: -windowHeight }]}
-          colors={blueGradientColors}></LinearGradient>
+          colors={blueGradientColors}
+        ></LinearGradient>
         <LinearGradient
           style={[{ height: windowHeight }]}
-          colors={bottomGradientColors}></LinearGradient>
+          colors={bottomGradientColors}
+        ></LinearGradient>
         <View
           style={[
             styles.loginBoxView,
             {
               top: -windowHeight / 6,
             },
-          ]}>
+          ]}
+        >
           <LoginBox
             onLoginChangeText={props.onLoginChangeText}
             onPasswordChangeText={props.onPasswordChangeText}
@@ -66,14 +79,14 @@ export default function LoginScreenTemplate(props: LoginBoxProps) {
 
 const styles = StyleSheet.create({
   loginBoxView: {
-    position: 'absolute',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    width: '100%',
+    position: "absolute",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    width: "100%",
   },
   grad: {
-    position: 'absolute',
-    width: '100%',
+    position: "absolute",
+    width: "100%",
     paddingBottom: 80,
     paddingHorizontal: 38,
   },
