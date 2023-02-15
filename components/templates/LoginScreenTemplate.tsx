@@ -33,6 +33,7 @@ export default function LoginScreenTemplate(props: LoginBoxProps) {
           height: windowHeight,
           paddingTop: windowHeight / 2.5,
         }}
+        keyboardShouldPersistTaps={"handled"}
         showsVerticalScrollIndicator={false}
       >
         <LinearGradient

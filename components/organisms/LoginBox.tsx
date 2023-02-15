@@ -1,14 +1,20 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import LoginInputField from '../atoms/LoginInputField';
-import PasswordInputField from '../atoms/PasswordInputField';
-import WelcomeToItcard from '../atoms/WelcomeToItcard';
-import { LoginInputFieldProps } from '../atoms/LoginInputField';
-import { PasswordInputFieldProps } from '../atoms/PasswordInputField';
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import LoginInputField from "../atoms/LoginInputField";
+import PasswordInputField from "../atoms/PasswordInputField";
+import WelcomeToItcard from "../atoms/WelcomeToItcard";
+import { LoginInputFieldProps } from "../atoms/LoginInputField";
+import { PasswordInputFieldProps } from "../atoms/PasswordInputField";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import RememberMeToggler, {
   IRememberMeToggler,
-} from '../atoms/RememberMeToggler';
+} from "../atoms/RememberMeToggler";
 
 export interface LoginBoxProps
   extends LoginInputFieldProps,
@@ -22,27 +28,28 @@ export default function LoginBox(props: LoginBoxProps) {
     <>
       <Animated.View
         entering={FadeInDown.delay(100)}
-        style={styles.welcomeView}>
+        style={styles.welcomeView}
+      >
         <WelcomeToItcard />
       </Animated.View>
       <View style={styles.wrapper}>
         <LinearGradient
           style={styles.boxGrad}
           colors={
-            t.theme === 'light'
+            t.theme === "light"
               ? [t.bgPrimary, t.bgTertiaryGrouped]
               : [t.bgTertiary, t.bgPrimary]
-          }>
+          }
+        >
           <Animated.Text
             entering={FadeInDown.delay(220)}
-            style={[styles.mainText, { color: t.labelTertiary }]}>
+            style={[styles.mainText, { color: t.labelTertiary }]}
+          >
             Logowanie
           </Animated.Text>
           <View
-            style={[
-              styles.separator,
-              { borderBottomColor: t.separator },
-            ]}></View>
+            style={[styles.separator, { borderBottomColor: t.separator }]}
+          ></View>
           <Animated.View entering={FadeInDown.delay(320)}>
             <LoginInputField
               onLoginFocus={props.onLoginFocus}
@@ -72,16 +79,17 @@ export default function LoginBox(props: LoginBoxProps) {
             />
           </Animated.View>
           <Animated.View entering={FadeInDown.delay(520)}>
-            <TouchableOpacity onPress={props.submitAction}>
+            <Pressable onPressIn={props.submitAction}>
               <LinearGradient
                 colors={[t.itcGranatSecondary, t.itcGranatSecondary]}
                 // colors={['rgb(121, 150, 174)', 'rgb(99, 116, 169)']}
-                style={styles.loginButton}>
-                <Text style={[styles.loginBtnText, { color: 'white' }]}>
+                style={styles.loginButton}
+              >
+                <Text style={[styles.loginBtnText, { color: "white" }]}>
                   Zaloguj
                 </Text>
               </LinearGradient>
-            </TouchableOpacity>
+            </Pressable>
           </Animated.View>
         </LinearGradient>
       </View>
@@ -92,10 +100,10 @@ export default function LoginBox(props: LoginBoxProps) {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: 'rgba(0,0,0,0.5)',
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "rgba(0,0,0,0.5)",
     shadowOffset: {
       width: 0,
       height: 1,
@@ -106,11 +114,11 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   welcomeView: {
-    width: '90%',
+    width: "90%",
     paddingLeft: 30,
   },
   boxGrad: {
-    width: '90%',
+    width: "90%",
     paddingHorizontal: 20,
     paddingVertical: 40,
     borderRadius: 12,
@@ -119,25 +127,25 @@ const styles = StyleSheet.create({
   separator: {
     top: -5,
     marginLeft: 8,
-    width: '75%',
+    width: "75%",
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 5,
   },
   loginBtnText: {
     fontSize: 17,
-    fontWeight: '400',
+    fontWeight: "400",
   },
   loginButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingVertical: 8,
-    width: '100%',
+    width: "100%",
     borderRadius: 10,
     marginTop: 5,
   },
   mainText: {
     fontSize: 48,
     paddingLeft: 8,
-    fontWeight: '200',
+    fontWeight: "200",
   },
 });

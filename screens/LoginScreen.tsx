@@ -1,16 +1,16 @@
-import LoginScreenTemplate from '../components/templates/LoginScreenTemplate';
-import { useEffect, useState } from 'react';
-import useCustomColors from '../hooks/useCustomColors';
-import { useAppDispatch } from '../hooks/reduxHooks';
-import { logIn } from '../store/slices/userInfo';
-import { logInAsync } from '../util/auth';
-import TestSplashElement from '../components/molecules/TestSplashElement';
-import { rememberUserData, readUserData } from '../util/rememberMe';
+import LoginScreenTemplate from "../components/templates/LoginScreenTemplate";
+import { useEffect, useState } from "react";
+import useCustomColors from "../hooks/useCustomColors";
+import { useAppDispatch } from "../hooks/reduxHooks";
+import { logIn } from "../store/slices/userInfo";
+import { logInAsync } from "../util/auth";
+import TestSplashElement from "../components/molecules/TestSplashElement";
+import { rememberUserData, readUserData } from "../util/rememberMe";
 
 export default function LoginScreen() {
   const t = useCustomColors();
-  const [loginText, setLoginText] = useState('');
-  const [passwordText, setPasswordText] = useState('');
+  const [loginText, setLoginText] = useState("");
+  const [passwordText, setPasswordText] = useState("");
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const logoUnfocusedColor = t.gray2;
   const logoFocusedColor = t.tint;
@@ -44,6 +44,7 @@ export default function LoginScreen() {
 
   async function submitHandler() {
     // Keyboard.dismiss();
+    console.log("asdf");
     if (loginText.length >= 6 && passwordText.length >= 6) {
       setIsFetching(true);
       try {
@@ -53,11 +54,11 @@ export default function LoginScreen() {
           dispatch(logIn(userData));
         } else {
           setPasswordError(
-            'Konto jest niepoprawnie skonfigurowane. Skontaktuj się z administracją.'
+            "Konto jest niepoprawnie skonfigurowane. Skontaktuj się z administracją."
           );
         }
       } catch (error) {
-        setPasswordError('Dane logowania są nieprawidłowe.');
+        setPasswordError("Dane logowania są nieprawidłowe.");
         setLoginError(null);
       }
       setIsFetching(false);
@@ -72,16 +73,16 @@ export default function LoginScreen() {
       //   );
     } else if (loginText.length < 6 && passwordText.length > 6) {
       setPasswordError(null);
-      setLoginError('Adres e-mail jest za krótki!');
+      setLoginError("Adres e-mail jest za krótki!");
     } else if (loginText.length > 6 && passwordText.length < 6) {
       setLoginError(null);
-      setPasswordError('Hasło jest za krótkie!');
+      setPasswordError("Hasło jest za krótkie!");
     } else {
-      setPasswordError('Hasło jest za krótkie!');
-      setLoginError('Adres e-mail jest za krótki!');
+      setPasswordError("Hasło jest za krótkie!");
+      setLoginError("Adres e-mail jest za krótki!");
     }
-    setLoginText('');
-    setPasswordText('');
+    setLoginText("");
+    setPasswordText("");
   }
 
   return (
