@@ -19,7 +19,6 @@ const RememberMeToggler = (props: IRememberMeToggler) => {
     <View style={styles.container}>
       <TouchableOpacity onPress={pressHandler} style={styles.checkboxView}>
         {props.checked ? (
-          // <Ionicons name="checkbox" size={18} color={t.tint} />
           <View
             style={[
               styles.iconWrapper,
