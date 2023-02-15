@@ -7,7 +7,10 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Layout from "../../constants/Layout";
-import { blueGradientColors } from "../../constants/Colors";
+import {
+  blueGradientColors,
+  blueLightGradientColors,
+} from "../../constants/Colors";
 import LoginBox, { LoginBoxProps } from "../organisms/LoginBox";
 
 export default function LoginScreenTemplate(props: LoginBoxProps) {
@@ -21,7 +24,7 @@ export default function LoginScreenTemplate(props: LoginBoxProps) {
   const bottomGradientColors =
     t.theme === "dark"
       ? [t.bgPrimary, t.bgSecondary]
-      : [t.fillPrimary, t.fillPrimary];
+      : [t.fillPrimary, t.labelQuaternary];
 
   return (
     <KeyboardAvoidingView
@@ -38,7 +41,9 @@ export default function LoginScreenTemplate(props: LoginBoxProps) {
       >
         <LinearGradient
           style={[styles.grad, { height: windowHeight, top: -windowHeight }]}
-          colors={blueGradientColors}
+          colors={
+            t.theme === "dark" ? blueGradientColors : blueLightGradientColors
+          }
         ></LinearGradient>
         <LinearGradient
           style={[{ height: windowHeight }]}

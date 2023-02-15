@@ -43,8 +43,6 @@ export default function LoginScreen() {
   }, []);
 
   async function submitHandler() {
-    // Keyboard.dismiss();
-    console.log("asdf");
     if (loginText.length >= 6 && passwordText.length >= 6) {
       setIsFetching(true);
       try {
