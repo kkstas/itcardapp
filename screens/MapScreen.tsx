@@ -1,6 +1,6 @@
 import MapView, { Callout, Marker } from "react-native-maps";
 import { StyleSheet, Alert } from "react-native";
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useRef, useCallback, useLayoutEffect, useState } from "react";
 import { TabTwoMainStackScreenProps } from "../types";
 import HeaderButton from "../components/atoms/HeaderButton";
 import { atmsDummyData } from "../constants/atmsDummyData";
@@ -14,6 +14,7 @@ import {
 } from "../store/slices/ticketData";
 import { getMapPreview } from "../util/location";
 import { getAddress } from "../util/location";
+import MapSearchForm from "../components/organisms/MapSearchForm";
 
 export default function MapScreen({
   navigation,
@@ -23,10 +24,8 @@ export default function MapScreen({
     { lat: number; lng: number } | undefined
   >(undefined);
 
-  const dispatch = useAppDispatch();
-
-  const t = { ...Colors.light, ...CustomLightTheme };
-  const atmData = atmsDummyData;
+  // mapRef służy jako punkt odniesienia do późniejszego przenoszenia widoku na mapie
+  const mapRef = useRef<MapView>();
 
   const region = {
     latitude: route.params?.lat || 51.059412936330716,
@@ -34,6 +33,25 @@ export default function MapScreen({
     latitudeDelta: 0.0922 / 2,
     longitudeDelta: 0.0421 / 2,
   };
+
+  const dispatch = useAppDispatch();
+
+  // zbudowane do funkcjonalności wyszukiwania lupką urządzenia
+  const animateToChosenMarker = (lat: number, lng: number) => {
+    setSelectedLocation({ lat: lat, lng: lng });
+    mapRef.current!.animateToRegion(
+      {
+        latitude: lat,
+        longitude: lng,
+        latitudeDelta: 0.0922 / 12,
+        longitudeDelta: 0.0421 / 12,
+      },
+      1000
+    );
+  };
+
+  const t = { ...Colors.light, ...CustomLightTheme };
+  const atmData = atmsDummyData;
 
   const savePickedLocationHandler = useCallback(async () => {
     if (!selectedLocation) {
@@ -80,9 +98,10 @@ export default function MapScreen({
   }, [navigation, savePickedLocationHandler]);
 
   return (
-    <MapView style={styles.map} initialRegion={region}>
+    <MapView ref={mapRef} style={styles.map} region={region}>
       {atmData.map((element, index) => (
         <Marker
+          tracksViewChanges={false}
           stopPropagation={true}
           key={index}
           coordinate={{ latitude: element.lat, longitude: element.lng }}
@@ -109,11 +128,20 @@ export default function MapScreen({
           </Callout>
         </Marker>
       ))}
+      // <MapSearchForm animateToChosenMarker={animateToChosenMarker} />
     </MapView>
   );
 }
 
 const styles = StyleSheet.create({
+  textBtn: {
+    position: "absolute",
+    bottom: 100,
+    right: 100,
+    width: 50,
+    height: 50,
+    backgroundColor: "red",
+  },
   map: {
     flex: 1,
   },
