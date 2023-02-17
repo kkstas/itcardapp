@@ -35,6 +35,8 @@ import MapScreen from "../screens/MapScreen";
 import { HeaderBackgroundBlur } from "./HeaderBackgroundBlur";
 import ReceiptModalScreen from "../screens/ReceiptModalScreen";
 import { clearUserData } from "../util/rememberMe";
+import { getThemePreference } from "../hooks/asyncStorage";
+import { setThemeState } from "../store/slices/userPreferences";
 
 const CLTheme = {
   ...DefaultTheme,
@@ -43,6 +45,18 @@ const CLTheme = {
     card: CustomLightTheme.bgTertiary,
     background: CustomLightTheme.bgPrimaryGrouped,
   },
+};
+
+const setThemeFromAsyncToRedux = async () => {
+  const dispatch = useAppDispatch();
+  const themeFromAsync = await getThemePreference();
+  if (
+    themeFromAsync === "dark" ||
+    themeFromAsync === "default" ||
+    themeFromAsync === "light"
+  ) {
+    dispatch(setThemeState({ theme: themeFromAsync }));
+  }
 };
 
 const CDTheme = {
@@ -54,6 +68,7 @@ const CDTheme = {
 };
 
 export default function Navigation() {
+  setThemeFromAsyncToRedux();
   const t = useCustomColors();
   return (
     <>

@@ -1,24 +1,26 @@
-import useCustomColors from '../hooks/useCustomColors';
-import React, { useState, useEffect } from 'react';
-import { Text, View, Alert, StyleSheet } from 'react-native';
-import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner';
-import ScanButton from '../components/atoms/ScanButton';
-import NotScannedContent from '../components/atoms/NotScannedContent';
-import ScanAnim from '../components/atoms/ScanAnim';
-import transformReceiptUrl from '../util/transformReceiptUrl';
-import { addNewReceipt } from '../hooks/asyncStorage';
-import { RootStackScreenProps } from '../types';
+import useCustomColors from "../hooks/useCustomColors";
+import React, { useState, useEffect } from "react";
+import { Text, View, Alert, StyleSheet } from "react-native";
+import { BarCodeScanner, BarCodeScannerResult } from "expo-barcode-scanner";
+import ScanButton from "../components/atoms/ScanButton";
+import NotScannedContent from "../components/atoms/NotScannedContent";
+import ScanAnim from "../components/atoms/ScanAnim";
+import transformReceiptUrl from "../util/transformReceiptUrl";
+import { addNewReceipt } from "../hooks/asyncStorage";
+import { TabTwoMainStackScreenProps } from "../types";
 
-export default function ScanReceiptScreen({ navigation }: RootStackScreenProps<'ReceiptModal'>) {
+export default function ScanReceiptScreen({
+  navigation,
+}: TabTwoMainStackScreenProps<"ScanReceiptScreen">) {
   const t = useCustomColors();
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
   useEffect(() => {
-    navigation.addListener('focus', () => {
+    navigation.addListener("focus", () => {
       setIsFocused(true);
     });
-    navigation.addListener('blur', () => {
+    navigation.addListener("blur", () => {
       setIsFocused(false);
       setScanned(true);
     });
@@ -27,7 +29,7 @@ export default function ScanReceiptScreen({ navigation }: RootStackScreenProps<'
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     };
 
     getBarCodeScannerPermissions();
@@ -40,12 +42,13 @@ export default function ScanReceiptScreen({ navigation }: RootStackScreenProps<'
     if (transformedUri) {
       addNewReceipt(transformedUri);
       Alert.alert(
-        'Skanowane zakończone sukcesem.',
-        'Zeskanowane potwierdzenia są dostępne w zakładce Dokumenty.', [{ text: "Powrót", onPress: () => navigation.push("Root") }]
+        "Skanowane zakończone sukcesem.",
+        "Zeskanowane potwierdzenia są dostępne w zakładce Dokumenty.",
+        [{ text: "Powrót", onPress: () => navigation.push("Root") }]
       );
     } else {
       Alert.alert(
-        'Błąd skanowania kodu!',
+        "Błąd skanowania kodu!",
         `Zeskanowany kod nie został zidentyfikowany jako kod potwierdzenia dokonania transakcji. Zeskanuj prawidłowy kod QR.`
       );
     }
@@ -61,14 +64,15 @@ export default function ScanReceiptScreen({ navigation }: RootStackScreenProps<'
     <View style={[styles.container, { backgroundColor: t.bgPrimary }]}>
       <View
         style={{
-          width: '100%',
-          height: '100%',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          overflow: 'hidden',
+          width: "100%",
+          height: "100%",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          overflow: "hidden",
           borderRadius: 12,
           paddingTop: 20,
-        }}>
+        }}
+      >
         {!scanned && isFocused ? (
           <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -78,7 +82,10 @@ export default function ScanReceiptScreen({ navigation }: RootStackScreenProps<'
           <View style={[styles.barcode, { backgroundColor: t.bgSecondary }]} />
         )}
 
-        <ScanAnim onPress={() => setScanned(prevScanned => !prevScanned)} scanned={scanned} />
+        <ScanAnim
+          onPress={() => setScanned((prevScanned) => !prevScanned)}
+          scanned={scanned}
+        />
         {scanned ? (
           <ScanButton onPress={() => setScanned(false)} />
         ) : (
@@ -90,14 +97,14 @@ export default function ScanReceiptScreen({ navigation }: RootStackScreenProps<'
 }
 const styles = StyleSheet.create({
   barcode: {
-    width: '95%',
-    height: '55%',
+    width: "95%",
+    height: "55%",
     borderRadius: 12,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   container: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
   },
 });
