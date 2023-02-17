@@ -15,6 +15,7 @@ import {
 import { getMapPreview } from "../util/location";
 import { getAddress } from "../util/location";
 import MapSearchForm from "../components/organisms/MapSearchForm";
+import useCustomColors from "../hooks/useCustomColors";
 
 export default function MapScreen({
   navigation,
@@ -50,7 +51,7 @@ export default function MapScreen({
     );
   };
 
-  const t = { ...Colors.light, ...CustomLightTheme };
+  const t = useCustomColors();
   const atmData = atmsDummyData;
 
   const savePickedLocationHandler = useCallback(async () => {
@@ -98,7 +99,14 @@ export default function MapScreen({
   }, [navigation, savePickedLocationHandler]);
 
   return (
-    <MapView ref={mapRef} style={styles.map} region={region}>
+    <MapView
+      ref={mapRef}
+      userInterfaceStyle={
+        t.theme === "light" ? "light" : t.theme === "dark" ? "dark" : undefined
+      }
+      style={styles.map}
+      region={region}
+    >
       {atmData.map((element, index) => (
         <Marker
           tracksViewChanges={false}
@@ -128,7 +136,7 @@ export default function MapScreen({
           </Callout>
         </Marker>
       ))}
-      // <MapSearchForm animateToChosenMarker={animateToChosenMarker} />
+      <MapSearchForm animateToChosenMarker={animateToChosenMarker} />
     </MapView>
   );
 }

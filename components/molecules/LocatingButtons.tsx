@@ -1,11 +1,10 @@
-import { TouchableOpacity, Image, View, StyleSheet } from 'react-native';
-import useCustomColors from '../../hooks/useCustomColors';
-import LocateMeButton from '../atoms/LocateMeButton';
-import LoadingOverlay from '../atoms/LoadingOverlay';
-import { Ionicons } from '@expo/vector-icons';
-import { useAppSelector } from '../../hooks/reduxHooks';
-import useLocation from '../../hooks/useLocation';
-import { memo } from 'react';
+import { TouchableOpacity, Image, View, StyleSheet } from "react-native";
+import useCustomColors from "../../hooks/useCustomColors";
+import LocateMeButton from "../atoms/LocateMeButton";
+import LoadingOverlay from "../atoms/LoadingOverlay";
+import { Ionicons } from "@expo/vector-icons";
+import { useAppSelector } from "../../hooks/reduxHooks";
+import useLocation from "../../hooks/useLocation";
 
 interface ILocationButtons {
   goToMapScreen: (lat: number, lng: number) => void;
@@ -46,25 +45,25 @@ function LocationButtons({ goToMapScreen }: ILocationButtons) {
   );
 }
 
-export default memo(LocationButtons);
+export default LocationButtons;
 
 const styles = StyleSheet.create({
   exitBtnView: {
-    position: 'absolute',
+    position: "absolute",
     right: 10,
     top: 10,
   },
   container: {
     height: 220,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
     borderRadius: 10,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   image: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
+    position: "absolute",
+    width: "100%",
+    height: "100%",
   },
 });

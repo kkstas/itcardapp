@@ -63,7 +63,6 @@ const useLocation = (goToMapScreen: TgoToMapScreen) => {
         },
       })
     );
-    console.log(location.coords);
     const currentAddress = await getAddress(
       location.coords.latitude,
       location.coords.longitude
