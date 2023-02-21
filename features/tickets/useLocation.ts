@@ -1,19 +1,20 @@
-import { useState } from "react";
-import { useAppDispatch } from "../../hooks/reduxHooks";
+import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import {
   PermissionStatus,
   getCurrentPositionAsync,
   useForegroundPermissions,
-} from "expo-location";
+} from 'expo-location';
 import {
   setAddress,
   setLocationUri,
   setCoords,
   clearLocationInputs,
-} from "./ticketFormSlice";
-import { Alert } from "react-native";
-import { getAddress } from "../../util/location";
-import { getMapPreview } from "../../util/location";
+} from './ticketFormSlice';
+import { Alert } from 'react-native';
+import { getAddress } from '../../util/location';
+import { getMapPreview } from '../../util/location';
+import locationSlice, { setLocation } from '../../store/slices/locationSlice';
 
 type TgoToMapScreen = (lat: number, lng: number) => void;
 
@@ -27,6 +28,8 @@ const useLocation = (goToMapScreen: TgoToMapScreen) => {
   const [locationPermissionInformation, requestPermission] =
     useForegroundPermissions();
 
+  const locationInfo = useAppSelector((state) => state.locationSlice);
+
   const dispatch = useAppDispatch();
 
   async function verifyPermissions() {
@@ -38,8 +41,8 @@ const useLocation = (goToMapScreen: TgoToMapScreen) => {
     }
     if (locationPermissionInformation?.status === PermissionStatus.DENIED) {
       Alert.alert(
-        "Niewystarczające uprawnienia!",
-        "Musisz udzielić zgody na wykorzystywanie usług lokalizacji na urządzeniu, aby korzystać z tej usługi."
+        'Niewystarczające uprawnienia!',
+        'Musisz udzielić zgody na wykorzystywanie usług lokalizacji na urządzeniu, aby korzystać z tej usługi.'
       );
       return false;
     }
@@ -47,13 +50,20 @@ const useLocation = (goToMapScreen: TgoToMapScreen) => {
   }
 
   const locateMe = async () => {
+    let location;
     setIsFetchingLocation(true);
-    const hasPermission = await verifyPermissions();
-    if (!hasPermission) {
-      setIsFetchingLocation(false);
-      return;
+
+    if (locationInfo.location?.coords) {
+      location = locationInfo.location;
+    } else {
+      const hasPermission = await verifyPermissions();
+      if (!hasPermission) {
+        setIsFetchingLocation(false);
+        return;
+      }
+      location = await getCurrentPositionAsync();
+      dispatch(setLocation(location));
     }
-    const location = await getCurrentPositionAsync();
     dispatch(
       setCoords({
         coords: {
@@ -81,12 +91,18 @@ const useLocation = (goToMapScreen: TgoToMapScreen) => {
 
   const pickOnMap = async () => {
     setIsFetchingLocation(true);
-    const hasPermission = await verifyPermissions();
-    if (!hasPermission) {
-      setIsFetchingLocation(false);
-      return;
+    let location;
+    if (locationInfo.location?.coords) {
+      location = locationInfo.location;
+    } else {
+      const hasPermission = await verifyPermissions();
+      if (!hasPermission) {
+        setIsFetchingLocation(false);
+        return;
+      }
+      location = await getCurrentPositionAsync();
+      dispatch(setLocation(location));
     }
-    const location = await getCurrentPositionAsync();
     setIsFetchingLocation(false);
     goToMapScreen(location.coords.latitude, location.coords.longitude);
   };

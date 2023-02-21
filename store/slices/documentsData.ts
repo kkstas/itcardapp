@@ -1,22 +1,22 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IReceiptState } from "../../features/receipts/asyncStorageHandler";
-import { TicketDataType } from "../../features/tickets/asyncStorageHandler";
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IReceiptState } from '../../features/receipts/asyncStorageHandler';
+import { TicketDataType } from '../../features/tickets/asyncStorageHandler';
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface IdocumentsData {
-  whichActive: "left" | "right";
+  whichActive: 'left' | 'right';
   ticketData: TicketDataType[] | null;
   receiptData: IReceiptState[] | null;
-  status: "idle" | "loading" | "succeeded" | "failed";
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
 
 const initialState: IdocumentsData = {
-  whichActive: "left",
+  whichActive: 'left',
   ticketData: null,
   receiptData: null,
-  status: "idle",
+  status: 'idle',
   error: null,
 };
 
@@ -26,10 +26,9 @@ const initialState: IdocumentsData = {
 // TICKETS: ///////////////////////////////////////////////////////////
 // --- GET TICKETS ---
 export const getTicketsThunk = createAsyncThunk(
-  "documentsData/getTicketsThunk",
+  'documentsData/getTicketsThunk',
   async () => {
-    console.log("getTicketsThunk aktywowany");
-    const jsonValue = await AsyncStorage.getItem("ticketData");
+    const jsonValue = await AsyncStorage.getItem('ticketData');
     const parsedValue = jsonValue != null ? JSON.parse(jsonValue) : null;
     if (Array.isArray(parsedValue)) {
       return parsedValue as TicketDataType[];
@@ -44,10 +43,9 @@ export const getTicketsThunk = createAsyncThunk(
 // RECEIPTS: //////////////////////////////////////////////////////////
 // GET RECEIPTS
 export const getReceiptsThunk = createAsyncThunk(
-  "documentsData/getReceiptsThunk",
+  'documentsData/getReceiptsThunk',
   async () => {
-    console.log("getReceiptsThunk aktywowany");
-    const jsonValue = await AsyncStorage.getItem("receiptData");
+    const jsonValue = await AsyncStorage.getItem('receiptData');
     const parsedValue = jsonValue != null ? JSON.parse(jsonValue) : null;
     if (Array.isArray(parsedValue)) {
       return parsedValue as IReceiptState[];
@@ -60,14 +58,14 @@ export const getReceiptsThunk = createAsyncThunk(
 );
 
 const documentsData = createSlice({
-  name: "documentsData",
+  name: 'documentsData',
   initialState,
   reducers: {
     switchToTickets: (state) => {
-      state.whichActive = "left";
+      state.whichActive = 'left';
     },
     switchToReceipts: (state) => {
-      state.whichActive = "right";
+      state.whichActive = 'right';
     },
     addTicket: (state, action: PayloadAction<TicketDataType>) => {
       if (Array.isArray(state.ticketData)) {
@@ -101,31 +99,31 @@ const documentsData = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getTicketsThunk.pending, (state, _action) => {
-        state.status = "loading";
+        state.status = 'loading';
       })
       .addCase(
         getTicketsThunk.fulfilled,
         (state, action: PayloadAction<TicketDataType[] | null>) => {
-          state.status = "succeeded";
+          state.status = 'succeeded';
           state.ticketData = action.payload;
         }
       )
       .addCase(getTicketsThunk.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.error = action.error as string;
       })
       .addCase(getReceiptsThunk.pending, (state, _action) => {
-        state.status = "loading";
+        state.status = 'loading';
       })
       .addCase(
         getReceiptsThunk.fulfilled,
         (state, action: PayloadAction<IReceiptState[] | null>) => {
-          state.status = "succeeded";
+          state.status = 'succeeded';
           state.receiptData = action.payload;
         }
       )
       .addCase(getReceiptsThunk.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.error = action.error as string;
       });
   },

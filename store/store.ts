@@ -1,8 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./slices/userInfo";
-import userPreferencesReducer from "../features/userPreferences/userPreferencesSlice";
-import ticketDataReducer from "../features/tickets/ticketFormSlice";
-import documentsDataReducer from "./slices/documentsData";
+import { configureStore } from '@reduxjs/toolkit';
+import userReducer from './slices/userInfo';
+import userPreferencesReducer from '../features/userPreferences/userPreferencesSlice';
+import ticketDataReducer from '../features/tickets/ticketFormSlice';
+import documentsDataReducer from './slices/documentsData';
+import locationReducer from './slices/locationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     userPreferences: userPreferencesReducer,
     ticketData: ticketDataReducer,
     documentsData: documentsDataReducer,
+    locationSlice: locationReducer,
   },
 });
 

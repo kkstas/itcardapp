@@ -1,26 +1,25 @@
-import MapView, { Callout, Marker } from "react-native-maps";
-import { StyleSheet, Alert } from "react-native";
-import { useRef, useCallback, useLayoutEffect, useState } from "react";
-import { TabTwoMainStackScreenProps } from "../types";
-import HeaderButton from "../components/common/HeaderButton";
-import { atmsDummyData } from "../constants/atmsDummyData";
-import MarkerCustomCallout from "../features/maps/marker/MarkerCustomCallout";
-import Colors, { CustomLightTheme } from "../constants/Colors";
-import { useAppDispatch } from "../hooks/reduxHooks";
+import MapView, { Callout, Marker } from 'react-native-maps';
+import { StyleSheet, Alert } from 'react-native';
+import { useRef, useCallback, useLayoutEffect, useState } from 'react';
+import { TabTwoMainStackScreenProps } from '../types';
+import HeaderButton from '../components/common/HeaderButton';
+import { atmsDummyData } from '../constants/atmsDummyData';
+import MarkerCustomCallout from '../features/maps/marker/MarkerCustomCallout';
+import { useAppDispatch } from '../hooks/reduxHooks';
 import {
   setCoords,
   setAddress,
   setLocationUri,
-} from "../features/tickets/ticketFormSlice";
-import { getMapPreview } from "../util/location";
-import { getAddress } from "../util/location";
-import MapSearchForm from "../features/maps/search/MapSearchForm";
-import useCustomColors from "../hooks/useCustomColors";
+} from '../features/tickets/ticketFormSlice';
+import { getMapPreview } from '../util/location';
+import { getAddress } from '../util/location';
+import MapSearchForm from '../features/maps/search/MapSearchForm';
+import useCustomColors from '../hooks/useCustomColors';
 
 export default function MapScreen({
   navigation,
   route,
-}: TabTwoMainStackScreenProps<"MapScreen">) {
+}: TabTwoMainStackScreenProps<'MapScreen'>) {
   const [selectedLocation, setSelectedLocation] = useState<
     { lat: number; lng: number } | undefined
   >(undefined);
@@ -57,8 +56,8 @@ export default function MapScreen({
   const savePickedLocationHandler = useCallback(async () => {
     if (!selectedLocation) {
       Alert.alert(
-        "Lokalizacja urządzenia nie została wybrana!",
-        "Proszę stuknięciem w ekran wybrać lokalizację urządzenia."
+        'Lokalizacja urządzenia nie została wybrana!',
+        'Proszę stuknięciem w ekran wybrać lokalizację urządzenia.'
       );
       return;
     }
@@ -81,7 +80,7 @@ export default function MapScreen({
       selectedLocation.lng
     );
     dispatch(setAddress({ address: currentAddress }));
-    navigation.navigate("CreateTicketScreen");
+    navigation.navigate('CreateTicketScreen');
   }, [navigation, selectedLocation]);
 
   useLayoutEffect(() => {
@@ -102,11 +101,10 @@ export default function MapScreen({
     <MapView
       ref={mapRef}
       userInterfaceStyle={
-        t.theme === "light" ? "light" : t.theme === "dark" ? "dark" : undefined
+        t.theme === 'light' ? 'light' : t.theme === 'dark' ? 'dark' : undefined
       }
       style={styles.map}
-      region={region}
-    >
+      region={region}>
       {atmData.map((element, index) => (
         <Marker
           tracksViewChanges={false}
@@ -118,19 +116,18 @@ export default function MapScreen({
           }}
           title={element.nazwaLokalizacji}
           pinColor={
-            element.instytucja === "PlanetCash"
-              ? "rgb(0,146,255)"
-              : element.instytucja === "ING" ||
-                element.instytucja === "PlanetING"
-                ? "rgb(255,98,0)"
-                : element.instytucja === "PlanetBNPP"
-                  ? "rgb(26,158,106)"
-                  : element.instytucja === "CreditAgricole"
-                    ? "#19b9b9"
-                    : "t.brown"
+            element.instytucja === 'PlanetCash'
+              ? 'rgb(0,146,255)'
+              : element.instytucja === 'ING' ||
+                element.instytucja === 'PlanetING'
+              ? 'rgb(255,98,0)'
+              : element.instytucja === 'PlanetBNPP'
+              ? 'rgb(26,158,106)'
+              : element.instytucja === 'CreditAgricole'
+              ? '#19b9b9'
+              : 't.brown'
           }
-          description={element.lokalizacja}
-        >
+          description={element.lokalizacja}>
           <Callout>
             <MarkerCustomCallout element={element} />
           </Callout>
@@ -143,12 +140,12 @@ export default function MapScreen({
 
 const styles = StyleSheet.create({
   textBtn: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 100,
     right: 100,
     width: 50,
     height: 50,
-    backgroundColor: "red",
+    backgroundColor: 'red',
   },
   map: {
     flex: 1,

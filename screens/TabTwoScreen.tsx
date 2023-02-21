@@ -1,27 +1,28 @@
-import { TabTwoMainStackScreenProps } from "../types";
-import MainScreenTemplate from "../components/tabTwoScreen/MainScreenTemplate";
+import { TabTwoMainStackScreenProps } from '../types';
+import MainScreenTemplate from '../components/tabTwoScreen/MainScreenTemplate';
 
-import { Alert } from "react-native";
-import { useState } from "react";
+import { Alert } from 'react-native';
+import { useState, useEffect } from 'react';
 import {
   PermissionStatus,
   getCurrentPositionAsync,
   useForegroundPermissions,
-} from "expo-location";
+} from 'expo-location';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
+import { setLocation } from '../store/slices/locationSlice';
 
 export default function TabTwoScreen({
   navigation,
-}: TabTwoMainStackScreenProps<"TabTwoScreen">) {
-  /////////////////////////////////////////////////////////////////
-  // To zmień na thunk
+}: TabTwoMainStackScreenProps<'TabTwoScreen'>) {
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
-  /////////////////////////////////////////////////////////////////
+  const dispatch = useAppDispatch();
+  const locationInfo = useAppSelector((state) => state.locationSlice.location);
 
   const [locationPermissionInformation, requestPermission] =
     useForegroundPermissions();
 
   function navigateToProfile() {
-    navigation.navigate("Root", { screen: "TabThree" });
+    navigation.navigate('Root', { screen: 'TabThree' });
   }
 
   async function verifyPermissions() {
@@ -33,8 +34,8 @@ export default function TabTwoScreen({
     }
     if (locationPermissionInformation?.status === PermissionStatus.DENIED) {
       Alert.alert(
-        "Niewystarczające uprawnienia!",
-        "Musisz udzielić zgody na wykorzystywanie lokalizacji na urządzeniu, aby korzystać z tej usługi."
+        'Niewystarczające uprawnienia!',
+        'Musisz udzielić zgody na wykorzystywanie lokalizacji na urządzeniu, aby korzystać z tej usługi.'
       );
       return false;
     }
@@ -46,7 +47,7 @@ export default function TabTwoScreen({
     appDescription: string,
     bottomInfo: string
   ) {
-    navigation.navigate("InfoModal", {
+    navigation.navigate('InfoModal', {
       appTitle: appTitle,
       appDescription: appDescription,
       bottomInfo: bottomInfo,
@@ -54,30 +55,33 @@ export default function TabTwoScreen({
   }
 
   function navigateToTicket() {
-    navigation.navigate("CreateTicketScreen");
+    navigation.navigate('CreateTicketScreen');
   }
 
   function navigateToScanReceipt() {
-    navigation.navigate("ScanReceiptScreen");
+    navigation.navigate('ScanReceiptScreen');
   }
 
-  /////////////////////////////////////////////////////////////////
-  // To zmień na thunk
   async function navigateToLocateATM() {
+    let location;
     setIsFetchingLocation(true);
-    const hasPermission = await verifyPermissions();
-    if (!hasPermission) {
-      setIsFetchingLocation(false);
-      return;
+    if (!locationInfo?.coords) {
+      const hasPermission = await verifyPermissions();
+      if (!hasPermission) {
+        setIsFetchingLocation(false);
+        return;
+      }
+      location = await getCurrentPositionAsync();
+      dispatch(setLocation(location));
+    } else {
+      location = locationInfo;
     }
-    const location = await getCurrentPositionAsync();
     setIsFetchingLocation(false);
-    navigation.navigate("LocateATMScreen", {
+    navigation.navigate('LocateATMScreen', {
       lat: location.coords.latitude,
       lng: location.coords.longitude,
     });
   }
-  /////////////////////////////////////////////////////////////////
 
   return (
     <MainScreenTemplate

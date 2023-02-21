@@ -23,19 +23,15 @@ export default function ThemePicker({
   const t = useCustomColors();
   const windowWidth = Layout.window.width;
   const offset = useSharedValue(windowWidth);
-  console.log('pierwszy render themepickera');
 
   // useEffect żeby slider się ustawiał zawsze na rzeczywistą pozycję
   useEffect(() => {
     if (asyncThemeState === 'light') {
       leftPressHandler();
-      console.log('useeffect light');
     } else if (asyncThemeState === 'dark') {
       rightPressHandler();
-      console.log('useeffect dark');
     } else {
       midPressHandler();
-      console.log('useeffect default');
     }
   }, []);
 

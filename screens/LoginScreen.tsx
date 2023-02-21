@@ -1,17 +1,20 @@
-import LoginScreenTemplate from "../components/loginScreen/LoginScreenTemplate";
-import { useEffect, useState } from "react";
-import useCustomColors from "../hooks/useCustomColors";
-import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
-import { getTicketsThunk, getReceiptsThunk } from "../store/slices/documentsData";
-import { logIn } from "../store/slices/userInfo";
-import { logInAsync } from "../util/auth";
-import TestSplashElement from "../components/loginScreen/TestSplashElement";
-import { rememberUserData, readUserData } from "../util/rememberMe";
+import LoginScreenTemplate from '../components/loginScreen/LoginScreenTemplate';
+import { useEffect, useState } from 'react';
+import useCustomColors from '../hooks/useCustomColors';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
+import {
+  getTicketsThunk,
+  getReceiptsThunk,
+} from '../store/slices/documentsData';
+import { logIn } from '../store/slices/userInfo';
+import { logInAsync } from '../util/auth';
+import TestSplashElement from '../components/loginScreen/TestSplashElement';
+import { rememberUserData, readUserData } from '../util/rememberMe';
 
 export default function LoginScreen() {
   const t = useCustomColors();
-  const [loginText, setLoginText] = useState("");
-  const [passwordText, setPasswordText] = useState("");
+  const [loginText, setLoginText] = useState('');
+  const [passwordText, setPasswordText] = useState('');
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const logoUnfocusedColor = t.gray2;
   const logoFocusedColor = t.tint;
@@ -26,7 +29,7 @@ export default function LoginScreen() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (dataState.status === "idle") {
+    if (dataState.status === 'idle') {
       dispatch(getTicketsThunk());
       dispatch(getReceiptsThunk());
     }
@@ -61,11 +64,11 @@ export default function LoginScreen() {
           dispatch(logIn(userData));
         } else {
           setPasswordError(
-            "Konto jest niepoprawnie skonfigurowane. Skontaktuj się z administracją."
+            'Konto jest niepoprawnie skonfigurowane. Skontaktuj się z administracją.'
           );
         }
       } catch (error) {
-        setPasswordError("Dane logowania są nieprawidłowe.");
+        setPasswordError('Dane logowania są nieprawidłowe.');
         setLoginError(null);
       }
       setIsFetching(false);
@@ -80,16 +83,16 @@ export default function LoginScreen() {
       //   );
     } else if (loginText.length < 6 && passwordText.length > 6) {
       setPasswordError(null);
-      setLoginError("Adres e-mail jest za krótki!");
+      setLoginError('Adres e-mail jest za krótki!');
     } else if (loginText.length > 6 && passwordText.length < 6) {
       setLoginError(null);
-      setPasswordError("Hasło jest za krótkie!");
+      setPasswordError('Hasło jest za krótkie!');
     } else {
-      setPasswordError("Hasło jest za krótkie!");
-      setLoginError("Adres e-mail jest za krótki!");
+      setPasswordError('Hasło jest za krótkie!');
+      setLoginError('Adres e-mail jest za krótki!');
     }
-    setLoginText("");
-    setPasswordText("");
+    setLoginText('');
+    setPasswordText('');
   }
 
   return (
