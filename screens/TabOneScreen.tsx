@@ -1,12 +1,12 @@
 import { StyleSheet, View } from "react-native";
-import UserDataList from "../components/organisms/UserDataList";
+import TabOneList from "../components/tabOneScreen/TabOneList";
 import useCustomColors from "../hooks/useCustomColors";
 
 export default function TabOneScreen() {
   const t = useCustomColors();
   return (
     <View style={[styles.container, { backgroundColor: t.bgPrimary }]}>
-      <UserDataList />
+      <TabOneList />
     </View>
   );
 }

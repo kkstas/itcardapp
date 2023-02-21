@@ -1,5 +1,5 @@
 import { TabTwoMainStackScreenProps } from "../types";
-import MainScreenTemplate from "../components/templates/MainScreenTemplate";
+import MainScreenTemplate from "../components/tabTwoScreen/MainScreenTemplate";
 
 import { Alert } from "react-native";
 import { useState } from "react";

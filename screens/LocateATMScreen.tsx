@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { TabTwoMainStackScreenProps } from "../types";
 import * as Linking from "expo-linking";
 import { IatmElement, atmsDummyData } from "../constants/atmsDummyData";
-import MarkerCustomCallout from "../components/atoms/MarkerCustomCallout";
+import MarkerCustomCallout from "../features/maps/marker/MarkerCustomCallout";
 
 export default function LocateATMScreen({
   route,
@@ -38,12 +38,12 @@ export default function LocateATMScreen({
               ? "rgb(0,146,255)"
               : element.instytucja === "ING" ||
                 element.instytucja === "PlanetING"
-              ? "rgb(255,98,0)"
-              : element.instytucja === "PlanetBNPP"
-              ? "rgb(26,158,106)"
-              : element.instytucja === "CreditAgricole"
-              ? "#19b9b9"
-              : "t.brown"
+                ? "rgb(255,98,0)"
+                : element.instytucja === "PlanetBNPP"
+                  ? "rgb(26,158,106)"
+                  : element.instytucja === "CreditAgricole"
+                    ? "#19b9b9"
+                    : "t.brown"
           }
           description={element.moduly}
         >

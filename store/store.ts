@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slices/userInfo";
-import userPreferencesReducer from "./slices/userPreferences";
-import ticketDataReducer from "./slices/ticketData";
+import userPreferencesReducer from "../features/userPreferences/userPreferencesSlice";
+import ticketDataReducer from "../features/tickets/ticketFormSlice";
 import documentsDataReducer from "./slices/documentsData";
 
 export const store = configureStore({

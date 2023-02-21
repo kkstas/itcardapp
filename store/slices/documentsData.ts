@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TicketDataType, IReceiptState } from "../../hooks/asyncStorage";
+import { IReceiptState } from "../../features/receipts/asyncStorageHandler";
+import { TicketDataType } from "../../features/tickets/asyncStorageHandler";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface IdocumentsData {

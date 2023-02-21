@@ -1,10 +1,11 @@
-import LoginScreenTemplate from "../components/templates/LoginScreenTemplate";
+import LoginScreenTemplate from "../components/loginScreen/LoginScreenTemplate";
 import { useEffect, useState } from "react";
 import useCustomColors from "../hooks/useCustomColors";
-import { useAppDispatch } from "../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
+import { getTicketsThunk, getReceiptsThunk } from "../store/slices/documentsData";
 import { logIn } from "../store/slices/userInfo";
 import { logInAsync } from "../util/auth";
-import TestSplashElement from "../components/molecules/TestSplashElement";
+import TestSplashElement from "../components/loginScreen/TestSplashElement";
 import { rememberUserData, readUserData } from "../util/rememberMe";
 
 export default function LoginScreen() {
@@ -21,7 +22,15 @@ export default function LoginScreen() {
   const [isFetching, setIsFetching] = useState(false);
   const [checked, setChecked] = useState(false);
 
+  const dataState = useAppSelector((state) => state.documentsData);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (dataState.status === "idle") {
+      dispatch(getTicketsThunk());
+      dispatch(getReceiptsThunk());
+    }
+  }, [dataState.status, dispatch]);
 
   const checkIfRemembered = async () => {
     setIsFetching(true);

@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet } from "react-native";
 import { BlurView } from "expo-blur";
 import { RootStackScreenProps } from "../types";
-import ReceiptModalContent from "../components/organisms/ReceiptModalContent";
+import ReceiptModalContent from "../features/receipts/components/list/ReceiptModalContent";
 
 export default function ReceiptModalScreen({
   navigation,

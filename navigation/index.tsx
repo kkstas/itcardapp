@@ -20,7 +20,7 @@ import {
 import TabThreeScreen from "../screens/TabThreeScreen";
 import { CustomLightTheme, CustomDarkTheme } from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import HeaderButton from "../components/atoms/HeaderButton";
+import HeaderButton from "../components/common/HeaderButton";
 import LoginScreen from "../screens/LoginScreen";
 import InfoModalScreen from "../screens/InfoModalScreen";
 import CreateTicketScreen from "../screens/CreateTicketScreen";
@@ -35,8 +35,8 @@ import MapScreen from "../screens/MapScreen";
 import { HeaderBackgroundBlur } from "./HeaderBackgroundBlur";
 import ReceiptModalScreen from "../screens/ReceiptModalScreen";
 import { clearUserData } from "../util/rememberMe";
-import { getThemePreference } from "../hooks/asyncStorage";
-import { setThemeState } from "../store/slices/userPreferences";
+import { getThemePreference } from "../features/userPreferences/asyncStorageHandler";
+import { setThemeState } from "../features/userPreferences/userPreferencesSlice";
 
 const CLTheme = {
   ...DefaultTheme,

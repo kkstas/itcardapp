@@ -1,13 +1,13 @@
 import useCustomColors from "../hooks/useCustomColors";
 import { View, StyleSheet } from "react-native";
 import { useState, memo } from "react";
-import TicketForm from "../components/organisms/TicketForm";
+import TicketForm from "../features/tickets/components/form/TicketForm";
 import { useAppSelector } from "../hooks/reduxHooks";
-import { TicketDataType, addNewTicket } from "../hooks/asyncStorage";
+import { TicketDataType, addNewTicket } from "../features/tickets/asyncStorageHandler";
 import { useAppDispatch } from "../hooks/reduxHooks";
-import { postTicketData } from "../util/ticketData";
+import { postTicketData } from "../features/tickets/postTicketData";
 import { TabTwoMainStackScreenProps } from "../types";
-import { clearInputs } from "../store/slices/ticketData";
+import { clearInputs } from "../features/tickets/ticketFormSlice";
 import { addTicket } from "../store/slices/documentsData";
 
 function CreateTicketScreen({

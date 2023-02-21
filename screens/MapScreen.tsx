@@ -2,19 +2,19 @@ import MapView, { Callout, Marker } from "react-native-maps";
 import { StyleSheet, Alert } from "react-native";
 import { useRef, useCallback, useLayoutEffect, useState } from "react";
 import { TabTwoMainStackScreenProps } from "../types";
-import HeaderButton from "../components/atoms/HeaderButton";
+import HeaderButton from "../components/common/HeaderButton";
 import { atmsDummyData } from "../constants/atmsDummyData";
-import MarkerCustomCallout from "../components/atoms/MarkerCustomCallout";
+import MarkerCustomCallout from "../features/maps/marker/MarkerCustomCallout";
 import Colors, { CustomLightTheme } from "../constants/Colors";
 import { useAppDispatch } from "../hooks/reduxHooks";
 import {
   setCoords,
   setAddress,
   setLocationUri,
-} from "../store/slices/ticketData";
+} from "../features/tickets/ticketFormSlice";
 import { getMapPreview } from "../util/location";
 import { getAddress } from "../util/location";
-import MapSearchForm from "../components/organisms/MapSearchForm";
+import MapSearchForm from "../features/maps/search/MapSearchForm";
 import useCustomColors from "../hooks/useCustomColors";
 
 export default function MapScreen({
@@ -122,12 +122,12 @@ export default function MapScreen({
               ? "rgb(0,146,255)"
               : element.instytucja === "ING" ||
                 element.instytucja === "PlanetING"
-              ? "rgb(255,98,0)"
-              : element.instytucja === "PlanetBNPP"
-              ? "rgb(26,158,106)"
-              : element.instytucja === "CreditAgricole"
-              ? "#19b9b9"
-              : "t.brown"
+                ? "rgb(255,98,0)"
+                : element.instytucja === "PlanetBNPP"
+                  ? "rgb(26,158,106)"
+                  : element.instytucja === "CreditAgricole"
+                    ? "#19b9b9"
+                    : "t.brown"
           }
           description={element.lokalizacja}
         >

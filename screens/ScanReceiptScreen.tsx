@@ -2,11 +2,11 @@ import useCustomColors from "../hooks/useCustomColors";
 import React, { useState, useEffect } from "react";
 import { Text, View, Alert, StyleSheet } from "react-native";
 import { BarCodeScanner, BarCodeScannerResult } from "expo-barcode-scanner";
-import ScanButton from "../components/atoms/ScanButton";
-import NotScannedContent from "../components/atoms/NotScannedContent";
-import ScanAnim from "../components/atoms/ScanAnim";
-import transformReceiptUrl from "../util/transformReceiptUrl";
-import { addNewReceipt } from "../hooks/asyncStorage";
+import ScanButton from "../features/receipts/components/scanner/ScanButton";
+import NotScannedContent from "../features/receipts/components/scanner/NotScannedContent";
+import ScanAnim from "../features/receipts/components/scanner/ScanAnim";
+import transformReceiptUrl from "../features/receipts/transformReceiptUrl";
+import { addNewReceipt } from "../features/receipts/asyncStorageHandler"
 import { TabTwoMainStackScreenProps } from "../types";
 import { useAppDispatch } from "../hooks/reduxHooks";
 import { addReceipt } from "../store/slices/documentsData";

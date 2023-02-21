@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet } from "react-native";
 import { BlurView } from "expo-blur";
 import { RootStackScreenProps } from "../types";
-import TicketModalContent from "../components/organisms/TicketModalContent";
+import TicketModalContent from "../features/tickets/components/list/TicketModalContent";
 
 export default function TicketModalScreen({
   navigation,

@@ -1,8 +1,8 @@
-import { BottomTabBarProps, BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { TicketDataType } from './hooks/asyncStorage';
-import { IReceiptState } from './hooks/asyncStorage';
+import { TicketDataType } from './features/tickets/asyncStorageHandler';
+import { IReceiptState } from './features/receipts/asyncStorageHandler';
 
 declare global {
   namespace ReactNavigation {
