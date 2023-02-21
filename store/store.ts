@@ -2,14 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slices/userInfo";
 import userPreferencesReducer from "./slices/userPreferences";
 import ticketDataReducer from "./slices/ticketData";
-import locationDataReducer from "./slices/locationData";
+import documentsDataReducer from "./slices/documentsData";
 
 export const store = configureStore({
   reducer: {
     userInfo: userReducer,
     userPreferences: userPreferencesReducer,
     ticketData: ticketDataReducer,
-    locationData: locationDataReducer,
+    documentsData: documentsDataReducer,
   },
 });
 

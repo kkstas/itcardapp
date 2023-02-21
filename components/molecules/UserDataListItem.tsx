@@ -1,54 +1,47 @@
-import React from 'react';
-import { StyleSheet, Dimensions, Alert } from 'react-native';
+import React from "react";
+import { StyleSheet, Dimensions, Alert } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   withSpring,
   withTiming,
-  SlideInLeft,
   SlideInRight,
   SlideOutRight,
-  SlideOutLeft,
-} from 'react-native-reanimated';
+} from "react-native-reanimated";
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
-} from 'react-native-gesture-handler';
+} from "react-native-gesture-handler";
 import {
   springConfig,
   timingConfig,
-} from '../animations/UserDataListAnimationConfig';
+} from "../animations/UserDataListAnimationConfig";
 
-import DeleteListButton from '../atoms/DeleteListButton';
-import ListItemContent from '../atoms/ListItemContent';
-import useCustomColors from '../../hooks/useCustomColors';
-import { useNavigation } from '@react-navigation/native';
+import DeleteListButton from "../atoms/DeleteListButton";
+import ListItemContent from "../atoms/ListItemContent";
+import useCustomColors from "../../hooks/useCustomColors";
+import { useNavigation } from "@react-navigation/native";
 
-import {
-  removeSingleReceipt,
-  IReceiptState,
-} from '../../hooks/asyncStorage';
+import { removeSingleReceipt, IReceiptState } from "../../hooks/asyncStorage";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { removeReceipt } from "../../store/slices/documentsData";
 
-const windowDimensions = Dimensions.get('window');
+const windowDimensions = Dimensions.get("window");
 const BUTTON_WIDTH = 80;
 const MAX_TRANSLATE = -BUTTON_WIDTH;
 
 type ListItemProps = {
   item: IReceiptState;
-  fromLeft: boolean;
   index: number;
 };
-export default function UserDataListItem({
-  item,
-  fromLeft,
-  index,
-}: ListItemProps) {
+export default function UserDataListItem({ item, index }: ListItemProps) {
   const isRemoving = useSharedValue(false);
   const translateX = useSharedValue(0);
   const t = useCustomColors();
+  const dispatch = useAppDispatch();
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   type AnimatedGHContext = {
     startX: number;
@@ -102,20 +95,21 @@ export default function UserDataListItem({
 
   function handleRemove() {
     Alert.alert(
-      'Czy napewno chcesz usunąć ten element?',
-      'Po usunięciu nie będzie można go przywrócić',
+      "Czy napewno chcesz usunąć ten element?",
+      "Po usunięciu nie będzie można go przywrócić",
       [
         {
-          text: 'Usuń',
+          text: "Usuń",
           onPress: () => {
             isRemoving.value = true;
             removeSingleReceipt(item.id);
+            dispatch(removeReceipt(item.id));
           },
-          style: 'destructive',
+          style: "destructive",
         },
         {
-          text: 'Anuluj',
-          style: 'cancel',
+          text: "Anuluj",
+          style: "cancel",
           onPress: () => (translateX.value = withTiming(0, timingConfig)),
         },
       ]
@@ -123,9 +117,9 @@ export default function UserDataListItem({
   }
 
   const removeButton = {
-    title: 'Usuń',
+    title: "Usuń",
     backgroundColor: t.pink,
-    color: 'white',
+    color: "white",
     onPress: handleRemove,
     windowWidth: windowDimensions.width,
     BUTTON_WIDTH: BUTTON_WIDTH,
@@ -137,19 +131,18 @@ export default function UserDataListItem({
     };
   });
 
-
-
   const goToReceiptModal = () => {
     if (translateX.value === 0) {
-      navigation.navigate('ReceiptModal', { data: item });
+      navigation.navigate("ReceiptModal", { data: item });
     }
   };
 
   return (
     <Animated.View
       style={styles.item}
-      entering={(fromLeft ? SlideInLeft : SlideInRight).delay(index * 50)}
-      exiting={(fromLeft ? SlideOutLeft : SlideOutRight).delay(index * 50)}>
+      entering={SlideInRight.delay(index * 50)}
+      exiting={SlideOutRight.delay(index * 50)}
+    >
       <PanGestureHandler activeOffsetX={[-10, 10]} onGestureEvent={handler}>
         <Animated.View style={stylesAnimation}>
           <ListItemContent goToReceiptModal={goToReceiptModal} item={item} />
@@ -165,11 +158,11 @@ export default function UserDataListItem({
 
 const styles = StyleSheet.create({
   item: {
-    justifyContent: 'center',
+    justifyContent: "center",
   },
 
   buttonsContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     bottom: 0,
     left: windowDimensions.width,

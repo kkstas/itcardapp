@@ -8,6 +8,8 @@ import ScanAnim from "../components/atoms/ScanAnim";
 import transformReceiptUrl from "../util/transformReceiptUrl";
 import { addNewReceipt } from "../hooks/asyncStorage";
 import { TabTwoMainStackScreenProps } from "../types";
+import { useAppDispatch } from "../hooks/reduxHooks";
+import { addReceipt } from "../store/slices/documentsData";
 
 export default function ScanReceiptScreen({
   navigation,
@@ -16,6 +18,8 @@ export default function ScanReceiptScreen({
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     navigation.addListener("focus", () => {
       setIsFocused(true);
@@ -41,6 +45,8 @@ export default function ScanReceiptScreen({
     const transformedUri = transformReceiptUrl(data);
     if (transformedUri) {
       addNewReceipt(transformedUri);
+      dispatch(addReceipt(transformedUri));
+
       Alert.alert(
         "Skanowane zakończone sukcesem.",
         "Zeskanowane potwierdzenia są dostępne w zakładce Dokumenty.",

@@ -12,7 +12,11 @@ import {
 export default function TabTwoScreen({
   navigation,
 }: TabTwoMainStackScreenProps<"TabTwoScreen">) {
+  /////////////////////////////////////////////////////////////////
+  // To zmień na thunk
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
+  /////////////////////////////////////////////////////////////////
+
   const [locationPermissionInformation, requestPermission] =
     useForegroundPermissions();
 
@@ -57,6 +61,8 @@ export default function TabTwoScreen({
     navigation.navigate("ScanReceiptScreen");
   }
 
+  /////////////////////////////////////////////////////////////////
+  // To zmień na thunk
   async function navigateToLocateATM() {
     setIsFetchingLocation(true);
     const hasPermission = await verifyPermissions();
@@ -71,6 +77,7 @@ export default function TabTwoScreen({
       lng: location.coords.longitude,
     });
   }
+  /////////////////////////////////////////////////////////////////
 
   return (
     <MainScreenTemplate

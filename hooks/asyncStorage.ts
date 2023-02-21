@@ -63,13 +63,11 @@ export const removeSingleReceipt = async (deleteId: number) => {
 
 export const getAllReceipts = async () => {
   try {
-    console.log("Fetching receipts from AsyncStorage (receiptData):");
     const jsonValue = await AsyncStorage.getItem("receiptData");
     const parsedValue = jsonValue != null ? JSON.parse(jsonValue) : null;
     console.log(parsedValue);
     return parsedValue;
   } catch (e) {
-    console.log("Fetching receipts from AsyncStorage failed");
     console.log(e);
   }
 };
@@ -93,7 +91,6 @@ export const addNewReceipt = async (data: IReceiptState) => {
 
 export const getAllTickets = async () => {
   try {
-    console.log("Fetching tickets from AsyncStorage (ticketData):");
     const jsonValue = await AsyncStorage.getItem("ticketData");
     const parsedValue = jsonValue != null ? JSON.parse(jsonValue) : null;
     for (const e of parsedValue) {
@@ -101,7 +98,6 @@ export const getAllTickets = async () => {
     }
     return parsedValue;
   } catch (e) {
-    console.log("Fetching tickets from AsyncStorage failed");
     console.log(e);
   }
 };
