@@ -1,5 +1,11 @@
-import MapView, { Callout, Marker } from 'react-native-maps';
-import { StyleSheet, Alert } from 'react-native';
+import MapView, {
+  Circle,
+  Callout,
+  MapPressEvent,
+  Marker,
+  MarkerSelectEvent,
+} from 'react-native-maps';
+import { Keyboard, Text, View, StyleSheet, Alert } from 'react-native';
 import { useRef, useCallback, useLayoutEffect, useState } from 'react';
 import { TabTwoMainStackScreenProps } from '../types';
 import HeaderButton from '../components/common/HeaderButton';
@@ -23,9 +29,11 @@ export default function MapScreen({
   const [selectedLocation, setSelectedLocation] = useState<
     { lat: number; lng: number } | undefined
   >(undefined);
+  const [isSearchShown, setIsSearchShown] = useState(false);
 
   // mapRef służy jako punkt odniesienia do późniejszego przenoszenia widoku na mapie
-  const mapRef = useRef<MapView>();
+  const mapRef = useRef<MapView | null>();
+  const markersRef = useRef<any[]>([]);
 
   const region = {
     latitude: route.params?.lat || 51.059412936330716,
@@ -37,17 +45,21 @@ export default function MapScreen({
   const dispatch = useAppDispatch();
 
   // zbudowane do funkcjonalności wyszukiwania lupką urządzenia
-  const animateToChosenMarker = (lat: number, lng: number) => {
+  const animateToChosenMarker = (id: number, lat: number, lng: number) => {
     setSelectedLocation({ lat: lat, lng: lng });
+
     mapRef.current!.animateToRegion(
       {
         latitude: lat,
         longitude: lng,
-        latitudeDelta: 0.0922 / 12,
-        longitudeDelta: 0.0421 / 12,
+        latitudeDelta: 0.0922 / 2,
+        longitudeDelta: 0.0421 / 2,
       },
-      1000
+      800
     );
+    setTimeout(() => {
+      markersRef.current[id].showCallout();
+    }, 1200);
   };
 
   const t = useCustomColors();
@@ -87,54 +99,87 @@ export default function MapScreen({
     navigation.setOptions({
       headerRight: () => (
         <HeaderButton
-          icon="save-outline"
-          text="Zapisz"
+          icon='save-outline'
+          text='Zapisz'
           color={t.blue}
-          position="right"
+          position='right'
           onPress={savePickedLocationHandler}
         />
       ),
     });
   }, [navigation, savePickedLocationHandler]);
 
+  const markerPressed = () => {
+    Keyboard.dismiss();
+  };
+
+  const mapPressed = (event: MapPressEvent) => {
+    Keyboard.dismiss();
+    setIsSearchShown(false);
+  };
   return (
-    <MapView
-      ref={mapRef}
-      userInterfaceStyle={
-        t.theme === 'light' ? 'light' : t.theme === 'dark' ? 'dark' : undefined
-      }
-      style={styles.map}
-      region={region}>
-      {atmData.map((element, index) => (
-        <Marker
-          tracksViewChanges={false}
-          stopPropagation={true}
-          key={index}
-          coordinate={{ latitude: element.lat, longitude: element.lng }}
-          onPress={() => {
-            setSelectedLocation({ lat: element.lat, lng: element.lng });
-          }}
-          title={element.nazwaLokalizacji}
-          pinColor={
-            element.instytucja === 'PlanetCash'
-              ? 'rgb(0,146,255)'
-              : element.instytucja === 'ING' ||
-                element.instytucja === 'PlanetING'
-              ? 'rgb(255,98,0)'
-              : element.instytucja === 'PlanetBNPP'
-              ? 'rgb(26,158,106)'
-              : element.instytucja === 'CreditAgricole'
-              ? '#19b9b9'
-              : 't.brown'
-          }
-          description={element.lokalizacja}>
-          <Callout>
-            <MarkerCustomCallout element={element} />
-          </Callout>
-        </Marker>
-      ))}
-      <MapSearchForm animateToChosenMarker={animateToChosenMarker} />
-    </MapView>
+    <>
+      <MapView
+        onPress={mapPressed}
+        onMarkerPress={markerPressed}
+        ref={(r) => (mapRef.current = r)}
+        userInterfaceStyle={
+          t.theme === 'light'
+            ? 'light'
+            : t.theme === 'dark'
+            ? 'dark'
+            : undefined
+        }
+        style={styles.map}
+        region={region}
+      >
+        {atmData.map((element, index) => (
+          <Marker
+            //tracksViewChanges={false}
+            key={element.id}
+            ref={(ref) => {
+              markersRef.current[element.id] = ref;
+            }}
+            // identifier={element.id}
+            coordinate={{ latitude: element.lat, longitude: element.lng }}
+            onSelect={(event: MarkerSelectEvent) => {
+              setSelectedLocation({ lat: element.lat, lng: element.lng });
+            }}
+            title={element.nazwaLokalizacji}
+            pinColor={
+              element.instytucja === 'PlanetCash'
+                ? 'rgb(0,146,255)'
+                : element.instytucja === 'ING' ||
+                  element.instytucja === 'PlanetING'
+                ? 'rgb(255,98,0)'
+                : element.instytucja === 'PlanetBNPP'
+                ? 'rgb(26,158,106)'
+                : element.instytucja === 'CreditAgricole'
+                ? '#19b9b9'
+                : 't.brown'
+            }
+            description={element.lokalizacja}
+          >
+            <Callout>
+              <MarkerCustomCallout element={element} />
+            </Callout>
+          </Marker>
+        ))}
+
+        {/* circle służy do wskazywania aktualnej pozycji usera */}
+        <Circle
+          center={{ latitude: region.latitude, longitude: region.longitude }}
+          radius={100} // radius jest liczony w metrach
+          fillColor='rgba(50,255,255,0.2)'
+          strokeColor='rgba(50,255,255,0.2)'
+        />
+      </MapView>
+      <MapSearchForm
+        isShown={isSearchShown}
+        setIsSearchShown={setIsSearchShown}
+        animateToChosenMarker={animateToChosenMarker}
+      />
+    </>
   );
 }
 

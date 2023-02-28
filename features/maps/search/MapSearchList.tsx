@@ -4,7 +4,7 @@ import MapSearchItem from "./MapSearchItem";
 
 export interface IMapSearchList {
   inputValue: string;
-  onItemPress: (lat: number, lng: number) => void;
+  onItemPress: (id: number, lat: number, lng: number) => void;
 }
 
 const MapSearchList = (props: IMapSearchList) => {
@@ -16,9 +16,10 @@ const MapSearchList = (props: IMapSearchList) => {
       {matchingATMs &&
         matchingATMs.map((atm, index) => (
           <MapSearchItem
-            key={atm.nazwa}
-            onPress={() => props.onItemPress(atm.lat, atm.lng)}
+            key={atm.id}
+            onPress={() => props.onItemPress(atm.id, atm.lat, atm.lng)}
             data={atm}
+            screenWidth={width}
             index={index}
           />
         ))}
