@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import useCustomColors from '../../hooks/useCustomColors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
@@ -71,10 +71,13 @@ export default function TabOneListHeader({
 
   return (
     <View style={[styles.container, { paddingTop: headerHeight }]}>
-      <TouchableOpacity onPress={ticketBtnAction} style={[styles.box]}>
+      <TouchableOpacity
+        onPress={ticketBtnAction}
+        style={[styles.box]}
+      >
         <Animated.View style={[styles.boxContent, animateLeftStyle]}>
           <AnimatedIcon
-            name="layers-outline"
+            name='layers-outline'
             size={30}
             style={animatedLeftColor}
           />
@@ -84,10 +87,13 @@ export default function TabOneListHeader({
         </Animated.View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={receiptBtnAction} style={[styles.box]}>
+      <TouchableOpacity
+        onPress={receiptBtnAction}
+        style={[styles.box]}
+      >
         <Animated.View style={[styles.boxContent, animateRightStyle]}>
           <AnimatedIcon
-            name="receipt-outline"
+            name='receipt-outline'
             size={30}
             style={animatedRightColor}
           />

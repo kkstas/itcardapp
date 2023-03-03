@@ -1,32 +1,33 @@
-import React, { useEffect, useMemo, memo } from "react";
-import { StyleSheet, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
-import ReceiptDataListItem from "../../features/receipts/components/list/ReceiptDataListItem";
-import TabOneListHeader from "./TabOneListHeader";
-import { useSharedValue, withTiming } from "react-native-reanimated";
-import useCustomColors from "../../hooks/useCustomColors";
-import TicketDataListItem from "../../features/tickets/components/list/TicketDataListItem";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import React, { useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import ReceiptDataListItem from '../../features/receipts/components/list/ReceiptDataListItem';
+import TabOneListHeader from './TabOneListHeader';
+import { useSharedValue, withTiming } from 'react-native-reanimated';
+import useCustomColors from '../../hooks/useCustomColors';
+import TicketDataListItem from '../../features/tickets/components/list/TicketDataListItem';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import {
   getReceiptsThunk,
   getTicketsThunk,
   switchToTickets,
   switchToReceipts,
-} from "../../store/slices/documentsData";
+} from '../../store/slices/documentsData';
+import TicketDataPlaceholder from '../../features/tickets/components/list/TicketDataPlaceholder';
+import ReceiptDataPlaceholder from '../../features/receipts/components/list/ReceiptDataPlaceholder';
 
 function TabOneList() {
   const dataState = useAppSelector((state) => state.documentsData);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (dataState.status === "idle") {
+    if (dataState.status === 'idle') {
       dispatch(getTicketsThunk());
       dispatch(getReceiptsThunk());
     }
   }, [dataState.status, dispatch]);
 
   const t = useCustomColors();
-
 
   const sliderOffset = useSharedValue(0);
   const leftColorOffset = useSharedValue(t.tint);
@@ -47,53 +48,55 @@ function TabOneList() {
 
   return (
     <View style={styles.container}>
-      {dataState.whichActive === "left" ? (
+      {dataState.whichActive === 'left' ? (
         <FlatList
-          ListHeaderComponent={useMemo(
-            () => (
-              <TabOneListHeader
-                pressTicketsHandler={pressTicketsHandler}
-                pressReceiptsHandler={pressReceiptsHandler}
-                sliderOffset={sliderOffset}
-                leftColorOffset={leftColorOffset}
-                rightColorOffset={rightColorOffset}
-              />
-            ),
-            [sliderOffset, leftColorOffset, rightColorOffset]
+          ListHeaderComponent={() => (
+            <TabOneListHeader
+              pressTicketsHandler={pressTicketsHandler}
+              pressReceiptsHandler={pressReceiptsHandler}
+              sliderOffset={sliderOffset}
+              leftColorOffset={leftColorOffset}
+              rightColorOffset={rightColorOffset}
+            />
           )}
           data={dataState.ticketData}
           renderItem={({ item, index }) => (
-            <TicketDataListItem item={item} index={index} />
+            <TicketDataListItem
+              item={item}
+              index={index}
+            />
           )}
+          ListEmptyComponent={TicketDataPlaceholder}
         />
       ) : (
         <FlatList
-          ListHeaderComponent={useMemo(
-            () => (
-              <TabOneListHeader
-                pressTicketsHandler={pressTicketsHandler}
-                pressReceiptsHandler={pressReceiptsHandler}
-                sliderOffset={sliderOffset}
-                leftColorOffset={leftColorOffset}
-                rightColorOffset={rightColorOffset}
-              />
-            ),
-            [sliderOffset, leftColorOffset, rightColorOffset]
+          ListHeaderComponent={() => (
+            <TabOneListHeader
+              pressTicketsHandler={pressTicketsHandler}
+              pressReceiptsHandler={pressReceiptsHandler}
+              sliderOffset={sliderOffset}
+              leftColorOffset={leftColorOffset}
+              rightColorOffset={rightColorOffset}
+            />
           )}
           data={dataState.receiptData}
           renderItem={({ item, index }) => (
-            <ReceiptDataListItem item={item} index={index} />
+            <ReceiptDataListItem
+              item={item}
+              index={index}
+            />
           )}
+          ListEmptyComponent={ReceiptDataPlaceholder}
         />
       )}
     </View>
   );
 }
-export default memo(TabOneList);
+export default TabOneList;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
+    width: '100%',
   },
 });

@@ -1,33 +1,33 @@
-import React from "react";
-import { StyleSheet, Dimensions, Alert } from "react-native";
+import React from 'react';
+import { StyleSheet, Dimensions, Alert } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   withSpring,
   withTiming,
-  SlideInRight,
-  SlideOutRight,
-} from "react-native-reanimated";
+  SlideInLeft,
+  SlideOutLeft,
+} from 'react-native-reanimated';
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
-} from "react-native-gesture-handler";
+} from 'react-native-gesture-handler';
 import {
   springConfig,
   timingConfig,
-} from "../../../../components/animations/UserDataListAnimationConfig";
+} from '../../../../components/animations/UserDataListAnimationConfig';
 
-import DeleteListButton from "../../../../components/common/DeleteListButton";
-import ListItemContent from "./ListItemContent";
-import useCustomColors from "../../../../hooks/useCustomColors";
-import { useNavigation } from "@react-navigation/native";
+import DeleteListButton from '../../../../components/common/DeleteListButton';
+import ListItemContent from './ListItemContent';
+import useCustomColors from '../../../../hooks/useCustomColors';
+import { useNavigation } from '@react-navigation/native';
 
-import { removeSingleReceipt, IReceiptState } from "../../asyncStorageHandler"
-import { useAppDispatch } from "../../../../hooks/reduxHooks";
-import { removeReceipt } from "../../../../store/slices/documentsData";
+import { removeSingleReceipt, IReceiptState } from '../../asyncStorageHandler';
+import { useAppDispatch } from '../../../../hooks/reduxHooks';
+import { removeReceipt } from '../../../../store/slices/documentsData';
 
-const windowDimensions = Dimensions.get("window");
+const windowDimensions = Dimensions.get('window');
 const BUTTON_WIDTH = 80;
 const MAX_TRANSLATE = -BUTTON_WIDTH;
 
@@ -95,21 +95,21 @@ export default function ReceiptDataListItem({ item, index }: ListItemProps) {
 
   function handleRemove() {
     Alert.alert(
-      "Czy napewno chcesz usunąć ten element?",
-      "Po usunięciu nie będzie można go przywrócić",
+      'Czy napewno chcesz usunąć ten element?',
+      'Po usunięciu nie będzie można go przywrócić',
       [
         {
-          text: "Usuń",
+          text: 'Usuń',
           onPress: () => {
             isRemoving.value = true;
             removeSingleReceipt(item.id);
             dispatch(removeReceipt(item.id));
           },
-          style: "destructive",
+          style: 'destructive',
         },
         {
-          text: "Anuluj",
-          style: "cancel",
+          text: 'Anuluj',
+          style: 'cancel',
           onPress: () => (translateX.value = withTiming(0, timingConfig)),
         },
       ]
@@ -117,9 +117,9 @@ export default function ReceiptDataListItem({ item, index }: ListItemProps) {
   }
 
   const removeButton = {
-    title: "Usuń",
+    title: 'Usuń',
     backgroundColor: t.pink,
-    color: "white",
+    color: 'white',
     onPress: handleRemove,
     windowWidth: windowDimensions.width,
     BUTTON_WIDTH: BUTTON_WIDTH,
@@ -133,19 +133,25 @@ export default function ReceiptDataListItem({ item, index }: ListItemProps) {
 
   const goToReceiptModal = () => {
     if (translateX.value === 0) {
-      navigation.navigate("ReceiptModal", { data: item });
+      navigation.navigate('ReceiptModal', { data: item });
     }
   };
 
   return (
     <Animated.View
       style={styles.item}
-      entering={SlideInRight.delay(index * 50)}
-      exiting={SlideOutRight.delay(index * 50)}
+      entering={SlideInLeft.delay(index * 50)}
+      exiting={SlideOutLeft.delay(index * 50)}
     >
-      <PanGestureHandler activeOffsetX={[-10, 10]} onGestureEvent={handler}>
+      <PanGestureHandler
+        activeOffsetX={[-10, 10]}
+        onGestureEvent={handler}
+      >
         <Animated.View style={stylesAnimation}>
-          <ListItemContent goToReceiptModal={goToReceiptModal} item={item} />
+          <ListItemContent
+            goToReceiptModal={goToReceiptModal}
+            item={item}
+          />
 
           <Animated.View style={[styles.buttonsContainer, removeButtonColor]}>
             <DeleteListButton item={removeButton} />
@@ -158,11 +164,11 @@ export default function ReceiptDataListItem({ item, index }: ListItemProps) {
 
 const styles = StyleSheet.create({
   item: {
-    justifyContent: "center",
+    justifyContent: 'center',
   },
 
   buttonsContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     bottom: 0,
     left: windowDimensions.width,

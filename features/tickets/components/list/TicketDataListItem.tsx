@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   View,
   Dimensions,
   Alert,
   TouchableOpacity,
-} from "react-native";
+} from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedGestureHandler,
@@ -14,26 +14,26 @@ import Animated, {
   withTiming,
   SlideInLeft,
   SlideOutLeft,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
-} from "react-native-gesture-handler";
+} from 'react-native-gesture-handler';
 import {
   springConfig,
   timingConfig,
-} from "../../../../components/animations/UserDataListAnimationConfig";
+} from '../../../../components/animations/UserDataListAnimationConfig';
 
-import DeleteListButton from "../../../../components/common/DeleteListButton";
-import useCustomColors from "../../../../hooks/useCustomColors";
-import { TicketDataType, removeSingleItem } from "../../asyncStorageHandler"
-import TicketItemContent from "./TicketItemContent";
+import DeleteListButton from '../../../../components/common/DeleteListButton';
+import useCustomColors from '../../../../hooks/useCustomColors';
+import { TicketDataType, removeSingleItem } from '../../asyncStorageHandler';
+import TicketItemContent from './TicketItemContent';
 
-import { useNavigation } from "@react-navigation/native";
-import { useAppDispatch } from "../../../../hooks/reduxHooks";
-import { removeTicket } from "../../../../store/slices/documentsData";
+import { useNavigation } from '@react-navigation/native';
+import { useAppDispatch } from '../../../../hooks/reduxHooks';
+import { removeTicket } from '../../../../store/slices/documentsData';
 
-const windowDimensions = Dimensions.get("window");
+const windowDimensions = Dimensions.get('window');
 const BUTTON_WIDTH = 80;
 const MAX_TRANSLATE = -BUTTON_WIDTH;
 
@@ -100,21 +100,21 @@ export default function TicketDataListItem({ item, index }: ListItemProps) {
 
   function handleRemove() {
     Alert.alert(
-      "Czy napewno chcesz usunąć ten element?",
-      "Po usunięciu nie będzie można go przywrócić",
+      'Czy napewno chcesz usunąć ten element?',
+      'Po usunięciu nie będzie można go przywrócić',
       [
         {
-          text: "Usuń",
+          text: 'Usuń',
           onPress: () => {
             isRemoving.value = true;
             removeSingleItem(item.id);
             dispatch(removeTicket(item.id));
           },
-          style: "destructive",
+          style: 'destructive',
         },
         {
-          text: "Anuluj",
-          style: "cancel",
+          text: 'Anuluj',
+          style: 'cancel',
           onPress: () => (translateX.value = withTiming(0, timingConfig)),
         },
       ]
@@ -122,9 +122,9 @@ export default function TicketDataListItem({ item, index }: ListItemProps) {
   }
 
   const removeButton = {
-    title: "Usuń",
+    title: 'Usuń',
     backgroundColor: t.pink,
-    color: "white",
+    color: 'white',
     onPress: handleRemove,
     windowWidth: windowDimensions.width,
     BUTTON_WIDTH: BUTTON_WIDTH,
@@ -138,7 +138,7 @@ export default function TicketDataListItem({ item, index }: ListItemProps) {
 
   const goToTicketModal = () => {
     if (translateX.value === 0) {
-      navigation.navigate("TicketModal", { data: item });
+      navigation.navigate('TicketModal', { data: item });
     }
   };
 
@@ -149,9 +149,15 @@ export default function TicketDataListItem({ item, index }: ListItemProps) {
         entering={SlideInLeft.delay(index * 50)}
         exiting={SlideOutLeft.delay(index * 50)}
       >
-        <PanGestureHandler activeOffsetX={[-10, 10]} onGestureEvent={handler}>
+        <PanGestureHandler
+          activeOffsetX={[-10, 10]}
+          onGestureEvent={handler}
+        >
           <Animated.View style={stylesAnimation}>
-            <TicketItemContent goToTicketModal={goToTicketModal} item={item} />
+            <TicketItemContent
+              goToTicketModal={goToTicketModal}
+              item={item}
+            />
 
             <Animated.View style={[styles.buttonsContainer, removeButtonColor]}>
               <DeleteListButton item={removeButton} />
@@ -165,11 +171,11 @@ export default function TicketDataListItem({ item, index }: ListItemProps) {
 
 const styles = StyleSheet.create({
   item: {
-    justifyContent: "center",
+    justifyContent: 'center',
   },
 
   buttonsContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     bottom: 0,
     left: windowDimensions.width,

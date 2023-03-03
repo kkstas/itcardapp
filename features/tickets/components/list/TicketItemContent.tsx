@@ -37,7 +37,12 @@ export default function TicketItemContent({
         ) : item.locationUri ? (
           <Image source={{ uri: item.locationUri }} style={s.img} />
         ) : (
-          <Text></Text>
+
+        <Ionicons
+          name='location-outline'
+          color={t.green2}
+          size={25}
+        />
         )}
       </View>
       <View style={[s.contentContainer]}>
