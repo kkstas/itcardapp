@@ -2,7 +2,7 @@ import { TabTwoMainStackScreenProps } from '../types';
 import MainScreenTemplate from '../components/tabTwoScreen/MainScreenTemplate';
 
 import { Alert } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   PermissionStatus,
   getCurrentPositionAsync,

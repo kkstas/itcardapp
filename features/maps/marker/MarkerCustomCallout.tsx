@@ -5,7 +5,11 @@ import { IatmElement } from '../../../constants/atmsDummyData';
 import CalloutLogoImage from './CalloutLogoImage';
 import CashInCashOutInfo from './CashInCashOutInfo';
 
-export default function MarkerCustomCallout({ element }: { element: IatmElement }) {
+export default function MarkerCustomCallout({
+  element,
+}: {
+  element: IatmElement;
+}) {
   const t = { ...Colors.light, ...CustomLightTheme };
   const locArr = element.adresLokalizacji.split(', ');
   return (
@@ -13,6 +17,9 @@ export default function MarkerCustomCallout({ element }: { element: IatmElement 
       <View style={styles.container}>
         <CalloutLogoImage institution={element.instytucja} />
       </View>
+      <Text style={[styles.deviceName, { color: t.tint }]}>
+        {element.nazwa}
+      </Text>
       <Text style={[styles.locationName, { color: t.labelPrimary }]}>
         {element.nazwaLokalizacji}
       </Text>
@@ -31,6 +38,11 @@ export default function MarkerCustomCallout({ element }: { element: IatmElement 
 }
 
 const styles = StyleSheet.create({
+  deviceName: {
+    fontSize: 9,
+    letterSpacing: 0.7,
+    fontWeight: '700',
+  },
   locationName: {
     fontWeight: '600',
     fontSize: 16,

@@ -66,7 +66,9 @@ function TabOneList() {
               index={index}
             />
           )}
-          ListEmptyComponent={TicketDataPlaceholder}
+          ListEmptyComponent={() => (
+            <TicketDataPlaceholder onPress={pressReceiptsHandler} />
+          )}
         />
       ) : (
         <FlatList
@@ -86,7 +88,9 @@ function TabOneList() {
               index={index}
             />
           )}
-          ListEmptyComponent={ReceiptDataPlaceholder}
+          ListEmptyComponent={() => (
+            <ReceiptDataPlaceholder onPress={pressTicketsHandler} />
+          )}
         />
       )}
     </View>

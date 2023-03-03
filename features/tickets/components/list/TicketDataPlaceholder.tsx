@@ -1,10 +1,12 @@
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Pressable, Text } from 'react-native';
 import useCustomColors from '../../../../hooks/useCustomColors';
 import Animated, { FadeInLeft, FadeOutLeft } from 'react-native-reanimated';
-import PhoneQRSvg from '../../../../components/common/PhoneQRSvg';
+import CallCenterSvg from '../../../../components/common/CallCenterSvg';
+import { useNavigation } from '@react-navigation/native';
 
-const TicketDataPlaceholder = () => {
+const TicketDataPlaceholder = ({ onPress }: { onPress: () => void }) => {
   const t = useCustomColors();
+  const navigation = useNavigation();
   return (
     <Animated.View
       entering={FadeInLeft.delay(100)}
@@ -12,10 +14,7 @@ const TicketDataPlaceholder = () => {
       style={[styles.container]}
     >
       <View style={styles.mainComponent}>
-        <PhoneQRSvg
-          color={t.tint}
-          currentBackgroundColor={t.bgPrimary}
-        />
+        <CallCenterSvg color={t.tint} />
         <Text style={[styles.header, { color: t.labelPrimary }]}>
           Tu znajdziesz Twoje zgłoszenia
         </Text>
@@ -24,13 +23,21 @@ const TicketDataPlaceholder = () => {
         >
           Wygląda na to, że nie utworzyłeś jeszcze zgłoszenia.{' '}
         </Text>
-        <Text style={[styles.text, { color: t.tint }]}>
-          Dotknij, aby utworzyć pierwsze zgłoszenie
-        </Text>
+        <Pressable
+          onPress={() =>
+            navigation.navigate('TabTwo', { screen: 'CreateTicketScreen' })
+          }
+        >
+          <Text style={[styles.text, { color: t.tint }]}>
+            Dotknij, aby utworzyć pierwsze zgłoszenie
+          </Text>
+        </Pressable>
         <Text style={[styles.text, { color: t.labelTertiary }]}>lub</Text>
-        <Text style={[styles.text, { color: t.tint }]}>
-          Przejdź do Twoich pokwitowań
-        </Text>
+        <Pressable onPress={onPress}>
+          <Text style={[styles.text, { color: t.tint }]}>
+            Przejdź do Twoich pokwitowań
+          </Text>
+        </Pressable>
       </View>
     </Animated.View>
   );
@@ -42,7 +49,7 @@ const styles = StyleSheet.create({
   img: {
     width: 100,
     height: 100,
-    marginBottom: 20,
+    marginBottom: 24,
     opacity: 0.9,
   },
   imgDark: {

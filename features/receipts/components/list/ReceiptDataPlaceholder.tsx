@@ -1,10 +1,12 @@
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Pressable, Text } from 'react-native';
 import useCustomColors from '../../../../hooks/useCustomColors';
 import Animated, { FadeInLeft, FadeOutLeft } from 'react-native-reanimated';
-import CallCenterSvg from '../../../../components/common/CallCenterSvg';
+import PhoneQRSvg from '../../../../components/common/PhoneQRSvg';
+import { useNavigation } from '@react-navigation/native';
 
-const ReceiptDataPlaceholder = () => {
+const ReceiptDataPlaceholder = ({ onPress }: { onPress: () => void }) => {
   const t = useCustomColors();
+  const navigation = useNavigation();
   return (
     <Animated.View
       entering={FadeInLeft.delay(100)}
@@ -12,7 +14,10 @@ const ReceiptDataPlaceholder = () => {
       style={[styles.container]}
     >
       <View style={styles.mainComponent}>
-        <CallCenterSvg color={t.tint} />
+        <PhoneQRSvg
+          color={t.tint}
+          currentBackgroundColor={t.bgPrimary}
+        />
         <Text style={[styles.header, { color: t.labelPrimary }]}>
           Tu znajdziesz Twoje potwierdzenia
         </Text>
@@ -21,13 +26,21 @@ const ReceiptDataPlaceholder = () => {
         >
           Wygląda na to, że nie utworzyłeś jeszcze zgłoszenia.{' '}
         </Text>
-        <Text style={[styles.text, { color: t.tint }]}>
-          Dotknij, aby zeskanować pierwsze potwierdzenie
-        </Text>
+        <Pressable
+          onPress={() =>
+            navigation.navigate('TabTwo', { screen: 'ScanReceiptScreen' })
+          }
+        >
+          <Text style={[styles.text, { color: t.tint }]}>
+            Dotknij, aby zeskanować pierwsze potwierdzenie
+          </Text>
+        </Pressable>
         <Text style={[styles.text, { color: t.labelTertiary }]}>lub</Text>
-        <Text style={[styles.text, { color: t.tint }]}>
-          Przejdź do Twoich zgłoszeń
-        </Text>
+        <Pressable onPress={onPress}>
+          <Text style={[styles.text, { color: t.tint }]}>
+            Przejdź do Twoich zgłoszeń
+          </Text>
+        </Pressable>
       </View>
     </Animated.View>
   );
