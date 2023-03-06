@@ -13,8 +13,8 @@ type ButtonData = {
 
 /**
  * component created for animated lists (ticket and receiept data)
- * @param item of type ButtonData 
- * @returns 
+ * @param item of type ButtonData
+ * @returns
  */
 export default function DeleteListButton({ item }: { item: ButtonData }) {
   return (
